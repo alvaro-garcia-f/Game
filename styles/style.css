@@ -25,3 +25,12 @@ body {
     background-color: rgb(23, 23, 39);
 }
 
+#player {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    width: 32px;
+    height: 64px;
+    background-color: red;
+}
+

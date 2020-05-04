@@ -1,1 +1,1 @@
-var player = document.getElementById("player");
+var playerSprite = document.getElementById("playerSprite");

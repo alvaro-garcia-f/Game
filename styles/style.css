@@ -25,7 +25,7 @@ body {
     background-color: rgb(23, 23, 39);
 }
 
-#player {
+#playerSprite {
     position: absolute;
     bottom: 64px;
     left: 64px;

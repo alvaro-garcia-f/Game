@@ -1,13 +1,17 @@
 var x = 64;
 
 function moveLeft () {
-    x -= 10;
-    player.style.left = `${x}px`
+    if (x - 10 > 0) {   // Prevents crossing left border 
+        x -= 10;
+        player.style.left = `${x}px`;
+    }
 }
 
 function moveRight () {
-    x += 10;
-    player.style.left = `${x}px`
+    if (x + 10 < 968) {  // Prevents crossing right border 
+        x += 10;
+        player.style.left = `${x}px`;
+    }
 }
 
 window.addEventListener("keydown", (e) => {

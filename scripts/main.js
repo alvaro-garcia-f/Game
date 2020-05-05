@@ -1,12 +1,16 @@
+const GRAVITY = 0.5;
+
 // Player Class - Handles Player movement     
 var Player = function () {
     const self = this;
-    this.h = 40;        // Player height
-    this.w = 32;        // Player width
-    this.x = 64;        // Starting horizontal position
-    this.y = GROUND - this.h;    // Starting vertical position
-    this.speed = 2;
-    const MAX_JUMP_HEIGHT = GROUND - this.h * 2;
+    this.h = 40;                    // Player height
+    this.w = 32;                    // Player width
+    this.x = 64;                    // Starting horizontal position
+    const LAND = GROUND - this.h;   // Players feet touch ground
+    this.y = LAND;                  // Starting vertical position
+    this.runSpeed = 2;
+    this.jumpSpeed = -10;
+    this.jumping = false;
 
     this.loadSprite = function () {
         ctx.beginPath();
@@ -16,18 +20,27 @@ var Player = function () {
     }
 
     this.moveLeft = function () {
-        if (this.x - this.speed > 0)   // Prevents crossing left border 
-            this.x -= this.speed;
+        if (this.x - this.runSpeed > 0)   // Prevents crossing left border 
+            this.x -= this.runSpeed;
     }
 
     this.moveRight = function () {
-        if (this.x + this.speed < 968)  // Prevents crossing right border 
-            this.x += this.speed;
+        if (this.x + this.runSpeed < 968)  // Prevents crossing right border 
+            this.x += this.runSpeed;
     }
 
     this.jump = function () {
-        if (this.y > MAX_JUMP_HEIGHT)
-            this.y -= this.speed;
+        if (this.jumping) {
+            this.y += this.jumpSpeed;
+            this.jumpSpeed += GRAVITY;
+        }
+    }
+
+    this.land = function () {
+        if(this.y + this.jumpSpeed >= LAND) {
+            this.y = LAND;
+            this.jumping = false;
+        }
     }
 };
 
@@ -48,7 +61,11 @@ function loadScrLoop() {
     loadGround();
     if (game.keyLeft) player.moveLeft();
     if (game.keyRight) player.moveRight();
-    if (game.keyJump) player.jump();
+    if (game.keyJump) {
+        player.jumping = true;
+        player.jump();
+        player.land();
+    }
     player.loadSprite();
     requestAnimationFrame(loadScrLoop);
 }

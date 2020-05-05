@@ -5,9 +5,9 @@ var Player = function () {
     this.w = 32;        // Player width
     this.x = 64;        // Starting horizontal position
     this.y = GROUND - this.h;    // Starting vertical position
-    const MAX_JUMP_HEIGHT = GROUND + this.h; 
-    this.timer;
-    
+    this.speed = 2;
+    const MAX_JUMP_HEIGHT = GROUND - this.h * 2;
+
     this.loadSprite = function () {
         ctx.beginPath();
         ctx.fillStyle = "#00FF00";
@@ -16,87 +16,78 @@ var Player = function () {
     }
 
     this.moveLeft = function () {
-        if (this.x - 10 > 0) {   // Prevents crossing left border 
-            this.x -= 10;
-            playerSprite.style.left = `${this.x}px`;
-        }
+        if (this.x - this.speed > 0)   // Prevents crossing left border 
+            this.x -= this.speed;
     }
 
     this.moveRight = function () {
-        if (this.x + 10 < 968) {  // Prevents crossing right border 
-            this.x += 10;
-            playerSprite.style.left = `${this.x}px`;
-        }
+        if (this.x + this.speed < 968)  // Prevents crossing right border 
+            this.x += this.speed;
     }
 
     this.jump = function () {
-        if (this.y < MAX_JUMP_HEIGHT) {
-            this.y += 10;
-            playerSprite.style.bottom = `${this.y}px`;
-        } else {
-            this.timer = setInterval(self.land, 100);
-        }
-    }
-
-    this.land = function () {
-        if (this.y >= GROUND && this.y < 10) {
-            this.y = GROUND;
-            playerSprite.style.bottom = `${this.y}px`;
-            clearInterval(this.timer);
-        } else {
-            this.y -= 10;
-            playerSprite.style.bottom = `${this.y}px`;
-        }
+        if (this.y > MAX_JUMP_HEIGHT)
+            this.y -= this.speed;
     }
 };
 
 // Game Class - Handles world creation
 var Game = function () {
+    this.keyLeft = false;
+    this.keyRight = false;
+    this.keyJump = false;
 
     this.init = function () {
-        loadGround ();
+        loadGround();
     }
 }
 
 // Animation Loop
-function animate () {
+function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
-    player.loadSprite();
     loadGround();
-    player.x += 2;
-    requestAnimationFrame (animate);
+    if (game.keyLeft) player.moveLeft();
+    if (game.keyRight) player.moveRight();
+    if (game.keyJump) player.jump();
+    player.loadSprite();
+    requestAnimationFrame(loadScrLoop);
 }
 
 // Initialize game
-var game = new Game ();
+var game = new Game();
 game.init();
 
 var player = new Player();
 // player.loadSprite();
 
-// Start animation loop
-animate();
-/*
+// Keyboard listeners
 window.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "ArrowLeft":
-            player.moveLeft();
+            game.keyLeft = true;
             break;
         case "ArrowRight":
-            player.moveRight();
+            game.keyRight = true;
             break;
         case "ArrowUp":
-            player.jumping = true;
-            player.jump();
+            game.keyJump = true;
             break;
     }
 });
 
 window.addEventListener("keyup", (e) => {
-    console.log("up");
     switch (e.key) {
+        case "ArrowLeft":
+            game.keyLeft = false;
+            break;
+        case "ArrowRight":
+            game.keyRight = false;
+            break;
         case "ArrowUp":
-            player.land();
+            game.keyJump = false;
             break;
     }
-});*/
+});
+
+// Start animation loop
+requestAnimationFrame(loadScrLoop);

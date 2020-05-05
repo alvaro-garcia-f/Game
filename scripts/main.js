@@ -1,6 +1,4 @@
-const GROUND = 498;
-
-// Player Class      
+// Player Class - Handles Player movement     
 var Player = function () {
     const self = this;
     this.h = 40;        // Player height
@@ -52,6 +50,7 @@ var Player = function () {
     }
 };
 
+// Game Class - Handles world creation
 var Game = function () {
 
     this.init = function () {
@@ -59,13 +58,24 @@ var Game = function () {
     }
 }
 
+// Animation Loop
+function animate () {
+    ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    player.loadSprite();
+    loadGround();
+    player.x += 2;
+    requestAnimationFrame (animate);
+}
+
+// Initialize game
 var game = new Game ();
 game.init();
 
 var player = new Player();
-player.loadSprite();
+// player.loadSprite();
 
-
+// Start animation loop
+animate();
 /*
 window.addEventListener("keydown", (e) => {
     switch (e.key) {

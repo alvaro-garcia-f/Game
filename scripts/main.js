@@ -2,7 +2,6 @@ const GRAVITY = 0.5;
 
 // Player Class - Handles Player movement     
 var Player = function () {
-    const self = this;
     this.h = 40;                    // Player height
     this.w = 32;                    // Player width
     this.x = 64;                    // Starting horizontal position
@@ -13,10 +12,8 @@ var Player = function () {
     this.jumping = false;
 
     this.loadSprite = function () {
-        ctx.beginPath();
         ctx.fillStyle = "#00FF00";
         ctx.fillRect(this.x, this.y, this.w, this.h);
-        ctx.closePath();
     }
 
     this.moveLeft = function () {
@@ -43,16 +40,33 @@ var Player = function () {
             this.jumping = false;
         }
     }
+
+    this.collide = function () {
+        return this.x + this.w >= game.obstacle.x;
+    }
 };
+
+var Obstacle = function (x, y, w, h) {
+    this.h = h;                    // Obstacle height
+    this.w = w;                    // Obstacle width
+    this.x = x;                    // Starting horizontal position
+    this.y = y - this.h;                  // Starting vertical position
+}
 
 // Game Class - Handles world creation
 var Game = function () {
     this.keyLeft = false;
     this.keyRight = false;
     this.keyJump = false;
+    this.obstacle; 
 
     this.init = function () {
         loadGround();
+    }
+
+    this.loadObstacle = function () {
+        this.obstacle = new Obstacle (600, GROUND, 32, 32);
+        drawObstacle(this.obstacle);
     }
 }
 
@@ -60,8 +74,9 @@ var Game = function () {
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
     loadGround();
+    game.loadObstacle();
     if (game.keyLeft) player.moveLeft();
-    if (game.keyRight) player.moveRight();
+    if (game.keyRight) if (!player.collide()) player.moveRight();
     if (game.keyJump || player.jumping) {
         player.jumping = true;
         player.jump();

@@ -62,7 +62,7 @@ function loadScrLoop() {
     loadGround();
     if (game.keyLeft) player.moveLeft();
     if (game.keyRight) player.moveRight();
-    if (game.keyJump) {
+    if (game.keyJump || player.jumping) {
         player.jumping = true;
         player.jump();
         player.land();

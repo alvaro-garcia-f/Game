@@ -37,8 +37,9 @@ var Player = function () {
     }
 
     this.land = function () {
-        if(this.y + this.jumpSpeed >= LAND) {
+        if(this.y + this.jumpSpeed >= LAND) {   // Prevents falling below ground
             this.y = LAND;
+            this.jumpSpeed = -10;               // Reset jump speed
             this.jumping = false;
         }
     }

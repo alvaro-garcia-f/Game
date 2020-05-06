@@ -53,7 +53,7 @@ var Game = function () {
     }
 
     this.land = function () {
-        if (this.collideVertical()) this.player.landObstacle(this.obstacle);
-        else this.player.landGround();
+        if (this.collideVertical()) this.player.land(this.obstacle.y);
+        else this.player.land(GROUND);
     }
 }

@@ -43,27 +43,19 @@ var Player = function () {
             this.jump();
         }
 
-        if (!this.jumping && !this.onTop && this.y + this.h < GROUND) { //If it's not jumping or on top of something is falling
+      /*  if (!this.jumping && !this.onTop && this.y + this.h < GROUND) { //If it's not jumping or on top of something is falling
             this.y += this.vSpeed;
             this.vSpeed += GRAVITY;
         } else if (!this.jumping) {
             this.vSpeed = 0;
-        }
+        }*/
     }
 
-    this.landGround = function () {
-        if(this.y + this.vSpeed >= LAND) {   // Prevents falling below ground
-            this.y = LAND;
+    this.land = function (floor) {
+        if (this.y + this.vSpeed >= floor - this.h) {   // Prevents falling below obstacle
+            this.y = floor - this.h;
             this.vSpeed = 0;               // Reset jump speed
             this.jumping = false;
-        }
-    }
-
-    this.landObstacle = function (obstacle) {
-        if (this.y + this.vSpeed >= obstacle.y) {   // Prevents falling below obstacle
-            this.y = obstacle.y - this.h;
-            this.vSpeed = 0;               // Reset jump speed
-            this.jumping = false;
-        }
+        }      
     }
 };

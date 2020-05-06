@@ -42,7 +42,8 @@ var Player = function () {
     }
 
     this.collide = function () {
-        return this.x + this.w >= game.obstacle.x;
+        return this.x + this.w >= game.obstacle.x &&
+               this.y + this.h >= game.obstacle.y;
     }
 };
 

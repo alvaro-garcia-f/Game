@@ -47,12 +47,13 @@ var Game = function () {
     this.collideVertical = function () {
         return (this.player.x > this.obstacle.x &&
                 this.player.x < this.obstacle.x + this.obstacle.w ||
-                this.player.x + this.w > this.obstacle.x &&
-                this.player.x + this.w < this.obstacle.x + this.obstacle.w) &&
-                this.player.y + this.h > this.obstacle.y; 
+                this.player.x + this.player.w > this.obstacle.x &&
+                this.player.x + this.player.w < this.obstacle.x + this.obstacle.w) &&
+                this.player.y + this.player.h > this.obstacle.y; 
     }
 
-    this.landObstacle = function () {
-        this.player.landObstacle(this.obstacle);
+    this.land = function () {
+        if (this.collideVertical()) this.player.landObstacle(this.obstacle);
+        else this.player.landGround();
     }
 }

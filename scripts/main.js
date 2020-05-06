@@ -11,8 +11,7 @@ function loadScrLoop() {
     
     if (game.keyJump || game.player.jumping) {
         game.player.move("jump");
-        if (game.collideVertical()) game.landObstacle();
-        else game.player.landGround();
+        game.land();
     }
     game.player.loadSprite();
     requestAnimationFrame(loadScrLoop);

@@ -60,12 +60,10 @@ var Player = function () {
     }
 
     this.landObstacle = function (obstacle) {
-        console.log("hola");
-        if (this.y  >= obstacle.y) {   // Prevents falling below oobstacle
+        if (this.y + this.vSpeed >= obstacle.y) {   // Prevents falling below obstacle
             this.y = obstacle.y - this.h;
             this.vSpeed = 0;               // Reset jump speed
             this.jumping = false;
-            this.onTop = true;
         }
     }
 };

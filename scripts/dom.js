@@ -5,7 +5,8 @@ const GROUND = 498;
 const canvas = document.getElementById("screen");
 const ctx = canvas.getContext("2d");
 
-function loadGround() {
+//
+function drawGround() {
     ctx.fillStyle = "#2c2b40";
     ctx.fillRect(0, GROUND, SCR_WIDTH, 64);
 }

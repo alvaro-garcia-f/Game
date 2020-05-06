@@ -1,13 +1,14 @@
 const GRAVITY = 0.5;
 
+// Obstacle Class
 var Obstacle = function (x, y, w, h) {
     this.h = h;                    // Obstacle height
     this.w = w;                    // Obstacle width
     this.x = x;                    // Starting horizontal position
-    this.y = y - this.h;                  // Starting vertical position
+    this.y = y - this.h;           // Starting vertical position
 }
 
-// Game Class - Handles world creation
+// Game Class - Handles world creation and interaction
 var Game = function () {
     this.keyLeft = false;
     this.keyRight = false;
@@ -15,8 +16,9 @@ var Game = function () {
     this.obstacle; 
     this.player = new Player ();
 
+    // Loaders
     this.init = function () {
-        loadGround();
+        drawGround();
     }
 
     this.loadObstacle = function () {
@@ -24,9 +26,10 @@ var Game = function () {
         drawObstacle(this.obstacle);
     }
 
+    //Movement
     this.movePlayer = function (direction) {
-        if (direction === "left") this.player.moveLeft();
-        if (direction === "right") this.player.moveRight();
+        if (direction === "left") this.movePlayerLeft();
+        if (direction === "right") this.movePlayerRight();
         if (direction === "jump") {
             if (!this.player.jumping) {
                 this.player.jumping = true;
@@ -38,6 +41,17 @@ var Game = function () {
         }
     }
 
+    this.movePlayerLeft = function () {
+        if (!this.isObjectBehind() || 
+            this.isObjectBehind() && !this.collideLeft()) this.player.moveLeft();
+    }
+
+    this.movePlayerRight = function () {
+        if (!this.isObjectInFront() ||
+            this.isObjectInFront() && !this.collideRight()) this.player.moveRight();
+    }
+
+    // Obstacle positioning
     this.isObjectInFront = function () {
         return this.obstacle && this.player.x + this.player.w < this.obstacle.x + this.obstacle.w;
     }
@@ -45,7 +59,7 @@ var Game = function () {
     this.isObjectBehind = function () {
         return this.obstacle && this.player.x > this.obstacle.x;
     }
-
+    // Collisions
     this.collideLeft = function () {
         return this.player.x < this.obstacle.x + this.obstacle.w &&
                this.player.y < this.obstacle.y + this.obstacle.h &&

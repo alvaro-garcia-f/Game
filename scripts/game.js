@@ -24,6 +24,20 @@ var Game = function () {
         drawObstacle(this.obstacle);
     }
 
+    this.movePlayer = function (direction) {
+        if (direction === "left") this.player.moveLeft();
+        if (direction === "right") this.player.moveRight();
+        if (direction === "jump") {
+            if (!this.player.jumping) {
+                this.player.jumping = true;
+                this.player.vSpeed = -10;
+            }
+            this.player.jump();
+            if (this.collideVertical()) this.player.land(this.obstacle.y);
+            else this.player.land(GROUND);
+        }
+    }
+
     this.isObjectInFront = function () {
         return this.obstacle && this.player.x + this.player.w < this.obstacle.x + this.obstacle.w;
     }
@@ -50,10 +64,5 @@ var Game = function () {
                 this.player.x + this.player.w > this.obstacle.x &&
                 this.player.x + this.player.w < this.obstacle.x + this.obstacle.w) &&
                 this.player.y + this.player.h > this.obstacle.y; 
-    }
-
-    this.land = function () {
-        if (this.collideVertical()) this.player.land(this.obstacle.y);
-        else this.player.land(GROUND);
     }
 }

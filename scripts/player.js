@@ -58,35 +58,9 @@ var Player = function () {
             this.jumping = false;
         }
     }
-    this.seesObjectFront = function (obstacle) {
-        return this.x + this.w < obstacle.x + obstacle.w;
-    }
-
-    this.seesObjectBack = function (obstacle) {
-        return this.x > obstacle.x;
-    }
-
-    this.collideLeft = function (obstacle) {
-        return this.x < obstacle.x + obstacle.w &&
-               this.y < obstacle.y + obstacle.h &&
-               this.y + this.h > obstacle.y;
-    }
-
-    this.collideRight = function (obstacle) {
-        return this.x + this.w > obstacle.x &&
-               this.y < obstacle.y + obstacle.h &&
-               this.y + this.h > obstacle.y;
-    }
-
-    this.collideBottom = function (obstacle) {
-        return (this.x > obstacle.x &&
-                this.x < obstacle.x + obstacle.w ||
-                this.x + this.w > obstacle.x &&
-                this.x + this.w < obstacle.x + obstacle.w) &&
-                this.y + this.h > obstacle.y; 
-    }
 
     this.landObstacle = function (obstacle) {
+        console.log("hola");
         if (this.y  >= obstacle.y) {   // Prevents falling below oobstacle
             this.y = obstacle.y - this.h;
             this.vSpeed = 0;               // Reset jump speed

@@ -4,14 +4,14 @@ function loadScrLoop() {
     loadGround();
     game.loadObstacle();
     // If there is no object in the direction the character moves there is one but there is no collision
-    if (game.keyLeft && (!game.player.seesObjectBack(game.obstacle) || 
-        game.player.seesObjectBack(game.obstacle) && !game.player.collideLeft(game.obstacle))) game.player.move("left");
-    if (game.keyRight && (!game.player.seesObjectFront(game.obstacle) ||
-        game.player.seesObjectFront(game.obstacle) && !game.player.collideRight(game.obstacle))) game.player.move("right");
+    if (game.keyLeft && (!game.isObjectBehind() || 
+        game.isObjectBehind() && !game.collideLeft())) game.player.move("left");
+    if (game.keyRight && (!game.isObjectInFront() ||
+        game.isObjectInFront() && !game.collideRight())) game.player.move("right");
     
     if (game.keyJump || game.player.jumping) {
         game.player.move("jump");
-        if (game.player.collideBottom(game.obstacle)) game.player.landObstacle(game.obstacle);
+        if (game.collideVertical()) game.landObstacle();
         else game.player.landGround();
     }
     game.player.loadSprite();

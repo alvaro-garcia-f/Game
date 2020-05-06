@@ -40,10 +40,24 @@ var Player = function () {
             this.jumping = false;
         }
     }
+    this.seesObjectFront = function (obstacle) {
+        return this.x + this.w < obstacle.x + obstacle.w;
+    }
 
-    this.collide = function () {
-        return this.x + this.w >= game.obstacle.x &&
-               this.y + this.h >= game.obstacle.y;
+    this.seesObjectBack = function (obstacle) {
+        return this.x > obstacle.x;
+    }
+
+    this.collideLeft = function (obstacle) {
+        return this.x < obstacle.x + obstacle.w &&
+               this.y < obstacle.y + obstacle.h &&
+               this.y + this.h > obstacle.y;
+    }
+
+    this.collideRight = function (obstacle) {
+        return this.x + this.w > obstacle.x &&
+               this.y < obstacle.y + obstacle.h &&
+               this.y + this.h > obstacle.y;
     }
 };
 
@@ -76,8 +90,12 @@ function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
     loadGround();
     game.loadObstacle();
-    if (game.keyLeft) player.moveLeft();
-    if (game.keyRight) if (!player.collide()) player.moveRight();
+    // If there is no object in the direction the character moves there is one but there is no collision
+    if (game.keyLeft && (!player.seesObjectBack(game.obstacle) || 
+        player.seesObjectBack(game.obstacle) && !player.collideLeft(game.obstacle))) player.moveLeft();
+    if (game.keyRight && (!player.seesObjectFront(game.obstacle) ||
+        player.seesObjectFront(game.obstacle) && !player.collideRight(game.obstacle))) player.moveRight();
+    
     if (game.keyJump || player.jumping) {
         player.jumping = true;
         player.jump();

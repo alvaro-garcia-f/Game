@@ -3,12 +3,11 @@ var Player = function () {
     this.h = 40;                    // Player height
     this.w = 32;                    // Player width
     this.x = 64;                    // Starting horizontal position
-    const LAND = GROUND - this.h;   // Players feet touch ground
-    this.y = LAND;                  // Starting vertical position
-    this.runSpeed = 2;
+    this.y = GROUND - this.h;       // Starting vertical position
+    this.position = GROUND;          // Where is the player stading on
+    this.runSpeed = 3;
     this.vSpeed = 0;
     this.jumping = false;
-    this.onTop = false;
 
     this.loadSprite = function () {
         ctx.fillStyle = "#00FF00";
@@ -37,6 +36,7 @@ var Player = function () {
             this.y = floor - this.h;
             this.vSpeed = 0;               // Reset jump speed
             this.jumping = false;
+            this.position = GROUND;
         }      
     }
 };

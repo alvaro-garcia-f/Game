@@ -28,6 +28,10 @@ var Game = function () {
 
     //Movement
     this.movePlayer = function (direction) {
+        if (!this.collideVertical() && this.player.position !== GROUND) {
+            this.player.jumping = true;
+            this.player.land(GROUND);
+        }
         if (direction === "left") this.movePlayerLeft();
         if (direction === "right") this.movePlayerRight();
         if (direction === "jump") {
@@ -73,10 +77,14 @@ var Game = function () {
     }
 
     this.collideVertical = function () {
-        return (this.player.x > this.obstacle.x &&
-                this.player.x < this.obstacle.x + this.obstacle.w ||
-                this.player.x + this.player.w > this.obstacle.x &&
-                this.player.x + this.player.w < this.obstacle.x + this.obstacle.w) &&
-                this.player.y + this.player.h > this.obstacle.y; 
+        if ((this.player.x > this.obstacle.x &&
+            this.player.x < this.obstacle.x + this.obstacle.w ||
+            this.player.x + this.player.w > this.obstacle.x &&
+            this.player.x + this.player.w < this.obstacle.x + this.obstacle.w) &&
+            this.player.y + this.player.h >= this.obstacle.y) {
+                this.player.position = this.obstacle.y;
+                return true;
+            }
+            return false; 
     }
 }

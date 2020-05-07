@@ -7,7 +7,7 @@ body {
     width: 1000px;
     height: 562px;
     border: 2px solid orange;
-    background-image: url("../assets/img/background_1.png");
+    background-image: url("../assets/img/bg/background_1.png");
     background-size: contain;
     margin: 0 auto;
     image-rendering: pixelated;

@@ -12,6 +12,6 @@ function drawGround() {
 }
 
 function drawObstacle(obstacle) {
-    ctx.fillStyle = "#ff0000";
+    ctx.fillStyle = obstacle.sprite;
     ctx.fillRect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
 }

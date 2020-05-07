@@ -22,7 +22,7 @@ var Game = function () {
     }
 
     this.loadObstacle = function () {
-        this.obstacle = new Obstacle (600, GROUND, 32, 32);
+        this.obstacle = new Obstacle (20, GROUND, 32, 32);
         drawObstacle(this.obstacle);
     }
 
@@ -65,13 +65,13 @@ var Game = function () {
     }
     // Collisions
     this.collideLeft = function () {
-        return this.player.x < this.obstacle.x + this.obstacle.w &&
+        return this.player.x - this.player.runSpeed <= this.obstacle.x + this.obstacle.w &&
                this.player.y < this.obstacle.y + this.obstacle.h &&
                this.player.y + this.player.h > this.obstacle.y;
     }
 
     this.collideRight = function () {
-        return this.player.x + this.player.w > this.obstacle.x &&
+        return this.player.x + this.player.w + this.player.runSpeed >= this.obstacle.x &&
                this.player.y < this.obstacle.y + this.obstacle.h &&
                this.player.y + this.player.h > this.obstacle.y;
     }
@@ -81,7 +81,7 @@ var Game = function () {
             this.player.x < this.obstacle.x + this.obstacle.w ||
             this.player.x + this.player.w > this.obstacle.x &&
             this.player.x + this.player.w < this.obstacle.x + this.obstacle.w) &&
-            this.player.y + this.player.h >= this.obstacle.y) {
+            this.player.y + this.player.h + this.player.vSpeed >= this.obstacle.y) {
                 this.player.position = this.obstacle.y;
                 return true;
             }

@@ -1,15 +1,7 @@
 // Animation Loop
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
-    drawGround();
-    game.loadObstacle();
-    // If there is no object in the direction the character moves  orthere is one but there is no collision
-    if (game.keyLeft) game.movePlayer("left");
-    if (game.keyRight) game.movePlayer("right");
-    if (game.keyJump || game.player.jumping) {
-        game.movePlayer("jump");
-    }
-    game.player.loadSprite();
+    game.engine(); 
     requestAnimationFrame(loadScrLoop);
 }
 

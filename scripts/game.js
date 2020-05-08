@@ -38,6 +38,19 @@ var Game = function () {
         this.obstacles.createObstacle(900, GROUND);
     }
 
+    // Main game block - Generates procedure every iteration
+    this.engine = function () {
+        drawGround();
+        this.loadObstacle();
+        // If there is no object in the direction the character moves  orthere is one but there is no collision
+        if (this.keyLeft) this.movePlayer("left");
+        if (this.keyRight) this.movePlayer("right");
+        if (this.keyJump || this.player.jumping) {
+            this.movePlayer("jump");
+        }
+        this.player.loadSprite();
+    }
+
     this.loadObstacle = function () {
         this.obstacles.buffer.forEach((o) => {
             drawObstacle(o, this.resources.list.obstacles[o.type].element);

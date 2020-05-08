@@ -1,23 +1,33 @@
-var assetsLoaded = 0;
-
 var Asset = function () {
     const self = this;
     this.ready = false;
     this.element;
 
-    this.load = function (type, path) {
-        if (type === "image") this.element = new Image();
-        if (type === "audio") this.element = new Audio();
-        this.element.src = path;
+    this.loadImage = function (path) { 
+        this.element = new Image();
         this.element.onload = function () {
-            // self.ready = true; check why this doesn't work!!!
-            assetsLoaded++;
+            self.ready = true;
+            console.log(self, self.ready);
         };
+        this.element.src = path;
     }
 
+    this.loadAudio = function (path) {
+        this.element = new Audio();   
+        this.element.oncanplay = function () {
+            self.ready = true;
+            console.log(self, self.ready);
+        };
+        this.element.src = path;
+    }
+
+    this.isReady = function () {
+        return this.ready;
+    }
 }
 
 var Resources = function () {
+    const self = this;
     this.player = {
         path: '../assets/img/player/',
         idle: 'runner_idle_0.png',
@@ -31,25 +41,22 @@ var Resources = function () {
         box2: 'o1_trashcan.png'
     };
 
-    this.sounds = {
+    this.sfx = {
         path: '../assets/sound/sfx/',
         jump: 'sfx_jump.wav',
         land: 'sfx_land.wav'
     };
 
     this.list = {}; // Contains all created resources; 
-    var totalAssets = Object.keys(this.player).length - 1;
+    this.totalAssets = Object.keys(this.player).length +
+                      Object.keys(this.obstacles).length + 
+                      Object.keys(this.sfx).length - 3; // All elements minus the path 
 
     this.startPreload = function () {
    
         this.preloadPlayer();
         this.preloadObstacles();
-        //this.loadSound();
-    
-        while (assetsLoaded < this.totalAssets) {
-            console.log("Loading assets...");
-        }
-
+        this.preloadSfx();
         console.log("Assets loaded", this.list);       
     }
     //Load all assets
@@ -57,8 +64,8 @@ var Resources = function () {
         this.list['player'] = {};
         Object.keys(this.player).forEach((k) => {
             if (k !== 'path') {
-                this.list.player[k] = new Asset();
-                this.list.player[k].load("image",`${this.player.path}${this.player[k]}`);
+                self.list.player[k] = new Asset();
+                self.list.player[k].loadImage(`${self.player.path}${self.player[k]}`);
             }
         });
     }
@@ -67,8 +74,18 @@ var Resources = function () {
         this.list['obstacles'] = {};
         Object.keys(this.obstacles).forEach((k) => {
             if (k !== 'path') {
-                this.list.obstacles[k] = new Asset();
-                this.list.obstacles[k].load("image",`${this.obstacles.path}${this.obstacles[k]}`);
+                self.list.obstacles[k] = new Asset();
+                self.list.obstacles[k].loadImage(`${self.obstacles.path}${self.obstacles[k]}`);
+            }
+        });
+    }
+
+    this.preloadSfx = function () {
+        this.list['sfx'] = {};
+        Object.keys(this.sfx).forEach((k) => {
+            if (k !== 'path') {
+                self.list.sfx[k] = new Asset();
+                self.list.sfx[k].loadAudio(`${this.sfx.path}${this.sfx[k]}`);
             }
         });
     }

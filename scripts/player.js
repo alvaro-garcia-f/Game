@@ -8,6 +8,7 @@ var Player = function () {
     this.runSpeed = 3;
     this.vSpeed = 0;
     this.jumping = false;
+    this.landed = false;
 
     this.loadSprite = function () {
         ctx.fillStyle = "#00FF00";
@@ -37,6 +38,7 @@ var Player = function () {
             this.vSpeed = 0;               // Reset jump speed
             this.jumping = false;
             this.position = GROUND;
+            this.landed = true;
         }      
     }
 };

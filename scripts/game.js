@@ -2,19 +2,23 @@ const GRAVITY = 0.5;
 
 // Audio Player Class - Handles audio (SFX or OST)
 var audioPlayer = function () {
-    this.audio = new Audio();
+    this.sfx = {};
     
+    this.load = function (sounds) {
+        this.sfx = sounds;
+    }
+
     this.play = function (event) {
         switch (event) {
             case "jump":
-                this.audio.src = "../assets/sound/sfx/sfx_jump.wav";
+                if (this.sfx.jump.isReady())
+                    this.sfx.jump.element.play();
                 break;
-          /*  case "land":
-                this.audio.src = "../assets/sound/sfx/sfx_land.wav";
-                this.audio.play();
-                break; */
+            case "land":
+                if (this.sfx.land.isReady())
+                    this.sfx.land.element.play();
+                break;
         }
-        this.audio.play();
     }
 }
 
@@ -33,6 +37,7 @@ var Game = function () {
     this.init = function ()
     {
         this.resources.startPreload();
+        this.sound.load(this.resources.list.sfx);
         drawGround();
         this.obstacles.createObstacle(300, GROUND);
         this.obstacles.createObstacle(900, GROUND);
@@ -74,6 +79,10 @@ var Game = function () {
             this.player.jump();
             if (this.collideVertical()) this.player.land(this.obstacles.next().y);
             else this.player.land(GROUND);
+            if (this.player.landed) {
+                this.sound.play("land");
+                this.player.landed = false;
+            }
         }
     }
 

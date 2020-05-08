@@ -1,31 +1,30 @@
 // Player Class - Handles Player movement     
 var Player = function () {
-    this.h = 40;                    // Player height
-    this.w = 32;                    // Player width
+    this.h = 35;                    // Player height
+    this.w = 25;                    // Player width
     this.x = 64;                    // Starting horizontal position
     this.y = GROUND - this.h;       // Starting vertical position
-    this.position = GROUND;          // Where is the player stading on
+    this.position = GROUND;         // Where is the player standing on
     this.runSpeed = 3;
     this.vSpeed = 0;
+    this.status = 'idle';                  // Idle || Running || Jumping 
     this.jumping = false;
     this.landed = false;
 
-    this.loadSprite = function () {
-        ctx.fillStyle = "#00FF00";
-        ctx.fillRect(this.x, this.y, this.w, this.h);
-    }
-    
     this.moveLeft = function () {
+        this.status = 'running';
         if (this.x - this.runSpeed > 0)   // Prevents crossing left border 
             this.x -= this.runSpeed;
     }
 
     this.moveRight = function () {
+        this.status = 'running';
         if (this.x + this.runSpeed < 968)  // Prevents crossing right border 
             this.x += this.runSpeed;
     }
 
     this.jump = function () {
+        this.status = 'jumping';
         if (this.jumping) {
             this.y += this.vSpeed;
             this.vSpeed += GRAVITY;
@@ -39,6 +38,7 @@ var Player = function () {
             this.jumping = false;
             this.position = GROUND;
             this.landed = true;
+            this.status = 'running';
         }      
     }
 };

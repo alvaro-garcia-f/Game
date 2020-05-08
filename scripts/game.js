@@ -33,7 +33,7 @@ var Game = function () {
     this.player = new Player ();
     this.sound = new audioPlayer();
 
-    // Loaders
+    // Game Setup - Preloads all assets
     this.init = function ()
     {
         this.resources.startPreload();
@@ -45,15 +45,20 @@ var Game = function () {
 
     // Main game block - Generates procedure every iteration
     this.engine = function () {
-        drawGround();
+        drawGround();  
         this.loadObstacle();
-        // If there is no object in the direction the character moves  orthere is one but there is no collision
+        // If there is no object in the direction the character moves or there is one but there is no collision
         if (this.keyLeft) this.movePlayer("left");
         if (this.keyRight) this.movePlayer("right");
         if (this.keyJump || this.player.jumping) {
             this.movePlayer("jump");
         }
-        this.player.loadSprite();
+        this.loadPlayer();
+    }
+    
+    // Loaders
+    this.loadPlayer = function () {
+        drawPlayer(this.player, this.resources.list.player[this.player.status].element);
     }
 
     this.loadObstacle = function () {

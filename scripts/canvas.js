@@ -11,6 +11,10 @@ function drawGround() {
     ctx.fillRect(0, GROUND, SCR_WIDTH, 64);
 }
 
+function drawPlayer(player, image) {
+    ctx.drawImage(image, player.x, player.y);
+}
+
 function drawObstacle(obstacle, image) {
     ctx.drawImage(image, obstacle.x, obstacle.y);
 }

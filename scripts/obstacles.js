@@ -8,18 +8,18 @@ var Obstacle = function (type, x, y, w, h, sprite) {
     this.sprite = sprite;
 }
 
-var obstacleBuffer = function () {
+var ObstacleBuffer = function () {
     const self = this;
     const OBSTACLES = {
-        "box1": {
-            "h": 24,
-            "w": 25,
-            "color": "#ff0000" 
+        box1: {
+            h: 24,
+            w: 25,
+            sprite: "o1_box.png" 
         },
-        "box2": {
-            "h": 32,
-            "w": 25,
-            "color": "#0000ff"
+        box2: {
+            h: 32,
+            w: 25,
+            sprite: "o1_trashcan.png"
         }
     };
 
@@ -31,11 +31,10 @@ var obstacleBuffer = function () {
 
     this.createObstacle = function (x, y) {
         this.buffer.push(self.createBox(x, y));
-        drawObstacle(this.buffer.length - 1);
     }
 
     this.createBox = function (x, y) {
-        if (Math.random() < 0.5) return new Obstacle ("box1", x, y, OBSTACLES.box1.w, OBSTACLES.box1.h, OBSTACLES.box1.color);
-        return new Obstacle ("box2", x, y, OBSTACLES.box2.w, OBSTACLES.box2.h, OBSTACLES.box2.color);
+        if (Math.random() < 0.5) return new Obstacle ("box1", x, y, OBSTACLES.box1.w, OBSTACLES.box1.h, OBSTACLES.box1.sprite);
+        return new Obstacle ("box2", x, y, OBSTACLES.box2.w, OBSTACLES.box2.h, OBSTACLES.box2.sprite);
     }
 }

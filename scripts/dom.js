@@ -11,7 +11,6 @@ function drawGround() {
     ctx.fillRect(0, GROUND, SCR_WIDTH, 64);
 }
 
-function drawObstacle(obstacle) {
-    ctx.fillStyle = obstacle.sprite;
-    ctx.fillRect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
+function drawObstacle(obstacle, image) {
+    ctx.drawImage(image, obstacle.x, obstacle.y);
 }

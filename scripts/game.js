@@ -8,36 +8,39 @@ var audioPlayer = function () {
         switch (event) {
             case "jump":
                 this.audio.src = "../assets/sound/sfx/sfx_jump.wav";
-                this.audio.play();
                 break;
           /*  case "land":
                 this.audio.src = "../assets/sound/sfx/sfx_land.wav";
                 this.audio.play();
                 break; */
         }
+        this.audio.play();
     }
 }
 
 // Game Class - Handles world creation and interaction
 var Game = function () {
+    const self = this;
     this.keyLeft = false;
     this.keyRight = false;
     this.keyJump = false;
-    this.obstacles = new obstacleBuffer (); 
+    this.resources = new Resources ();
+    this.obstacles = new ObstacleBuffer (); 
     this.player = new Player ();
     this.sound = new audioPlayer();
 
     // Loaders
-    this.init = function () {
+    this.init = function ()
+    {
+        this.resources.startPreload();
         drawGround();
         this.obstacles.createObstacle(300, GROUND);
         this.obstacles.createObstacle(900, GROUND);
-        console.log(this.obstacles.buffer[0], this.obstacles.buffer[1]);
     }
 
     this.loadObstacle = function () {
         this.obstacles.buffer.forEach((o) => {
-            drawObstacle(o);
+            drawObstacle(o, this.resources.list.obstacles[o.type].element);
         });
     }
 
@@ -79,6 +82,7 @@ var Game = function () {
     this.isObjectBehind = function () {
         return this.player.x > this.obstacles.next().x;
     }
+    
     // Collisions
     this.collideLeft = function () {
         return this.player.x - this.player.runSpeed <= this.obstacles.next().x + this.obstacles.next().w &&

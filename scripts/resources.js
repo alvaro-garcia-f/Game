@@ -128,6 +128,14 @@ var Resources = function () {
         return true;
     }
 
+    this.uiLoadComplete = function () {
+        var assets = Object.keys(self.list.ui);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.ui[assets[i]].isReady()) return false;
+        }
+        return true;
+    }
+
     this.sfxLoadComplete = function () {
         var assets = Object.keys(self.list.sfx);
         for (let i=0; i < assets.length; i++) {

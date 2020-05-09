@@ -9,16 +9,7 @@ var audioPlayer = function () {
     }
 
     this.play = function (event) {
-        switch (event) {
-            case "jump":
-                if (this.sfx.jump.isReady())
-                    this.sfx.jump.element.play();
-                break;
-            case "land":
-                if (this.sfx.land.isReady())
-                    this.sfx.land.element.play();
-                break;
-        }
+        if (this.sfx[event].isReady()) this.sfx[event].element.play();
     }
 }
 

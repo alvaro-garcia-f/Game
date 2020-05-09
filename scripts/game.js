@@ -23,6 +23,8 @@ var Game = function () {
     this.obstacles = new ObstacleBuffer (); 
     this.player = new Player ();
     this.sound = new audioPlayer();
+    this.attempts = 5;
+    this.countDown = 60;
 
     // Game Setup - Preloads all assets
     this.init = function ()

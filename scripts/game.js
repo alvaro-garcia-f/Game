@@ -9,7 +9,7 @@ var audioPlayer = function () {
     }
 
     this.play = function (event) {
-        if (this.sfx[event].isReady()) this.sfx[event].element.play();
+        if (this.sfx[event]) this.sfx[event].element.play();
     }
 }
 
@@ -28,10 +28,19 @@ var Game = function () {
     this.init = function ()
     {
         this.resources.startPreload();
-        this.sound.load(this.resources.list.sfx);
-        drawGround();
-        this.obstacles.createObstacle(300, GROUND);
-        this.obstacles.createObstacle(900, GROUND);
+        setTimeout(self.loadWhenReady, 300);
+    }
+
+    this.loadWhenReady = function () {
+        if (self.resources.isLoadComplete()) {
+            self.sound.load(self.resources.list.sfx);
+            drawGround();
+            self.obstacles.createObstacle(300, GROUND);
+            self.obstacles.createObstacle(900, GROUND);
+            return;
+        } else {
+            setTimeout(self.loadWhenReady(), 300);
+        }
     }
 
     // Main game block - Generates procedure every iteration

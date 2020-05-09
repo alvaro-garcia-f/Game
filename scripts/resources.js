@@ -20,7 +20,7 @@ var Asset = function () {
     }
 
     this.isReady = function () {
-        return this.ready;
+        return self.ready;
     }
 }
 
@@ -55,8 +55,8 @@ var Resources = function () {
         this.preloadPlayer();
         this.preloadObstacles();
         this.preloadSfx();
-        console.log("Assets loaded", this.list);       
     }
+
     //Load all assets
     this.preloadPlayer = function () {
         this.list['player'] = {};
@@ -86,5 +86,37 @@ var Resources = function () {
                 self.list.sfx[k].loadAudio(`${this.sfx.path}${this.sfx[k]}`);
             }
         });
+    }
+
+    this.isLoadComplete = function () {
+        if(self.playerLoadComplete() && self.obstaclesLoadComplete() && self.sfxLoadComplete()) {
+            console.log("Assets loaded", self.list);
+            return true;    
+        }
+        return false;
+    }
+
+    this.playerLoadComplete = function () {
+        var assets = Object.keys(self.list.player);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.player[assets[i]].isReady()) return false;
+        }
+        return true;
+    }
+
+    this.obstaclesLoadComplete = function () {
+        var assets = Object.keys(self.list.obstacles);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.obstacles[assets[i]].isReady()) return false;
+        }
+        return true;
+    }
+
+    this.sfxLoadComplete = function () {
+        var assets = Object.keys(self.list.sfx);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.sfx[assets[i]].isReady()) return false;
+        }
+        return true;
     }
 }

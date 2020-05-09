@@ -52,14 +52,12 @@ var Resources = function () {
     };
 
     this.list = {}; // Contains all created resources; 
-    this.totalAssets = Object.keys(this.player).length +
-                      Object.keys(this.obstacles).length + 
-                      Object.keys(this.sfx).length - 3; // All elements minus the path 
 
     this.startPreload = function () {
    
         this.preloadPlayer();
         this.preloadObstacles();
+        this.preloadUi();
         this.preloadSfx();
     }
 
@@ -105,7 +103,8 @@ var Resources = function () {
     }
 
     this.isLoadComplete = function () {
-        if(self.playerLoadComplete() && self.obstaclesLoadComplete() && self.sfxLoadComplete()) {
+        if(self.playerLoadComplete() && self.obstaclesLoadComplete() &&
+           self.uiLoadComplete() && self.sfxLoadComplete()) {
             console.log("Assets loaded", self.list);
             return true;    
         }

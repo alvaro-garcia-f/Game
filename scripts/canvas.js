@@ -17,9 +17,11 @@ function drawCounters(attempts, heart, time, clock) {
     }
 
     ctx.drawImage(clock, 850, 50, clock.width/1.5, clock.height/1.5);
-    ctx.font = '20px Roboto';
-    ctx.fillStyle = "#fff";
-    ctx.fillText(`${time}s`, 890, 73);
+    ctx.font = 'bold 30px Droid Sans';
+    ctx.strokeStyle = '#000';
+    ctx.fillStyle = '#fff';
+    ctx.strokeText(`${time}s`, 890, 76);
+    ctx.fillText(`${time}s`, 890, 76);
 }
 
 function drawPlayer(player, image) {

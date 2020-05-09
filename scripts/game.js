@@ -32,7 +32,10 @@ var Game = function () {
     this.init = function ()
     {
         this.resources.startPreload();
+        //begin testing
         this.obstacles.createObstacle();
+        this.startGame();
+        //end testing  
        // setTimeout(self.loadWhenReady, 300);
     }
 
@@ -47,20 +50,26 @@ var Game = function () {
     }
 
     this.startGame = function () {
-        this.timer = setInterval (function () {
-            self.countDown--;
-        });
+        this.timer = setInterval(function () {
+                self.countDown--;
+        }, 1000);
     }
 
     // Main game block - Generates procedure every iteration
     this.engine = function () {
         if (this.countDown === 0) {
-            console.log(gameOver);
-            this.over = true;
-            return;
+            if (this.attempts === 1) {
+                this.over = true
+                clearInterval(this.timer);
+                this.attempts--;
+                this.loadCounters();
+                console.log("Game Over");
+            } else {
+                this.countDown = 60;
+                this.attempts--;
+            }    
         }
-        drawGround();
-       // this.obstacles.createObstacle();
+        drawGround();  
         this.loadObstacle();
         this.loadCounters();
         // If there is no object in the direction the character moves or there is one but there is no collision

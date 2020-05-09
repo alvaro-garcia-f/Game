@@ -47,6 +47,7 @@ var Game = function () {
     this.engine = function () {
         drawGround();  
         this.loadObstacle();
+        this.loadCounters();
         // If there is no object in the direction the character moves or there is one but there is no collision
         if (this.keyLeft) this.movePlayer("left");
         if (this.keyRight) this.movePlayer("right");
@@ -57,6 +58,11 @@ var Game = function () {
     }
     
     // Loaders
+    this.loadCounters = function () {
+        drawCounters(this.attempts, this.resources.list.ui.heart.element,
+                     this.countDown, this.resources.list.ui.clock.element);
+    }
+
     this.loadPlayer = function () {
         drawPlayer(this.player, this.resources.list.player[this.player.status].element);
     }

@@ -82,7 +82,7 @@ var Game = function () {
             }
             this.player.jump();
             if (this.collideVertical() && this.player.location === "n") { this.player.land(this.obstacles.next().y);}
-            else if (this.collideVertical() && this.player.location === "p") { console.log("hi"); this.player.land(this.obstacles.previous().y);}
+            else if (this.collideVertical() && this.player.location === "p") { this.player.land(this.obstacles.previous().y);}
             else this.player.land(GROUND);
 
             if (this.player.landed) {

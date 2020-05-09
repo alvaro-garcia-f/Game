@@ -57,9 +57,14 @@ var Game = function () {
     // Main game block - Generates procedure every iteration
     this.engine = function () {
         if (this.countDown === 0) {
-            console.log("Game Over");
-            this.over = true
-            clearInterval(this.timer);
+            if (this.attempts === 1) {
+                console.log("Game Over");
+                this.over = true
+                clearInterval(this.timer);
+            } else {
+                this.countDown = 60;
+                this.attempts--;
+            }    
         }
         drawGround();  
         this.loadObstacle();

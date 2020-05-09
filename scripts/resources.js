@@ -84,6 +84,16 @@ var Resources = function () {
         });
     }
 
+    this.preloadUi = function () {
+        this.list['ui'] = {};
+        Object.keys(this.ui).forEach((k) => {
+            if (k !== 'path') {
+                self.list.ui[k] = new Asset();
+                self.list.ui[k].loadImage(`${self.ui.path}${self.ui[k]}`);
+            }
+        });
+    }
+
     this.preloadSfx = function () {
         this.list['sfx'] = {};
         Object.keys(this.sfx).forEach((k) => {

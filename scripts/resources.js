@@ -39,6 +39,12 @@ var Resources = function () {
         box2: 'o1_trashcan.png'
     };
 
+    this.ui = {
+        path: '../assets/img/ui/',
+        clock: 'clock.png',
+        heart: 'heart.png'
+    };
+
     this.sfx = {
         path: '../assets/sound/sfx/',
         jump: 'sfx_jump.wav',

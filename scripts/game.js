@@ -58,9 +58,11 @@ var Game = function () {
     this.engine = function () {
         if (this.countDown === 0) {
             if (this.attempts === 1) {
-                console.log("Game Over");
                 this.over = true
                 clearInterval(this.timer);
+                this.attempts--;
+                this.loadCounters();
+                console.log("Game Over");
             } else {
                 this.countDown = 60;
                 this.attempts--;

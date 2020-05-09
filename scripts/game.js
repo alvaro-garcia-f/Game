@@ -41,7 +41,7 @@ var Game = function () {
             self.obstacles.createObstacle(900, GROUND);
             return;
         } else {
-            setTimeout(self.loadWhenReady(), 300);
+            setTimeout(self.loadWhenReady, 300);
         }
     }
 

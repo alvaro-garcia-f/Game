@@ -25,6 +25,8 @@ var Game = function () {
     this.sound = new audioPlayer();
     this.attempts = 5;
     this.countDown = 60;
+    this.timer;
+    this.over = false;
 
     // Game Setup - Preloads all assets
     this.init = function ()
@@ -39,14 +41,26 @@ var Game = function () {
             drawGround();
             self.obstacles.createObstacle(300, GROUND);
             self.obstacles.createObstacle(900, GROUND);
+            self.startGame();
             return;
         } else {
             setTimeout(self.loadWhenReady, 300);
         }
     }
 
+    this.startGame = function () {
+        this.timer = setInterval(function () {
+                self.countDown--;
+        }, 1000);
+    }
+
     // Main game block - Generates procedure every iteration
     this.engine = function () {
+        if (this.countDown === 0) {
+            console.log("Game Over");
+            this.over = true
+            clearInterval(this.timer);
+        }
         drawGround();  
         this.loadObstacle();
         this.loadCounters();

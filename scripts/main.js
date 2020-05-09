@@ -2,7 +2,7 @@
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
     game.engine(); 
-    requestAnimationFrame(loadScrLoop);
+    if(!game.over) requestAnimationFrame(loadScrLoop);
 }
 
 // Initialize game

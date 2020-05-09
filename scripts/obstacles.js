@@ -41,7 +41,8 @@ var ObstacleBuffer = function () {
     }
 
     this.createObstacle = function () {
-        this.bufferFront.push(this.createBox());
+      //  this.bufferFront.push(this.createBox());
+      this.createBox();
     }
 
     this.sendObstacleBack = function () {
@@ -54,14 +55,12 @@ var ObstacleBuffer = function () {
 
     // Obstacle creators
     this.createBox = function () {
-        if (Math.random() < 0.5) return new Obstacle ("box1", OBSTACLES.box1.w, OBSTACLES.box1.h, OBSTACLES.box1.sprite);
-        return new Obstacle ("box2", OBSTACLES.box2.w, OBSTACLES.box2.h, OBSTACLES.box2.sprite);
+        if (Math.random() < 0.5) this.bufferFront.push(new Obstacle ("box1", OBSTACLES.box1.w, OBSTACLES.box1.h, OBSTACLES.box1.sprite));
+        return this.bufferFront.push(new Obstacle ("box2", OBSTACLES.box2.w, OBSTACLES.box2.h, OBSTACLES.box2.sprite));
     }
 
     //Obstacle animation
     this.animateObstacle = function () {
-        var obstacle = this.bufferFront[0];
-        obstacle.move();
-       console.log(this.bufferFront, obstacle);
+       if(this.bufferFront.length > 0) this.bufferFront[0].move();
     }
 }

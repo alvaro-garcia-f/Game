@@ -32,15 +32,13 @@ var Game = function () {
     this.init = function ()
     {
         this.resources.startPreload();
-       // this.obstacles.createObstacle();
-        setTimeout(self.loadWhenReady, 300);
+        this.obstacles.createObstacle();
+       // setTimeout(self.loadWhenReady, 300);
     }
 
     this.loadWhenReady = function () {
         if (self.resources.isLoadComplete()) {
             self.sound.load(self.resources.list.sfx);
-            drawGround();
-            self.obstacles.createObstacle();
             self.startGame();
             return;
         } else {
@@ -61,8 +59,8 @@ var Game = function () {
             this.over = true;
             return;
         }
-
-        drawGround();  
+        drawGround();
+       // this.obstacles.createObstacle();
         this.loadObstacle();
         this.loadCounters();
         // If there is no object in the direction the character moves or there is one but there is no collision

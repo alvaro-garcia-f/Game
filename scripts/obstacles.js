@@ -23,16 +23,31 @@ var ObstacleBuffer = function () {
         }
     };
 
-    this.buffer = [];
+    this.bufferFront = [];
+    this.bufferBack = [];
 
+    // Obstacles handlers
     this.next = function () {
-        return this.buffer[0];
+        return this.bufferFront[0];
+    }
+
+    this.previous = function () {
+        return this.bufferBack[this.bufferBack.length - 1];
     }
 
     this.createObstacle = function (x, y) {
-        this.buffer.push(self.createBox(x, y));
+        this.bufferFront.push(self.createBox(x, y));
     }
 
+    this.sendObstacleBack = function () {
+        this.bufferBack.push(this.bufferFront.shift());
+    }
+    
+    this.sendObstacleForward = function () {
+        this.bufferFront.unshift(this.bufferBack.pop());
+    }
+
+    // Obstacle creators
     this.createBox = function (x, y) {
         if (Math.random() < 0.5) return new Obstacle ("box1", x, y, OBSTACLES.box1.w, OBSTACLES.box1.h, OBSTACLES.box1.sprite);
         return new Obstacle ("box2", x, y, OBSTACLES.box2.w, OBSTACLES.box2.h, OBSTACLES.box2.sprite);

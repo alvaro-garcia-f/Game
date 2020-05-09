@@ -7,7 +7,6 @@ var Asset = function () {
         this.element = new Image();
         this.element.onload = function () {
             self.ready = true;
-            console.log(self, self.ready);
         };
         this.element.src = path;
     }
@@ -16,7 +15,6 @@ var Asset = function () {
         this.element = new Audio();   
         this.element.oncanplay = function () {
             self.ready = true;
-            console.log(self, self.ready);
         };
         this.element.src = path;
     }

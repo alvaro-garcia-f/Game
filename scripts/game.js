@@ -134,26 +134,16 @@ var Game = function () {
     }
 
     this.movePlayerLeft = function () {
-        if (!this.isObjectBehind() || 
-            this.isObjectBehind() && !this.collideLeft()) this.player.moveLeft();
+        if (!this.collideLeft()) this.player.moveLeft();
         this.checkObstacleCrossed();
     }
 
     this.movePlayerRight = function () {
-        if (!this.isObjectInFront() ||
-            this.isObjectInFront() && !this.collideRight()) this.player.moveRight();
+        if (!this.collideRight()) this.player.moveRight();
         this.checkObstacleCrossed();
     }
 
     // Obstacle positioning
-    this.isObjectInFront = function () {
-        return this.obstacles.next() && this.player.x + this.player.w < this.obstacles.next().x + this.obstacles.next().w;
-    }
-
-    this.isObjectBehind = function () {
-        return this.obstacles.previous() && this.player.x > this.obstacles.previous().x;
-    }
-    
     this.checkObstacleCrossed = function () {
         if (this.obstacles.next() && this.player.x > this.obstacles.next().x + this.obstacles.next().w)
            this.obstacles.sendObstacleBack(); 
@@ -170,7 +160,8 @@ var Game = function () {
     }
 
     this.collideRight = function () {
-        return this.player.x + this.player.w + this.player.runSpeed >= this.obstacles.next().x &&
+        return this.obstacles.next() &&
+               this.player.x + this.player.w + this.player.runSpeed >= this.obstacles.next().x &&
                this.player.y < this.obstacles.next().y + this.obstacles.next().h &&
                this.player.y + this.player.h > this.obstacles.next().y;
     }

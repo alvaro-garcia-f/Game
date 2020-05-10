@@ -79,7 +79,7 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
-        if (!this.collideObstaclePlayer())
+        if (!this.collideObstaclePlayer() && !this.collideVertical())
             this.obstacles.animateObstacleStart();
     }
     

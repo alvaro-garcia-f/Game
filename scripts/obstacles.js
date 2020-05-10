@@ -62,6 +62,7 @@ var ObstacleBuffer = function () {
     //Obstacle animation
     this.animateObstacleStart = function () {
        if(this.bufferFront.length > 0 && !this.stopped) this.bufferFront[0].move();
+       if(this.bufferBack.length > 0 && !this.stopped) this.bufferBack[0].move();
     }
 
     this.animateObstacleStop = function () {

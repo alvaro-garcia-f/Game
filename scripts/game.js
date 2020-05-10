@@ -33,7 +33,7 @@ var Game = function () {
     {
         this.resources.startPreload();
         //begin testing
-        this.obstacles.createObstacle(); // <--- this is the only creation point at the moment
+        //this.obstacles.createObstacle(); // <--- this is the only creation point at the moment
         // this.startGame();
         //end testing  
        // setTimeout(self.loadWhenReady, 300);
@@ -69,7 +69,8 @@ var Game = function () {
                 this.attempts--;
             }    
         }
-        drawGround();  
+        drawGround(); 
+        this.generateObstacle(); 
         this.loadObstacle();
         this.loadCounters();
         // If there is no object in the direction the character moves or there is one but there is no collision
@@ -143,7 +144,12 @@ var Game = function () {
         this.checkObstacleCrossed();
     }
 
-    // Obstacle positioning
+    // Obstacle positioning and generations
+    this.generateObstacle = function () {
+        if(Math.round(Math.random() < 0.25))
+            this.obstacles.createObstacle();
+    }
+
     this.checkObstacleCrossed = function () {
         if (this.obstacles.next() && this.player.x > this.obstacles.next().x + this.obstacles.next().w)
            this.obstacles.sendObstacleBack(); 

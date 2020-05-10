@@ -33,8 +33,8 @@ var Game = function () {
     {
         this.resources.startPreload();
         //begin testing
-        this.obstacles.createObstacle();
-        this.startGame();
+        this.obstacles.createObstacle(); // <--- this is the only creation point at the moment
+        // this.startGame();
         //end testing  
        // setTimeout(self.loadWhenReady, 300);
     }
@@ -79,7 +79,8 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
-        this.obstacles.animateObstacle();
+        this.obstacles.animateObstacleStart();
+        this.collideObstaclePlayer();
     }
     
     // Loaders
@@ -204,5 +205,11 @@ var Game = function () {
         }
         this.player.location = GROUND;
         return false; 
+    }
+
+    this.collideObstaclePlayer = function () {
+        if (this.obstacles.next() && this.collideRight()) {
+            this.obstacles.animateObstacleStop();
+        }
     }
 }

@@ -3,7 +3,7 @@ var Obstacle = function (type, w, h, sprite) {
     const self = this;
     this.h = h;                    // Obstacle height
     this.w = w;                    // Obstacle width
-    this.x = 600;                    // Starting horizontal position
+    this.x = SCR_WIDTH;                    // Starting horizontal position
     this.y = GROUND - this.h;           // Starting vertical position
     this.type = type;
     this.sprite = sprite;
@@ -60,7 +60,12 @@ var ObstacleBuffer = function () {
     }
 
     //Obstacle animation
-    this.animateObstacle = function () {
-       if(this.bufferFront.length > 0) this.bufferFront[0].move();
+    this.animateObstacleStart = function () {
+       if(this.bufferFront.length > 0 && !this.stopped) this.bufferFront[0].move();
+    }
+
+    this.animateObstacleStop = function () {
+        this.speed = 0;
+        this.stopped = true;
     }
 }

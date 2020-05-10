@@ -79,8 +79,8 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
-        this.obstacles.animateObstacleStart();
-        this.collideObstaclePlayer();
+        if (!this.collideObstaclePlayer())
+            this.obstacles.animateObstacleStart();
     }
     
     // Loaders
@@ -199,8 +199,6 @@ var Game = function () {
     }
 
     this.collideObstaclePlayer = function () {
-        if (this.obstacles.next() && this.collideRight()) {
-            this.obstacles.animateObstacleStop();
-        }
+        return this.obstacles.next() && this.collideRight();
     }
 }

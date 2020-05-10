@@ -44,7 +44,8 @@ var ObstacleBuffer = function () {
     this.createObstacle = function () {
       //  this.bufferFront.push(this.createBox());
  
-      if (this.bufferFront.length === 0) { this.createBox(SCR_WIDTH); }
+      if (this.bufferFront.length === 0 || 
+        this.bufferFront[this.bufferFront.length - 1].x + this.bufferFront[this.bufferFront.length - 1].w < 1000) { this.createBox(SCR_WIDTH); }
       else {
           this.createBox(this.bufferFront[this.bufferFront.length - 1].x + this.bufferFront[this.bufferFront.length - 1].w) }
     }

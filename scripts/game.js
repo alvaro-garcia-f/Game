@@ -58,7 +58,7 @@ var Game = function () {
         }, 1000);
         this.timerDistance = setInterval(function () {
             self.distance--;
-        }, 10); // <-- Approx 35 makes game beatable if 6-7 +5 items have been picked up
+        }, 10); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
         this.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
 
@@ -153,12 +153,14 @@ var Game = function () {
     }
 
     this.movePlayerLeft = function () {
-        if (!this.collideLeft()) this.player.moveLeft();
+        if (!this.collideLeft()) { this.player.moveLeft(); }
+        else { this.player.status = 'idle' }
         this.checkObstacleCrossed();
     }
 
     this.movePlayerRight = function () {
         if (!this.collideRight()) this.player.moveRight();
+        else { this.player.status = 'idle' }
         this.checkObstacleCrossed();
     }
 

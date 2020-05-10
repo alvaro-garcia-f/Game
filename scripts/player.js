@@ -37,9 +37,10 @@ var Player = function () {
             this.y = floor - this.h;
             this.vSpeed = 0;               // Reset jump speed
             this.jumping = false;
-            this.position = GROUND;
+            this.position = GROUND;         // After a box (p or n) has been picked up, resets position
             this.landed = true;
-            this.status = 'running';
+            if (floor == GROUND) { this.status = 'running'; }
+            else { this.status = 'idle'}
         }      
     }
 };

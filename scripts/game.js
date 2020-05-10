@@ -25,7 +25,8 @@ var Game = function () {
     this.sound = new audioPlayer();
     this.attempts = 5;
     this.countDown = 60;
-    this.timer;
+    this.timerClock;
+    this.timerObstacle;
     this.over = false;
 
     // Game Setup - Preloads all assets
@@ -36,7 +37,7 @@ var Game = function () {
         //this.obstacles.createObstacle(); // <--- this is the only creation point at the moment
         // this.startGame();
         //end testing  
-       // setTimeout(self.loadWhenReady, 300);
+        setTimeout(self.loadWhenReady, 300);
     }
 
     this.loadWhenReady = function () {
@@ -50,9 +51,10 @@ var Game = function () {
     }
 
     this.startGame = function () {
-        this.timer = setInterval(function () {
+        this.timerClock = setInterval(function () {
                 self.countDown--;
         }, 1000);
+        this.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
 
     // Main game block - Generates procedure every iteration
@@ -60,7 +62,7 @@ var Game = function () {
         if (this.countDown === 0) {
             if (this.attempts === 1) {
                 this.over = true
-                clearInterval(this.timer);
+                clearInterval(this.timerClock);
                 this.attempts--;
                 this.loadCounters();
                 console.log("Game Over");
@@ -70,7 +72,7 @@ var Game = function () {
             }    
         }
         drawGround(); 
-        this.generateObstacle(); 
+        this.generateObstacle();
         this.loadObstacle();
         this.loadCounters();
         // If there is no object in the direction the character moves or there is one but there is no collision
@@ -146,8 +148,8 @@ var Game = function () {
 
     // Obstacle positioning and generations
     this.generateObstacle = function () {
-        if(Math.round(Math.random() < 0.25))
-            this.obstacles.createObstacle();
+        if (!self.obstacles.bufferFull())
+            self.obstacles.createObstacle();
     }
 
     this.checkObstacleCrossed = function () {

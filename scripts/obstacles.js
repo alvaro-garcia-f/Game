@@ -63,24 +63,19 @@ var ObstacleBuffer = function () {
     }
 
     //Obstacle animation
-    this.animateObstacleStart = function () {
-       if(this.bufferFront.length > 0 && !this.stopped) 
+    this.animateObstacles = function () {
+       if(this.bufferFront.length > 0) 
             this.bufferFront.forEach((obstacle) => {
                 obstacle.move();        
             });
 
-       if(this.bufferBack.length > 0 && !this.stopped)
+       if(this.bufferBack.length > 0)
            this.bufferBack.forEach((obstacle) => {
                obstacle.move();
            });
            
        if(this.bufferBack.length && this.bufferBack[0].x + this.bufferBack[0].w <= 0) 
             this.bufferBack.shift();
-    }
-
-    this.animateObstacleStop = function () {
-        this.speed = 0;
-        this.stopped = true;
     }
 
     this.bufferFull = function () {

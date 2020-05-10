@@ -24,8 +24,10 @@ var Game = function () {
     this.player = new Player ();
     this.sound = new audioPlayer();
     this.attempts = 5;
+    this.distance = 2000;
     this.countDown = 60;
     this.timerClock;
+    this.timerDistance;
     this.timerObstacle;
     this.over = false;
 
@@ -52,8 +54,11 @@ var Game = function () {
 
     this.startGame = function () {
         this.timerClock = setInterval(function () {
-                self.countDown--;
+            self.countDown--;
         }, 1000);
+        this.timerDistance = setInterval(function () {
+            self.distance--;
+        }, 10); // <-- Approx 35 makes game beatable if 6-7 +5 items have been picked up
         this.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
 
@@ -63,14 +68,24 @@ var Game = function () {
             if (this.attempts === 1) {
                 this.over = true
                 clearInterval(this.timerClock);
+                clearInterval(this.timerDistance);
                 this.attempts--;
                 this.loadCounters();
                 console.log("Game Over");
             } else {
                 this.countDown = 60;
                 this.attempts--;
-            }    
+            }
+            this.distance = 2000;    
         }
+        if (this.distance <= 0) {
+            this.over = true;
+            clearInterval(this.timerClock);
+            clearInterval(this.timerDistance);
+            console.log("Congratulations! You are on time!");
+        }
+
+        console.log(this.distance);
         drawGround(); 
         this.generateObstacle();
         this.loadObstacle();
@@ -82,7 +97,6 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
-        console.log(this.obstacles.bufferFront.length);
         if (!this.collideObstaclePlayer() && !this.collideVertical())
             this.obstacles.animateObstacles();
     }

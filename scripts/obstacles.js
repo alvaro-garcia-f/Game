@@ -43,9 +43,10 @@ var ObstacleBuffer = function () {
 
     this.createObstacle = function () {
       //  this.bufferFront.push(this.createBox());
+ 
       if (this.bufferFront.length === 0) { this.createBox(SCR_WIDTH); }
       else {
-          this.createBox(SCR_WIDTH + this.bufferFront[this.bufferFront.length - 1].x + 100) }
+          this.createBox(this.bufferFront[this.bufferFront.length - 1].x + this.bufferFront[this.bufferFront.length - 1].w) }
     }
 
     this.sendObstacleBack = function () {

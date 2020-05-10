@@ -82,6 +82,7 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
+        console.log(this.obstacles.bufferFront.length);
         if (!this.collideObstaclePlayer() && !this.collideVertical())
             this.obstacles.animateObstacles();
     }
@@ -128,6 +129,7 @@ var Game = function () {
             if (this.collideVertical() && this.player.location === "n") { this.player.land(this.obstacles.next().y);}
             else if (this.collideVertical() && this.player.location === "p") { this.player.land(this.obstacles.previous().y);}
             else this.player.land(GROUND);
+            this.checkObstacleCrossed();
 
             if (this.player.landed) {
                 this.sound.play("land");

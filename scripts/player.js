@@ -8,9 +8,10 @@ var Player = function () {
     this.location = GROUND;         // On which obstacle is the player standing
     this.runSpeed = 3;
     this.vSpeed = 0;
-    this.status = 'idle';                  // Idle || Running || Jumping 
-    this.jumping = false;
-    this.landed = false;
+    this.status = 'idle';            // Idle || Running || Jumping 
+    this.jumping = false;            // Prevents double jumping and helps detect if player has landed on obstacle
+    this.landed = false;             // Helps detect when caracter goes from moving to idle
+    this.hit = false;                // Prevents obstacle hit sound to be played more than once  
 
     this.moveLeft = function () {
         this.status = 'running';

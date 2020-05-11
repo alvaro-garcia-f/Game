@@ -1,7 +1,7 @@
 // Player Class - Handles Player movement     
 var Player = function () {
-    this.h = 35;                    // Player height
-    this.w = 25;                    // Player width
+    this.h = 70;                    // Player height
+    this.w = 50;                    // Player width
     this.x = 64;                    // Starting horizontal position
     this.y = GROUND - this.h;       // Starting vertical position
     this.position = GROUND;         // At which height is the player standing

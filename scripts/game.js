@@ -104,7 +104,8 @@ var Game = function () {
     // Loaders
     this.loadCounters = function () {
         drawCounters(this.attempts, this.resources.list.ui.heart.element,
-                     this.countDown, this.resources.list.ui.clock.element);
+                     this.countDown, this.resources.list.ui.clock.element,
+                     this.distance, this.resources.list.ui.flag.element);
     }
 
     this.loadPlayer = function () {

@@ -43,7 +43,8 @@ var Resources = function () {
     this.ui = {
         path: '../assets/img/ui/',
         clock: 'clock.png',
-        heart: 'heart.png'
+        heart: 'heart.png',
+        flag: 'flag.png'
     };
 
     this.sfx = {

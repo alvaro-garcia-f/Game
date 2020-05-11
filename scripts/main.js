@@ -9,10 +9,6 @@ function loadScrLoop() {
 var game = new Game();
 game.init();
 
-window.onload = () => {
-    console.log(document.getElementById("screen"));
-}
-
 // Keyboard listeners
 window.addEventListener("keydown", (e) => {
     switch (e.key) {

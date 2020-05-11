@@ -64,7 +64,8 @@ var Game = function () {
 
     // Main game block - Generates procedure every iteration
     this.engine = function () {
-        if (this.countDown === 0) {
+        // Detect end game conditions
+        if (this.countDown === 0) {             // Life loss or Game Over
             if (this.attempts === 1) {
                 this.over = true
                 clearInterval(this.timerClock);
@@ -78,27 +79,37 @@ var Game = function () {
             }
             this.distance = 2000;    
         }
-        if (this.distance <= 0) {
+        if (this.distance <= 0) {               // Goal
             this.over = true;
             clearInterval(this.timerClock);
             clearInterval(this.timerDistance);
             console.log("Congratulations! You are on time!");
         }
 
-        console.log(this.distance);
+        // Draw enviroment and obstacles
         drawGround(); 
         this.generateObstacle();
         this.loadObstacle();
         this.loadCounters();
-        // If there is no object in the direction the character moves or there is one but there is no collision
+
+        // Detect key pressed and move player
         if (this.keyLeft) this.movePlayer("left");
         if (this.keyRight) this.movePlayer("right");
         if (this.keyJump || this.player.jumping) {
             this.movePlayer("jump");
         }
         this.loadPlayer();
-        if (!this.collideObstaclePlayer() && !this.collideVertical())
+
+        //Detec collisions
+        if (this.collideObstaclePlayer() && !this.player.hit) {
+            this.sound.play("hit");
+            this.player.hit = true;
+        }
+
+        if (!this.collideObstaclePlayer() && !this.collideVertical()) {
             this.obstacles.animateObstacles();
+            this.player.hit = false;
+        }
     }
     
     // Loaders

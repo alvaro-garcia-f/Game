@@ -50,7 +50,8 @@ var Resources = function () {
     this.sfx = {
         path: '../assets/sound/sfx/',
         jump: 'sfx_jump.wav',
-        land: 'sfx_land.wav'
+        land: 'sfx_land.wav',
+        hit: 'sfx_hit.wav'
     };
 
     this.list = {}; // Contains all created resources; 

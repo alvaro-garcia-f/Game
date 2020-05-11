@@ -53,6 +53,10 @@ var Game = function () {
     }
 
     this.startGame = function () {
+        // Start animation loop
+        requestAnimationFrame(loadScrLoop);
+
+        // Start countdowns
         this.timerClock = setInterval(function () {
             self.countDown--;
         }, 1000);

@@ -10,7 +10,7 @@ var game = new Game();
 game.init();
 
 window.onload = () => {
-    console.log(document.getElementById("screen").src);
+    console.log(document.getElementById("screen"));
 }
 
 // Keyboard listeners

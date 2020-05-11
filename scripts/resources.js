@@ -28,7 +28,7 @@ var Asset = function () {
 var Resources = function () {
     const self = this;
     this.player = {
-        path: '../assets/img/player/',
+        path: '../Game/assets/img/player/',
         idle: 'runner_idle_0.png',
         running: 'runner_run_0.png',
         jumping: 'runner_jump_0.png'

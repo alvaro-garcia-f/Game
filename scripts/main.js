@@ -6,9 +6,12 @@ function loadScrLoop() {
 }
 
 // Initialize game
-console.log(document.getElementById("screen").src);
 var game = new Game();
 game.init();
+
+window.onload = () => {
+    console.log(document.getElementById("screen").src);
+}
 
 // Keyboard listeners
 window.addEventListener("keydown", (e) => {

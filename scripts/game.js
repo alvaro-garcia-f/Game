@@ -58,7 +58,7 @@ var Game = function () {
         }, 1000);
         this.timerDistance = setInterval(function () {
             if (self.player.status !== 'idle') self.distance--;
-        }, 10); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
+        }, 30); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
         this.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
 

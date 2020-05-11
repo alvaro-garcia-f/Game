@@ -107,9 +107,12 @@ var Game = function () {
         this.loadPlayer();
 
         //Detec collisions
-        if (this.collideObstaclePlayer() && !this.player.hit) {
-            this.sound.play("hit");
-            this.player.hit = true;
+        if (this.collideObstaclePlayer()) {
+            this.player.status = 'idle';
+            if(!this.player.hit) {
+                this.sound.play("hit");
+                this.player.hit = true;
+            }
         }
 
         if (!this.collideObstaclePlayer() && !this.collideVertical()) {

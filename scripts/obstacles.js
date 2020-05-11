@@ -17,13 +17,13 @@ var Obstacle = function (type, x, w, h, sprite) {
 var ObstacleBuffer = function () {
     const OBSTACLES = {
         box1: {
-            h: 24,
-            w: 25,
+            h: 64,
+            w: 64,
             sprite: "o1_box.png"
         },
         box2: {
-            h: 32,
-            w: 25,
+            h: 40,
+            w: 31,
             sprite: "o1_trashcan.png"
         }
     };

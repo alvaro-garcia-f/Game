@@ -23,6 +23,8 @@ var Game = function () {
     this.obstacles = new ObstacleBuffer (); 
     this.player = new Player ();
     this.item = {
+        w: 29,
+        h: 31,
         x: 500,
         y: 200,
         visible: true
@@ -150,7 +152,9 @@ var Game = function () {
     }
 
     this.loadItem = function () {
-        drawItem(this.resources.list.items.beer.element, this.item.x, this.item.y);
+        if (this.item.visible && this.item.x + this.item.w >= 0) {
+            drawItem(this.resources.list.items.beer.element, this.item.x, this.item.y);
+        }
     }
 
     //Movement

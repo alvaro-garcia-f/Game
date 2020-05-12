@@ -116,6 +116,8 @@ var Game = function () {
         if (this.browserFrames === 6) {
             this.browserFrames = 1;
             this.player.frame++;
+            if(!this.collideVertical())
+                this.player.updateStatus(`running_${this.player.frame%5}`);
         }
 
         //Detect collisions

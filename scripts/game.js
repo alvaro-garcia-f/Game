@@ -25,8 +25,8 @@ var Game = function () {
     this.item = {
         w: 29,
         h: 31,
-        x: 500,
-        y: 200,
+        x: 1000,
+        y: 350,
         visible: true
     };
 
@@ -124,6 +124,8 @@ var Game = function () {
             this.obstacles.animateObstacles();
             this.player.hit = false;
         }
+
+        if (this.collidePlayerItem()) console.log("beeeeer");
     }
     
     // Loaders
@@ -156,7 +158,7 @@ var Game = function () {
             drawItem(this.resources.list.items.beer.element, this.item.x, this.item.y);
             this.item.x -= 2;
         }
-        
+
         if (this.item.x + this.item.w <= 0) {
             this.item.x = 1000;
         }
@@ -263,6 +265,12 @@ var Game = function () {
 
     this.collideObstaclePlayer = function () {
         return this.obstacles.next() && this.collideRight();
+    }
+
+    this.collidePlayerItem = function () {
+        return this.player.x + this.player.w >= this.item.x &&
+               this.player.x + this.player.w <= this.item.x + this.item.w &&
+               this.player.y >= this.item.y && this.player.y <= this.item.y + this.item.h;
     }
 
     //Endings

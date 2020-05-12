@@ -43,3 +43,4 @@ function drawObstacle(obstacle, image) {
 function drawBuilding(image, pos) {
     ctx.drawImage(image, pos, GROUND-379, 400, 400);
 }
+

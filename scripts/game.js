@@ -252,7 +252,7 @@ var Game = function () {
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
         console.log("Congratulations! You are on time!");
-        drawBuilding(this.resources.list.bg.building.element, pos);
+        drawBuilding(self.resources.list.bg.building.element, pos);
         this.sound.play("victory");
     }
 }

@@ -22,6 +22,7 @@ var Game = function () {
     this.resources = new Resources ();
     this.obstacles = new ObstacleBuffer (); 
     this.player = new Player ();
+    this.browserFrames = 0;                  // Counts amount of animationFrames. Every 10, changes player running sprite. 
     this.item = {
         w: 29,
         h: 31,
@@ -111,7 +112,11 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
-        this.player.frame++;
+        this.browserFrames++;
+        if (this.browserFrames === 6) {
+            this.browserFrames = 1;
+            this.player.frame++;
+        }
 
         //Detect collisions
         if (this.collideObstaclePlayer()) {

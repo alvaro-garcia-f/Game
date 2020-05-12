@@ -270,10 +270,14 @@ var Game = function () {
 
     this.collideVerticalObstacle = function (obstacle, pos) {
         if (obstacle &&
-        (this.player.x > obstacle.x &&
+        (this.player.x > obstacle.x &&                              // Player collides with larger obstacle
         this.player.x < obstacle.x + obstacle.w ||
         this.player.x + this.player.w > obstacle.x &&
-        this.player.x + this.player.w < obstacle.x + obstacle.w) &&
+        this.player.x + this.player.w < obstacle.x + obstacle.w) ||
+        (obstacle.x > this.player.x &&                              // Player collides with smaller obstacle
+        obstacle.x < this.player.x + this.player.w ||
+        obstacle.x + obstacle.w > this.player.x &&
+        obstacle.x + obstacle.w < this.player.x + this.player.w) &&
         this.player.y + this.player.h + this.player.vSpeed >= obstacle.y) {
             this.player.position = obstacle.y;
             this.player.location = pos;

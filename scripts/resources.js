@@ -59,12 +59,12 @@ var Resources = function () {
 
     this.sfx = {
         path: '../assets/sound/sfx/',
-        jump: 'sfx_jump.wav',
-        land: 'sfx_land.wav',
-        hit: 'sfx_hit.wav',
-        late: 'sfx_late.wav',
-        victory: 'sfx_victory.mp3',
-        beer: 'sfx_beer.wav'
+        jump: 'sfx_jump.ogg',
+        land: 'sfx_land.ogg',
+        hit: 'sfx_hit.ogg',
+        late: 'sfx_late.ogg',
+        victory: 'sfx_victory.ogg',
+        beer: 'sfx_beer.ogg'
     };
 
     this.list = {}; // Contains all created resources; 

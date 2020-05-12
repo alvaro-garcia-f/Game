@@ -53,10 +53,9 @@ var Game = function () {
     }
 
     this.startGame = function () {
-        console.log(this.resources.list.items.beer.element);
         // Start animation loop
-        //requestAnimationFrame(loadScrLoop);
-
+        requestAnimationFrame(loadScrLoop);
+        
         // Start countdowns
         this.timerClock = setInterval(function () {
             self.countDown--;
@@ -66,9 +65,10 @@ var Game = function () {
         }, 10); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
         this.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
-
+    
     // Main game block - Generates procedure every iteration
     this.engine = function () {
+        drawItem(this.resources.list.items.beer.element);
         // Detect end game conditions
         if (this.countDown === 0) {             // Life loss or Game Over
             if (this.attempts === 1) {

@@ -40,8 +40,8 @@ function drawObstacle(obstacle, image) {
     ctx.drawImage(image, obstacle.x, obstacle.y);
 }
 
-function drawItem(image) {
-    ctx.drawImage(image, 500, 250);
+function drawItem(image, x, y) {
+    ctx.drawImage(image, x, y);
 }
 
 function drawBuilding(image, pos) {

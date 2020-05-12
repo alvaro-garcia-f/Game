@@ -22,6 +22,12 @@ var Game = function () {
     this.resources = new Resources ();
     this.obstacles = new ObstacleBuffer (); 
     this.player = new Player ();
+    this.item = {
+        x: 500,
+        y: 200,
+        visible: true
+    };
+
     this.sound = new audioPlayer();
     this.attempts = 5;
     this.distance = 2000;
@@ -68,7 +74,6 @@ var Game = function () {
     
     // Main game block - Generates procedure every iteration
     this.engine = function () {
-        drawItem(this.resources.list.items.beer.element);
         // Detect end game conditions
         if (this.countDown === 0) {             // Life loss or Game Over
             if (this.attempts === 1) {
@@ -94,6 +99,7 @@ var Game = function () {
         this.generateObstacle();
         this.loadObstacle();
         this.loadCounters();
+        this.loadItem();
 
         // Detect key pressed and move player
         if (this.keyLeft) this.movePlayer("left");
@@ -103,7 +109,7 @@ var Game = function () {
         }
         this.loadPlayer();
 
-        //Detec collisions
+        //Detect collisions
         if (this.collideObstaclePlayer()) {
             this.player.status = 'idle';
             if(!this.player.hit) {
@@ -141,6 +147,10 @@ var Game = function () {
                 drawObstacle(o, this.resources.list.obstacles[o.type].element);
             });
         }
+    }
+
+    this.loadItem = function () {
+        drawItem(this.resources.list.items.beer.element, this.item.x, this.item.y);
     }
 
     //Movement

@@ -101,6 +101,7 @@ var Game = function () {
         this.generateObstacle();
         this.loadObstacle();
         this.loadCounters();
+        this.generateItem();
         this.loadItem();
 
         // Detect key pressed and move player
@@ -126,7 +127,9 @@ var Game = function () {
         }
 
         if (this.item.visible && this.collidePlayerItem()) {
+            this.item.visible = false;
             this.sound.play("beer");
+            this.countDown += 5;
         }
     }
     
@@ -205,7 +208,7 @@ var Game = function () {
         this.checkObstacleCrossed();
     }
 
-    // Obstacle positioning and generations
+    // Obstacle and Items positioning and generations
     this.generateObstacle = function () {
         if (!self.obstacles.bufferFull())
             self.obstacles.createObstacle();
@@ -216,6 +219,14 @@ var Game = function () {
            this.obstacles.sendObstacleBack(); 
         if (this.obstacles.previous() && this.player.x + this.player.w < this.obstacles.previous().x)
             this.obstacles.sendObstacleForward();
+    }
+
+    this.generateItem = function () {     
+        if (!this.item.visible && Math.random()*100 <= 0.5) {
+            console.log("beer");
+            this.item.visible = true;
+            this.item.x = 1000;
+        }
     }
 
     // Collisions

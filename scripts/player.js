@@ -4,6 +4,16 @@ var Player = function () {
         idle: {
             h: 66,
             w: 40
+        },
+
+        jumping: {
+            h: 64,
+            w: 42
+        },
+
+        running: {
+            h: 62,
+            w: 50
         }
     };
 
@@ -33,7 +43,7 @@ var Player = function () {
     }
 
     this.jump = function () {
-        this.status = 'jumping';
+        this.updateStatus('jumping');
         if (this.jumping) {
             this.y += this.vSpeed;
             this.vSpeed += GRAVITY;
@@ -51,4 +61,8 @@ var Player = function () {
             else { this.status = 'idle'}
         }      
     }
+
+    this.updateStatus = function (stat) {
+        this.status = stat;
+    } 
 };

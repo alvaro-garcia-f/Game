@@ -4,7 +4,7 @@ var Asset = function () {
     this.ready = false;
     this.element;
 
-    this.loadImage = function (path) { 
+    this.loadImage = function (path) {
         this.element = new Image();
         this.element.onload = function () {
             self.ready = true;
@@ -13,7 +13,7 @@ var Asset = function () {
     }
 
     this.loadAudio = function (path) {
-        this.element = new Audio();   
+        this.element = new Audio();
         this.element.oncanplay = function () {
             self.ready = true;
         };
@@ -28,27 +28,27 @@ var Asset = function () {
 var Resources = function () {
     const self = this;
     this.player = {
-        path: '../Game/assets/img/player/',
+        path: './assets/img/player/',
         idle: 'runner_idle_0.png',
         running: 'runner_run_0.png',
         jumping: 'runner_jump_0.png'
     };
 
     this.obstacles = {
-        path: '../assets/img/obstacles/',
+        path: './assets/img/obstacles/',
         box1: 'o1_box.png',
         box2: 'o1_trashcan.png'
     };
 
     this.ui = {
-        path: '../assets/img/ui/',
+        path: './assets/img/ui/',
         clock: 'clock.png',
         heart: 'heart.png',
         flag: 'flag.png'
     };
 
     this.sfx = {
-        path: '../assets/sound/sfx/',
+        path: './assets/sound/sfx/',
         jump: 'sfx_jump.wav',
         land: 'sfx_land.wav',
         hit: 'sfx_hit.wav',
@@ -56,10 +56,10 @@ var Resources = function () {
         victory: 'sfx_victory.mp3'
     };
 
-    this.list = {}; // Contains all created resources; 
+    this.list = {}; // Contains all created resources;
 
     this.startPreload = function () {
-   
+
         this.preloadPlayer();
         this.preloadObstacles();
         this.preloadUi();
@@ -111,7 +111,7 @@ var Resources = function () {
         if(self.playerLoadComplete() && self.obstaclesLoadComplete() &&
            self.uiLoadComplete() && self.sfxLoadComplete()) {
             console.log("Assets loaded", self.list);
-            return true;    
+            return true;
         }
         return false;
     }

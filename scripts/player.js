@@ -53,16 +53,17 @@ var Player = function () {
     this.status = 'idle';            // Idle || Running 0 to 5 || Jumping 
     this.jumping = false;            // Prevents double jumping and helps detect if player has landed on obstacle
     this.landed = false;             // Helps detect when caracter goes from moving to idle
-    this.hit = false;                // Prevents obstacle hit sound to be played more than once  
+    this.hit = false;                // Prevents obstacle hit sound to be played more than once
+    this.frame = 0;                  // Runnign animation frame
 
     this.moveLeft = function () {
-        this.status = 'running_0';
+        this.status = `running_${this.frame%5}`;
         if (this.x - this.runSpeed > 0)   // Prevents crossing left border 
             this.x -= this.runSpeed;
     }
 
     this.moveRight = function () {
-        this.updateStatus('running_0');
+        this.updateStatus(`running_${this.frame%5}`);
         if (this.x + this.runSpeed < 968)  // Prevents crossing right border 
             this.x += this.runSpeed;
     }
@@ -77,7 +78,7 @@ var Player = function () {
 
     this.land = function (floor) {
         if (this.y + this.vSpeed >= floor - this.h) {   // Prevents falling below obstacle
-            if (floor == GROUND) { this.updateStatus('running_0'); }
+            if (floor == GROUND) { this.updateStatus(`running_${this.frame%5}`); }
             else { this.updateStatus('idle'); }
             this.y = floor - this.h;
             this.vSpeed = 0;               // Reset jump speed

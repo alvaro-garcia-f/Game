@@ -111,6 +111,7 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
+        this.player.frame++;
 
         //Detect collisions
         if (this.collideObstaclePlayer()) {

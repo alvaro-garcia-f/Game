@@ -1,7 +1,14 @@
 // Player Class - Handles Player movement     
 var Player = function () {
-    this.h = 70;                    // Player height
-    this.w = 50;                    // Player width
+    const SPRITE_SIZE = {
+        idle: {
+            h: 66,
+            w: 40
+        }
+    };
+
+    this.h = SPRITE_SIZE.idle.h;    // Player height in idle position
+    this.w = SPRITE_SIZE.idle.w;    // Player width in idle position
     this.x = 64;                    // Starting horizontal position
     this.y = GROUND - this.h;       // Starting vertical position
     this.position = GROUND;         // At which height is the player standing

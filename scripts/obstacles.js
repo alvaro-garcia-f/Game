@@ -49,7 +49,7 @@ var ObstacleBuffer = function () {
             this.bufferFront[this.bufferFront.length - 1].w < 1000) { this.createBox(SCR_WIDTH); }
         else {
             this.createBox(this.bufferFront[this.bufferFront.length - 1].x +
-            this.bufferFront[this.bufferFront.length - 1].w + Math.round(Math.random()*400) + 100);
+            this.bufferFront[this.bufferFront.length - 1].w + Math.round(Math.random()*600) + 100);
         }
     }
 

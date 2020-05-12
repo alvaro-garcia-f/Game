@@ -223,7 +223,6 @@ var Game = function () {
 
     this.generateItem = function () {     
         if (!this.item.visible && Math.random()*100 <= 0.5) {
-            console.log("beer");
             this.item.visible = true;
             this.item.x = 1000;
         }

@@ -4,6 +4,9 @@ const GROUND = 498;
 
 const canvas = document.getElementById("screen");
 const ctx = canvas.getContext("2d");
+//Set up font
+ctx.font = '15.75px Eight Bit Dragon';
+ctx.lineWidth = 3;
 
 // Drawing on canvas
 function drawGround() {
@@ -16,9 +19,8 @@ function drawCounters(attempts, heart, time, clock, distance, flag) {
     for (let i = 1; i <= attempts; i++) {
         ctx.drawImage(heart, 25*i, 50, heart.width/2, heart.height/2);
     }
-    //Set up font
-    ctx.font = 'bold 30px Droid Sans';
-    ctx.strokeStyle = '#000';
+
+    ctx.strokeStyle = '#333';
     ctx.fillStyle = '#fff';
 
     //Clock + Time

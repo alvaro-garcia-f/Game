@@ -248,10 +248,11 @@ var Game = function () {
     //Endings
     this.reachGoal = function () {
         this.over = true;
+        var pos = 600;
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
         console.log("Congratulations! You are on time!");
-        drawBuilding(this.resources.list.bg.building.element);
+        drawBuilding(this.resources.list.bg.building.element, pos);
         this.sound.play("victory");
     }
 }

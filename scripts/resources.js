@@ -40,6 +40,11 @@ var Resources = function () {
         box2: 'o1_trashcan.png'
     };
 
+    this.items = {
+        path: '../assets/img/items/',
+        beer: 'i1_beer.png'
+    };
+
     this.ui = {
         path: '../assets/img/ui/',
         clock: 'clock.png',
@@ -50,7 +55,7 @@ var Resources = function () {
     this.bg = {
         path: '../assets/img/bg/',
         building: 'building.png'
-    }
+    };
 
     this.sfx = {
         path: '../assets/sound/sfx/',
@@ -67,6 +72,7 @@ var Resources = function () {
    
         this.preloadPlayer();
         this.preloadObstacles();
+        this.preloadItems();
         this.preloadUi();
         this.preloadBg();
         this.preloadSfx();
@@ -89,6 +95,16 @@ var Resources = function () {
             if (k !== 'path') {
                 self.list.obstacles[k] = new Asset();
                 self.list.obstacles[k].loadImage(`${self.obstacles.path}${self.obstacles[k]}`);
+            }
+        });
+    }
+    
+    this.preloadItems = function () {
+        this.list['items'] = {};
+        Object.keys(this.items).forEach((k) => {
+            if (k !== 'path') {
+                self.list.items[k] = new Asset();
+                self.list.items[k].loadImage(`${self.items.path}${self.items[k]}`);
             }
         });
     }
@@ -123,10 +139,10 @@ var Resources = function () {
         });
     }
 
+    // Checking that all assets are loaded
     this.isLoadComplete = function () {
-        if(self.playerLoadComplete() && self.obstaclesLoadComplete() &&
+        if(self.playerLoadComplete() && self.obstaclesLoadComplete() && self.itemsLoadComplete() &&
            self.uiLoadComplete() && self.bgLoadComplete() && self.sfxLoadComplete()) {
-               console.log(self.list.bg.building.element);
             console.log("Assets loaded", self.list);
             return true;    
         }
@@ -145,6 +161,14 @@ var Resources = function () {
         var assets = Object.keys(self.list.obstacles);
         for (let i=0; i < assets.length; i++) {
             if(!self.list.obstacles[assets[i]].isReady()) return false;
+        }
+        return true;
+    }
+
+    this.itemsLoadComplete = function () {
+        var assets = Object.keys(self.list.items);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.items[assets[i]].isReady()) return false;
         }
         return true;
     }

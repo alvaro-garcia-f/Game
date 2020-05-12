@@ -288,12 +288,12 @@ var Game = function () {
     }
 
     this.collidePlayerItem = function () {
-        return this.player.x + this.player.w >= this.item.x &&
-               this.player.x + this.player.w <= this.item.x + this.item.w &&
-               this.player.y >= this.item.y && this.player.y <= this.item.y + this.item.h ||
-               this.player.x <= this.item.x + this.item.w &&
-               this.player.x >= this.item.x &&  this.player.y >= this.item.y && 
-               this.player.y <= this.item.y + this.item.h;
+        return this.item.x + this.item.w >= this.player.x &&
+               this.item.x + this.item.w <= this.player.x + this.player.w &&
+               this.item.y >= this.player.y && this.item.y <= this.player.y + this.player.h ||
+               this.item.x <= this.player.x + this.player.w &&
+               this.item.x >= this.player.x &&  this.item.y >= this.player.y && 
+               this.item.y <= this.player.y + this.player.h;
     }
 
     //Endings

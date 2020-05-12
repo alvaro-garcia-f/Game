@@ -53,10 +53,8 @@ var Game = function () {
     }
 
     this.startGame = function () {
-        drawBuilding(this.resources.list.bg.building.element);
-
         // Start animation loop
-        // requestAnimationFrame(loadScrLoop);
+        requestAnimationFrame(loadScrLoop);
 
         // Start countdowns
         this.timerClock = setInterval(function () {
@@ -64,7 +62,7 @@ var Game = function () {
         }, 1000);
         this.timerDistance = setInterval(function () {
             if (self.player.status !== 'idle') self.distance--;
-        }, 30); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
+        }, 10); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
         this.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
 
@@ -87,11 +85,7 @@ var Game = function () {
             this.distance = 2000;    
         }
         if (this.distance <= 0) {               // Goal
-            this.over = true;
-            clearInterval(this.timerClock);
-            clearInterval(this.timerDistance);
-            console.log("Congratulations! You are on time!");
-            this.sound.play("victory");
+            this.reachGoal();
         }
 
         // Draw enviroment and obstacles
@@ -249,5 +243,15 @@ var Game = function () {
 
     this.collideObstaclePlayer = function () {
         return this.obstacles.next() && this.collideRight();
+    }
+
+    //Endings
+    this.reachGoal = function () {
+        this.over = true;
+        clearInterval(this.timerClock);
+        clearInterval(this.timerDistance);
+        console.log("Congratulations! You are on time!");
+        drawBuilding(this.resources.list.bg.building.element);
+        this.sound.play("victory");
     }
 }

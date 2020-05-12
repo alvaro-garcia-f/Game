@@ -114,7 +114,7 @@ var Game = function () {
 
         //Detect collisions
         if (this.collideObstaclePlayer()) {
-            this.player.status = 'idle';
+            this.player.updateStatus('idle');
             if(!this.player.hit) {
                 this.sound.play("hit");
                 this.player.hit = true;
@@ -198,13 +198,13 @@ var Game = function () {
 
     this.movePlayerLeft = function () {
         if (!this.collideLeft()) { this.player.moveLeft(); }
-        else { this.player.status = 'idle' }
+        else { this.player.updateStatus('idle'); }
         this.checkObstacleCrossed();
     }
 
     this.movePlayerRight = function () {
         if (!this.collideRight()) this.player.moveRight();
-        else { this.player.status = 'idle' }
+        else { this.player.updateStatus('idle'); }
         this.checkObstacleCrossed();
     }
 

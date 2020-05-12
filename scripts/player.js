@@ -37,7 +37,7 @@ var Player = function () {
     }
 
     this.moveRight = function () {
-        this.status = 'running';
+        this.updateStatus('running');
         if (this.x + this.runSpeed < 968)  // Prevents crossing right border 
             this.x += this.runSpeed;
     }
@@ -57,8 +57,8 @@ var Player = function () {
             this.jumping = false;
             this.position = GROUND;         // After a box (p or n) has been picked up, resets position
             this.landed = true;
-            if (floor == GROUND) { this.status = 'running'; }
-            else { this.status = 'idle'}
+            if (floor == GROUND) { this.updateStatus('running'); }
+            else { this.updateStatus('idle'); }
         }      
     }
 

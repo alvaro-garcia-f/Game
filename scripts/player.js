@@ -17,23 +17,28 @@ var Player = function () {
         },
 
         running_1: {
-            h: 62,
-            w: 50
+            h: 60,
+            w: 56
         },
 
         running_2: {
             h: 62,
-            w: 50
+            w: 52
         },
 
         running_3: {
-            h: 62,
-            w: 50
+            h: 60,
+            w: 38
         },
 
         running_4: {
-            h: 62,
-            w: 50
+            h: 60,
+            w: 56
+        },
+
+        running_5: {
+            h: 59,
+            w: 38
         }
     };
 
@@ -45,7 +50,7 @@ var Player = function () {
     this.location = GROUND;         // On which obstacle is the player standing
     this.runSpeed = 3;
     this.vSpeed = 0;
-    this.status = 'idle';            // Idle || Running || Jumping 
+    this.status = 'idle';            // Idle || Running 0 to 5 || Jumping 
     this.jumping = false;            // Prevents double jumping and helps detect if player has landed on obstacle
     this.landed = false;             // Helps detect when caracter goes from moving to idle
     this.hit = false;                // Prevents obstacle hit sound to be played more than once  

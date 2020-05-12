@@ -125,7 +125,9 @@ var Game = function () {
             this.player.hit = false;
         }
 
-        if (this.collidePlayerItem()) console.log("beeeeer");
+        if (this.item.visible && this.collidePlayerItem()) {
+            this.sound.play("beer");
+        }
     }
     
     // Loaders

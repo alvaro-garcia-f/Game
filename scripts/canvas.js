@@ -25,26 +25,27 @@ function drawCounters(attempts, heart, time, clock, distance, flag) {
 
     //Clock + Time
     ctx.drawImage(clock, 850, 50, clock.width/1.5, clock.height/1.5);
-    ctx.strokeText(`${time}s`, 890, 76);
-    ctx.fillText(`${time}s`, 890, 76);
+    ctx.strokeText(`${time}s`, 890, 75);
+    ctx.fillText(`${time}s`, 890, 75);
 
     //Flag + Distance
     ctx.drawImage(flag, 430, 50, flag.width/1.5, flag.height/1.5);
-    ctx.strokeText(`${distance}m`, 470, 76);
-    ctx.fillText(`${distance}m`, 470, 76);
+    ctx.strokeText(`${distance}m`, 470, 75);
+    ctx.fillText(`${distance}m`, 470, 75);
 }
 
-function drawPlayer(player, image) {
-    ctx.drawImage(image, player.x, player.y);
+function drawBonusTime(time) {
+    console.log(time);
+    ctx.strokeStyle = 'lime';
+    ctx.fillStyle = 'lime';
+    ctx.strokeText(`${time}s`, 890, 70);
+    ctx.fillText(`${time}s`, 890, 70);
 }
-
-function drawObstacle(obstacle, image) {
-    ctx.drawImage(image, obstacle.x, obstacle.y);
-}
-
-function drawItem(image, x, y) {
-    ctx.drawImage(image, x, y);
-}
+//Draws generic elements on the screen. Asset contains the HTML element,
+//Object its position.
+function drawElement(asset, object) {
+    ctx.drawImage(asset, object.x, object.y);
+} 
 
 function drawBuilding(image, pos) {
     ctx.drawImage(image, pos, GROUND-379, 400, 400);

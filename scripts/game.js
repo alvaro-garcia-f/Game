@@ -138,6 +138,9 @@ var Game = function () {
             this.item.visible = false;
             this.sound.play("beer");
             this.countDown += 5;
+            requestAnimationFrame(function() {
+                drawBonusTime(self.countDown);
+            });
         }
     }
     
@@ -149,26 +152,26 @@ var Game = function () {
     }
 
     this.loadPlayer = function () {
-        drawPlayer(this.player, this.resources.list.player[this.player.status].element);
+        drawElement(this.resources.list.player[this.player.status].element, this.player);
     }
 
     this.loadObstacle = function () {
         if (this.obstacles.bufferFront.length > 0) {
             this.obstacles.bufferFront.forEach((o) => {
-                drawObstacle(o, this.resources.list.obstacles[o.type].element);
+                drawElement(this.resources.list.obstacles[o.type].element, o);
             });
         }
         
         if(this.obstacles.bufferBack.length > 0) {
             this.obstacles.bufferBack.forEach((o) => {
-                drawObstacle(o, this.resources.list.obstacles[o.type].element);
+                drawElement(this.resources.list.obstacles[o.type].element, o);
             });
         }
     }
 
     this.loadItem = function () {
         if (this.item.visible) {
-            drawItem(this.resources.list.items.beer.element, this.item.x, this.item.y);
+            drawElement(this.resources.list.items.beer.element, this.item);
             this.item.x -= 2;
         }
 

@@ -28,37 +28,42 @@ var Asset = function () {
 var Resources = function () {
     const self = this;
     this.player = {
-        path: '../assets/img/player/',
+        path: './assets/img/player/',
         running_0: 'runner_run_0.png',
+        running_1: 'runner_run_1.png',
+        running_2: 'runner_run_2.png',
+        running_3: 'runner_run_3.png',
+        running_4: 'runner_run_4.png',
+        running_5: 'runner_run_5.png',
         idle: 'runner_idle_0.png',
         jumping: 'runner_jump_0.png'
     };
 
     this.obstacles = {
-        path: '../assets/img/obstacles/',
+        path: './assets/img/obstacles/',
         box1: 'o1_box.png',
         box2: 'o1_trashcan.png'
     };
 
     this.items = {
-        path: '../assets/img/items/',
+        path: './assets/img/items/',
         beer: 'i1_beer.png'
     };
 
     this.ui = {
-        path: '../assets/img/ui/',
+        path: './assets/img/ui/',
         clock: 'clock.png',
         heart: 'heart.png',
         flag: 'flag.png'
     };
 
     this.bg = {
-        path: '../assets/img/bg/',
+        path: './assets/img/bg/',
         building: 'building.png'
     };
 
     this.sfx = {
-        path: '../assets/sound/sfx/',
+        path: './assets/sound/sfx/',
         jump: 'sfx_jump.ogg',
         land: 'sfx_land.ogg',
         hit: 'sfx_hit.ogg',

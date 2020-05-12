@@ -11,7 +11,27 @@ var Player = function () {
             w: 42
         },
 
-        running: {
+        running_0: {
+            h: 62,
+            w: 50
+        },
+
+        running_1: {
+            h: 62,
+            w: 50
+        },
+
+        running_2: {
+            h: 62,
+            w: 50
+        },
+
+        running_3: {
+            h: 62,
+            w: 50
+        },
+
+        running_4: {
             h: 62,
             w: 50
         }
@@ -31,13 +51,13 @@ var Player = function () {
     this.hit = false;                // Prevents obstacle hit sound to be played more than once  
 
     this.moveLeft = function () {
-        this.status = 'running';
+        this.status = 'running_0';
         if (this.x - this.runSpeed > 0)   // Prevents crossing left border 
             this.x -= this.runSpeed;
     }
 
     this.moveRight = function () {
-        this.updateStatus('running');
+        this.updateStatus('running_0');
         if (this.x + this.runSpeed < 968)  // Prevents crossing right border 
             this.x += this.runSpeed;
     }
@@ -52,7 +72,7 @@ var Player = function () {
 
     this.land = function (floor) {
         if (this.y + this.vSpeed >= floor - this.h) {   // Prevents falling below obstacle
-            if (floor == GROUND) { this.updateStatus('running'); }
+            if (floor == GROUND) { this.updateStatus('running_0'); }
             else { this.updateStatus('idle'); }
             this.y = floor - this.h;
             this.vSpeed = 0;               // Reset jump speed

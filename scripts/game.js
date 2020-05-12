@@ -152,8 +152,13 @@ var Game = function () {
     }
 
     this.loadItem = function () {
-        if (this.item.visible && this.item.x + this.item.w >= 0) {
+        if (this.item.visible) {
             drawItem(this.resources.list.items.beer.element, this.item.x, this.item.y);
+            this.item.x -= 2;
+        }
+        
+        if (this.item.x + this.item.w <= 0) {
+            this.item.x = 1000;
         }
     }
 

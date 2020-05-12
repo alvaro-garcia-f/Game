@@ -53,8 +53,9 @@ var Game = function () {
     }
 
     this.startGame = function () {
+        console.log(this.resources.list.items.beer.element);
         // Start animation loop
-        requestAnimationFrame(loadScrLoop);
+        //requestAnimationFrame(loadScrLoop);
 
         // Start countdowns
         this.timerClock = setInterval(function () {

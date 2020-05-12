@@ -52,17 +52,20 @@ var Player = function () {
 
     this.land = function (floor) {
         if (this.y + this.vSpeed >= floor - this.h) {   // Prevents falling below obstacle
+            if (floor == GROUND) { this.updateStatus('running'); }
+            else { this.updateStatus('idle'); }
             this.y = floor - this.h;
             this.vSpeed = 0;               // Reset jump speed
             this.jumping = false;
             this.position = GROUND;         // After a box (p or n) has been picked up, resets position
             this.landed = true;
-            if (floor == GROUND) { this.updateStatus('running'); }
-            else { this.updateStatus('idle'); }
         }      
     }
 
     this.updateStatus = function (stat) {
         this.status = stat;
-    } 
+        this.y += this.h - SPRITE_SIZE[stat].h;
+        this.h = SPRITE_SIZE[stat].h;
+        this.w = SPRITE_SIZE[stat].w;
+    }
 };

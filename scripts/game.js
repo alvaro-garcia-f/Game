@@ -53,8 +53,10 @@ var Game = function () {
     }
 
     this.startGame = function () {
+        drawBuilding(this.resources.list.bg.building.element);
+
         // Start animation loop
-        requestAnimationFrame(loadScrLoop);
+        // requestAnimationFrame(loadScrLoop);
 
         // Start countdowns
         this.timerClock = setInterval(function () {

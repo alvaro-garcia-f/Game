@@ -47,6 +47,11 @@ var Resources = function () {
         flag: 'flag.png'
     };
 
+    this.bg = {
+        path: '../assets/img/bg/',
+        building: 'building.png'
+    }
+
     this.sfx = {
         path: '../assets/sound/sfx/',
         jump: 'sfx_jump.wav',
@@ -63,6 +68,7 @@ var Resources = function () {
         this.preloadPlayer();
         this.preloadObstacles();
         this.preloadUi();
+        this.preloadBg();
         this.preloadSfx();
     }
 
@@ -97,6 +103,16 @@ var Resources = function () {
         });
     }
 
+    this.preloadBg = function () {
+        this.list['bg'] = {};
+        Object.keys(this.bg).forEach((k) => {
+            if (k !== 'path') {
+                self.list.bg[k] = new Asset();
+                self.list.bg[k].loadImage(`${self.bg.path}${self.bg[k]}`);
+            }
+        });
+    }
+
     this.preloadSfx = function () {
         this.list['sfx'] = {};
         Object.keys(this.sfx).forEach((k) => {
@@ -109,7 +125,8 @@ var Resources = function () {
 
     this.isLoadComplete = function () {
         if(self.playerLoadComplete() && self.obstaclesLoadComplete() &&
-           self.uiLoadComplete() && self.sfxLoadComplete()) {
+           self.uiLoadComplete() && self.bgLoadComplete() && self.sfxLoadComplete()) {
+               console.log(self.list.bg.building.element);
             console.log("Assets loaded", self.list);
             return true;    
         }
@@ -136,6 +153,14 @@ var Resources = function () {
         var assets = Object.keys(self.list.ui);
         for (let i=0; i < assets.length; i++) {
             if(!self.list.ui[assets[i]].isReady()) return false;
+        }
+        return true;
+    }
+
+    this.bgLoadComplete = function () {
+        var assets = Object.keys(self.list.bg);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.bg[assets[i]].isReady()) return false;
         }
         return true;
     }

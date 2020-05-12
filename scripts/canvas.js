@@ -39,3 +39,7 @@ function drawPlayer(player, image) {
 function drawObstacle(obstacle, image) {
     ctx.drawImage(image, obstacle.x, obstacle.y);
 }
+
+function drawBuilding(image) {
+    ctx.drawImage(image, 600, 100);
+}

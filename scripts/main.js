@@ -1,11 +1,11 @@
-
+var id;
 // Animation Loop
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
     game.engine(); 
-    if(game.status === 1) requestAnimationFrame(loadScrLoop);
+    if(game.status === 1) id = requestAnimationFrame(loadScrLoop);
     if(game.status === 2) game.setUpLevel();
-    if(game.status === 0) return;
+    if(game.status === 0) cancelAnimationFrame(id);
 }
 
 // Initialize game

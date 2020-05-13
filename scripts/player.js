@@ -54,7 +54,8 @@ var Player = function () {
     this.jumping = false;            // Prevents double jumping and helps detect if player has landed on obstacle
     this.landed = false;             // Helps detect when caracter goes from moving to idle
     this.hit = false;                // Prevents obstacle hit sound to be played more than once
-    this.frame = 0;                  // Runnign animation frame
+    this.frame = 0;                  // Running animation frame
+    this.attempts = 5;               // Lifes
 
     this.moveLeft = function () {
         this.status = `running_${this.frame%5}`;
@@ -90,8 +91,8 @@ var Player = function () {
 
     this.updateStatus = function (stat) {
         this.status = stat;
-        this.y += this.h - SPRITE_SIZE[stat].h;
-        this.h = SPRITE_SIZE[stat].h;
-        this.w = SPRITE_SIZE[stat].w;
+        this.y += this.h - SPRITE_SIZE[this.status].h;
+        this.h = SPRITE_SIZE[this.status].h;
+        this.w = SPRITE_SIZE[this.status].w;
     }
 };

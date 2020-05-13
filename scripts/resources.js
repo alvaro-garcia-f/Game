@@ -31,14 +31,14 @@ var Resources = function () {
     // Asset categories
     this.player = {
         path: './assets/img/player/',
-        running_0: 'runner_run_0.png',
-        running_1: 'runner_run_1.png',
-        running_2: 'runner_run_2.png',
-        running_3: 'runner_run_3.png',
-        running_4: 'runner_run_4.png',
-        running_5: 'runner_run_5.png',
-        idle: 'runner_run_idle.png',
-        jumping: 'runner_run_jump.png'
+        running_5_0: 'runner_run_0.png',
+        running_5_1: 'runner_run_1.png',
+        running_5_2: 'runner_run_2.png',
+        running_5_3: 'runner_run_3.png',
+        running_5_4: 'runner_run_4.png',
+        running_5_5: 'runner_run_5.png',
+        idle_5: 'runner_run_idle.png',
+        jumping_5: 'runner_run_jump.png'
     };
 
     this.obstacles = {

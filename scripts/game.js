@@ -32,7 +32,6 @@ var Game = function () {
     };
 
     this.sound = new audioPlayer();
-    this.attempts = 5;
     this.distance = 2000;
     this.countDown = 60;
     this.timerClock;
@@ -80,16 +79,16 @@ var Game = function () {
     this.engine = function () {
         // Detect end game conditions
         if (this.countDown === 0) {             // Life loss or Game Over
-            if (this.attempts === 1) {
+            if (this.player.attempts === 1) {
                 this.over = true
                 clearInterval(this.timerClock);
                 clearInterval(this.timerDistance);
-                this.attempts--;
+                this.player.attempts--;
                 this.loadCounters();
                 console.log("Game Over");
             } else {
                 this.countDown = 60;
-                this.attempts--;
+                this.player.attempts--;
             }
             this.sound.play("late");
             this.distance = 2000;    
@@ -145,13 +144,15 @@ var Game = function () {
     
     // Loaders
     this.loadCounters = function () {
-        drawCounters(this.attempts, this.resources.list.ui.heart.element,
+        drawCounters(this.player.attempts, this.resources.list.ui.heart.element,
                      this.countDown, this.resources.list.ui.clock.element,
                      this.distance, this.resources.list.ui.flag.element);
     }
 
     this.loadPlayer = function () {
-        drawElement(this.resources.list.player[this.player.status].element, this.player);
+        var sprite = `${this.player.status.split("_")[0]}_${this.player.attempts}`;
+        if (this.player.status.split('_')[0] === 'running') sprite = `${sprite}_${this.player.status.split("_")[1]}`; 
+        drawElement(this.resources.list.player[sprite].element, this.player);
     }
 
     this.loadObstacle = function () {

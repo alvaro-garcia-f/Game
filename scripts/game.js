@@ -23,6 +23,10 @@ var Game = function () {
         x: 0,
         y: 0
     };
+    this.bg2 = {                             // Second background to replicate loop
+        x: SCR_WIDTH,
+        y: 0
+    }
 
     this.resources = new Resources ();
     this.obstacles = new ObstacleBuffer (); 
@@ -140,7 +144,7 @@ var Game = function () {
 
         // If there are no Collisions, background and obstacles scroll
         if (!this.collideObstaclePlayer() && !this.collideVertical()) {
-            this.bg.x--;                                                                                  
+            this.animateBackground();                                                                                  
             this.obstacles.animateObstacles();
             this.player.hit = false;
         }
@@ -163,6 +167,7 @@ var Game = function () {
 
     this.loadEnviroment = function () {
         drawBackground(this.resources.list.bg.city.element, this.bg);
+        drawBackground(this.resources.list.bg.city.element, this.bg2);
         drawGround();
     }
 
@@ -254,6 +259,13 @@ var Game = function () {
             this.item.visible = true;
             this.item.x = 1000;
         }
+    }
+
+    this.animateBackground = function () {
+        this.bg.x -= 0.5;
+        this.bg2.x -= 0.5;
+        if(this.bg.x === -1000) this.bg.x = SCR_WIDTH;
+        if(this.bg2.x === -1000) this.bg2.x = SCR_WIDTH;
     }
 
     // Collisions

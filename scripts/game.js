@@ -138,9 +138,7 @@ var Game = function () {
             this.item.visible = false;
             this.sound.play("beer");
             this.countDown += 5;
-            requestAnimationFrame(function() {
-                drawBonusTime(self.countDown);
-            });
+            drawBonusTime(self.countDown);
         }
     }
     

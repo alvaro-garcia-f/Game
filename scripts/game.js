@@ -37,7 +37,8 @@ var Game = function () {
     this.timerClock;
     this.timerDistance;
     this.timerObstacle;
-    this.over = false;
+    this.level = 0;
+    this.status = 0;                        // 0 - Stopped | 1 - Running  | 2 - Paused 
 
     // Game Setup - Preloads all assets
     this.init = function ()
@@ -53,11 +54,23 @@ var Game = function () {
     this.loadWhenReady = function () {
         if (self.resources.isLoadComplete()) {
             self.sound.load(self.resources.list.sfx);
-            self.startGame();
+            self.setUpLevel();
             return;
         } else {
             setTimeout(self.loadWhenReady, 300);
         }
+    }
+
+    // Initializes player positions, counters and cleans obstacles, print level on screen    
+    this.setUpLevel = function () {
+        this.level++;
+        this.player.x = 64;
+        this.player.y = GROUND - this.player.h;
+        this.player.status = 'idle';
+        this.countDown = 60;
+        this.distance = 2000;
+        this.obstacles.emptyBuffer();
+        this.startGame();
     }
 
     this.startGame = function () {
@@ -307,7 +320,7 @@ var Game = function () {
             this.player.attempts--;
         }
         this.sound.play("late");
-        this.distance = 2000;    
+        this.distance = 2000;   
     }
 
     this.reachGoal = function () {

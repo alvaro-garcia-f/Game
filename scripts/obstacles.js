@@ -82,4 +82,9 @@ var ObstacleBuffer = function () {
     this.bufferFull = function () {
         return this.bufferFront.length === this.maxSize;
     }
+
+    this.emptyBuffer = function () {
+        this.bufferFront = [];
+        this.bufferBack = [];
+    }
 }

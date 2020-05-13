@@ -1,3 +1,4 @@
+
 // Animation Loop
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);

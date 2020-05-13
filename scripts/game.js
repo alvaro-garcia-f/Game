@@ -19,6 +19,11 @@ var Game = function () {
     this.keyLeft = false;
     this.keyRight = false;
     this.keyJump = false;
+    this.bg = {                               // Background position
+        x: 0,
+        y: 0
+    };
+
     this.resources = new Resources ();
     this.obstacles = new ObstacleBuffer (); 
     this.player = new Player ();
@@ -102,7 +107,7 @@ var Game = function () {
         }
 
         // Draw enviroment and obstacles
-        drawGround(); 
+        this.loadEnviroment();
         this.generateObstacle();
         this.loadObstacle();
         this.loadCounters();
@@ -151,6 +156,12 @@ var Game = function () {
         drawCounters(this.player.attempts, this.resources.list.ui.heart.element,
                      this.countDown, this.resources.list.ui.clock.element,
                      this.distance, this.resources.list.ui.flag.element);
+    }
+
+
+    this.loadEnviroment = function () {
+        drawBackground(this.resources.list.bg.city.element, this.bg);
+        drawGround();
     }
 
     this.loadPlayer = function () {

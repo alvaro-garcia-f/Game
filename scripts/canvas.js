@@ -43,12 +43,20 @@ function drawCounters(attempts, heart, time, clock, distance, flag) {
     ctx.fillText(`${distance}m`, 470, 75);
 }
 
-//Should make time blink in green. Doesn't work
+//Should make time blink in green. Doesn't work properly
 function drawBonusTime(time) {
     ctx.strokeStyle = 'lime';
     ctx.fillStyle = 'lime';
     ctx.strokeText(`${time}s`, 890, 70);
     ctx.fillText(`${time}s`, 890, 70);
+}
+
+//Draw text alerts on the screen
+function drawText(text) {
+    ctx.strokeStyle = '#333';
+    ctx.fillStyle = '#fff';
+    ctx.strokeText(text, 470, 270);
+    ctx.fillText(text, 470, 270);
 }
 
 // - GAME ELEMENTS

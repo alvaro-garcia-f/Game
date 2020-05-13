@@ -37,6 +37,3 @@ window.addEventListener("keyup", (e) => {
             break;
     }
 });
-
-// Start animation loop
-requestAnimationFrame(loadScrLoop);

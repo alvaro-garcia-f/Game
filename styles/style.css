@@ -1,5 +1,12 @@
+@font-face {
+    font-family: 'Eight Bit Dragon';
+    src: url('../assets/font/font.ttf') format('truetype');
+}
+
 body {
     background-color: black;
+    font-family: 'Eight Bit Dragon';
+    color: white;
 }
 
 #screen {
@@ -7,7 +14,7 @@ body {
     width: 1000px;
     height: 562px;
     border: 2px solid orange;
-    background-image: url("../assets/img/bg/background_1.png");
+    background-image: url('../assets/img/bg/background_1.png');
     background-size: contain;
     margin: 0 auto;
     image-rendering: pixelated;

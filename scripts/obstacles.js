@@ -1,12 +1,11 @@
 // Obstacle Class
-var Obstacle = function (type, x, w, h, sprite) {
+var Obstacle = function (type, x, w, h) {
     const self = this;
     this.h = h;                    // Obstacle height
     this.w = w;                    // Obstacle width
     this.x = x;                    // Starting horizontal position
     this.y = GROUND - this.h;           // Starting vertical position
     this.type = type;
-    this.sprite = sprite;
     this.speed = -4;
 
     self.move = function () {
@@ -17,14 +16,12 @@ var Obstacle = function (type, x, w, h, sprite) {
 var ObstacleBuffer = function () {
     const OBSTACLES = {
         box1: {
-            h: 24,
-            w: 25,
-            sprite: "o1_box.png"
+            h: 64,
+            w: 64,
         },
         box2: {
-            h: 32,
-            w: 25,
-            sprite: "o1_trashcan.png"
+            h: 40,
+            w: 31,
         }
     };
 
@@ -42,14 +39,13 @@ var ObstacleBuffer = function () {
     }
 
     this.createObstacle = function () {
-        //  this.bufferFront.push(this.createBox());
 
         if (this.bufferFront.length === 0 ||
             this.bufferFront[this.bufferFront.length - 1].x +
-            this.bufferFront[this.bufferFront.length - 1].w < 1000) { this.createBox(SCR_WIDTH); }
+            this.bufferFront[this.bufferFront.length - 1].w < 1000) { this.createBox(SCR_WIDTH + Math.round(Math.random()*200) + 100); }
         else {
             this.createBox(this.bufferFront[this.bufferFront.length - 1].x +
-            this.bufferFront[this.bufferFront.length - 1].w + Math.round(Math.random()*300) + 100);
+            this.bufferFront[this.bufferFront.length - 1].w + Math.round(Math.random()*500) + 100);
         }
     }
 
@@ -63,8 +59,8 @@ var ObstacleBuffer = function () {
 
     // Obstacle creators
     this.createBox = function (position) {
-        if (Math.random() < 0.5) { this.bufferFront.push(new Obstacle("box1", position, OBSTACLES.box1.w, OBSTACLES.box1.h, OBSTACLES.box1.sprite)); }
-        else { this.bufferFront.push(new Obstacle("box2", position, OBSTACLES.box2.w, OBSTACLES.box2.h, OBSTACLES.box2.sprite)); }
+        if (Math.random() < 0.5) { this.bufferFront.push(new Obstacle("box1", position, OBSTACLES.box1.w, OBSTACLES.box1.h, OBSTACLES.box1)); }
+        else { this.bufferFront.push(new Obstacle("box2", position, OBSTACLES.box2.w, OBSTACLES.box2.h, OBSTACLES.box2)); }
     }
 
     //Obstacle animation

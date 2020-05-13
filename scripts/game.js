@@ -22,6 +22,15 @@ var Game = function () {
     this.resources = new Resources ();
     this.obstacles = new ObstacleBuffer (); 
     this.player = new Player ();
+    this.browserFrames = 0;                  // Counts amount of animationFrames. Every 10, changes player running sprite. 
+    this.item = {
+        w: 29,
+        h: 31,
+        x: 1000,
+        y: 350,
+        visible: true
+    };
+
     this.sound = new audioPlayer();
     this.attempts = 5;
     this.distance = 2000;
@@ -53,15 +62,20 @@ var Game = function () {
     }
 
     this.startGame = function () {
+        // Start animation loop
+        console.log("Game Start");
+        requestAnimationFrame(loadScrLoop);
+        
+        // Start countdowns
         this.timerClock = setInterval(function () {
             self.countDown--;
         }, 1000);
         this.timerDistance = setInterval(function () {
             if (self.player.status !== 'idle') self.distance--;
-        }, 30); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
+        }, 10); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
         this.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
-
+    
     // Main game block - Generates procedure every iteration
     this.engine = function () {
         // Detect end game conditions
@@ -81,11 +95,7 @@ var Game = function () {
             this.distance = 2000;    
         }
         if (this.distance <= 0) {               // Goal
-            this.over = true;
-            clearInterval(this.timerClock);
-            clearInterval(this.timerDistance);
-            console.log("Congratulations! You are on time!");
-            this.sound.play("victory");
+            this.reachGoal();
         }
 
         // Draw enviroment and obstacles
@@ -93,6 +103,8 @@ var Game = function () {
         this.generateObstacle();
         this.loadObstacle();
         this.loadCounters();
+        this.generateItem();
+        this.loadItem();
 
         // Detect key pressed and move player
         if (this.keyLeft) this.movePlayer("left");
@@ -101,16 +113,33 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
+        this.browserFrames++;
+        if (this.browserFrames === 6) {
+            this.browserFrames = 1;
+            this.player.frame++;
+            if(!this.collideVertical())
+                this.player.updateStatus(`running_${this.player.frame%5}`);
+        }
 
-        //Detec collisions
-        if (this.collideObstaclePlayer() && !this.player.hit) {
-            this.sound.play("hit");
-            this.player.hit = true;
+        //Detect collisions
+        if (this.collideObstaclePlayer()) {
+            this.player.updateStatus('idle');
+            if(!this.player.hit) {
+                this.sound.play("hit");
+                this.player.hit = true;
+            }
         }
 
         if (!this.collideObstaclePlayer() && !this.collideVertical()) {
             this.obstacles.animateObstacles();
             this.player.hit = false;
+        }
+
+        if (this.item.visible && this.collidePlayerItem()) {
+            this.item.visible = false;
+            this.sound.play("beer");
+            this.countDown += 5;
+            drawBonusTime(self.countDown);
         }
     }
     
@@ -122,20 +151,31 @@ var Game = function () {
     }
 
     this.loadPlayer = function () {
-        drawPlayer(this.player, this.resources.list.player[this.player.status].element);
+        drawElement(this.resources.list.player[this.player.status].element, this.player);
     }
 
     this.loadObstacle = function () {
         if (this.obstacles.bufferFront.length > 0) {
             this.obstacles.bufferFront.forEach((o) => {
-                drawObstacle(o, this.resources.list.obstacles[o.type].element);
+                drawElement(this.resources.list.obstacles[o.type].element, o);
             });
         }
         
         if(this.obstacles.bufferBack.length > 0) {
             this.obstacles.bufferBack.forEach((o) => {
-                drawObstacle(o, this.resources.list.obstacles[o.type].element);
+                drawElement(this.resources.list.obstacles[o.type].element, o);
             });
+        }
+    }
+
+    this.loadItem = function () {
+        if (this.item.visible) {
+            drawElement(this.resources.list.items.beer.element, this.item);
+            this.item.x -= 2;
+        }
+
+        if (this.item.x + this.item.w <= 0) {
+            this.item.x = 1000;
         }
     }
 
@@ -168,17 +208,17 @@ var Game = function () {
 
     this.movePlayerLeft = function () {
         if (!this.collideLeft()) { this.player.moveLeft(); }
-        else { this.player.status = 'idle' }
+        else { this.player.updateStatus('idle'); }
         this.checkObstacleCrossed();
     }
 
     this.movePlayerRight = function () {
         if (!this.collideRight()) this.player.moveRight();
-        else { this.player.status = 'idle' }
+        else { this.player.updateStatus('idle'); }
         this.checkObstacleCrossed();
     }
 
-    // Obstacle positioning and generations
+    // Obstacle and Items positioning and generations
     this.generateObstacle = function () {
         if (!self.obstacles.bufferFull())
             self.obstacles.createObstacle();
@@ -189,6 +229,13 @@ var Game = function () {
            this.obstacles.sendObstacleBack(); 
         if (this.obstacles.previous() && this.player.x + this.player.w < this.obstacles.previous().x)
             this.obstacles.sendObstacleForward();
+    }
+
+    this.generateItem = function () {     
+        if (!this.item.visible && Math.random()*100 <= 0.5) {
+            this.item.visible = true;
+            this.item.x = 1000;
+        }
     }
 
     // Collisions
@@ -225,10 +272,14 @@ var Game = function () {
 
     this.collideVerticalObstacle = function (obstacle, pos) {
         if (obstacle &&
-        (this.player.x > obstacle.x &&
+        (this.player.x > obstacle.x &&                              // Player collides with larger obstacle
         this.player.x < obstacle.x + obstacle.w ||
         this.player.x + this.player.w > obstacle.x &&
-        this.player.x + this.player.w < obstacle.x + obstacle.w) &&
+        this.player.x + this.player.w < obstacle.x + obstacle.w) ||
+        (obstacle.x > this.player.x &&                              // Player collides with smaller obstacle
+        obstacle.x < this.player.x + this.player.w ||
+        obstacle.x + obstacle.w > this.player.x &&
+        obstacle.x + obstacle.w < this.player.x + this.player.w) &&
         this.player.y + this.player.h + this.player.vSpeed >= obstacle.y) {
             this.player.position = obstacle.y;
             this.player.location = pos;
@@ -240,5 +291,25 @@ var Game = function () {
 
     this.collideObstaclePlayer = function () {
         return this.obstacles.next() && this.collideRight();
+    }
+
+    this.collidePlayerItem = function () {
+        return this.item.x + this.item.w >= this.player.x &&
+               this.item.x + this.item.w <= this.player.x + this.player.w &&
+               this.item.y >= this.player.y && this.item.y <= this.player.y + this.player.h ||
+               this.item.x <= this.player.x + this.player.w &&
+               this.item.x >= this.player.x &&  this.item.y >= this.player.y && 
+               this.item.y <= this.player.y + this.player.h;
+    }
+
+    //Endings
+    this.reachGoal = function () {
+        this.over = true;
+        var pos = 600;
+        clearInterval(this.timerClock);
+        clearInterval(this.timerDistance);
+        console.log("Congratulations! You are on time!");
+        drawBuilding(self.resources.list.bg.building.element, pos);
+        this.sound.play("victory");
     }
 }

@@ -27,72 +27,72 @@ var Asset = function () {
 
 var Resources = function () {
     const self = this;
+
+    // Asset categories
     this.player = {
-        path: '../assets/img/player/',
+        path: './assets/img/player/',
+        running_0: 'runner_run_0.png',
+        running_1: 'runner_run_1.png',
+        running_2: 'runner_run_2.png',
+        running_3: 'runner_run_3.png',
+        running_4: 'runner_run_4.png',
+        running_5: 'runner_run_5.png',
         idle: 'runner_idle_0.png',
-        running: 'runner_run_0.png',
         jumping: 'runner_jump_0.png'
     };
 
     this.obstacles = {
-        path: '../assets/img/obstacles/',
+        path: './assets/img/obstacles/',
         box1: 'o1_box.png',
         box2: 'o1_trashcan.png'
     };
 
+    this.items = {
+        path: './assets/img/items/',
+        beer: 'i1_beer.png'
+    };
+
     this.ui = {
-        path: '../assets/img/ui/',
+        path: './assets/img/ui/',
         clock: 'clock.png',
         heart: 'heart.png',
         flag: 'flag.png'
     };
 
+    this.bg = {
+        path: './assets/img/bg/',
+        building: 'building.png'
+    };
+
     this.sfx = {
-        path: '../assets/sound/sfx/',
-        jump: 'sfx_jump.wav',
-        land: 'sfx_land.wav',
-        hit: 'sfx_hit.wav',
-        late: 'sfx_late.wav',
-        victory: 'sfx_victory.mp3'
+        path: './assets/sound/sfx/',
+        jump: 'sfx_jump.ogg',
+        land: 'sfx_land.ogg',
+        hit: 'sfx_hit.ogg',
+        late: 'sfx_late.ogg',
+        victory: 'sfx_victory.ogg',
+        beer: 'sfx_beer.ogg'
     };
 
     this.list = {}; // Contains all created resources; 
 
     this.startPreload = function () {
-   
-        this.preloadPlayer();
-        this.preloadObstacles();
-        this.preloadUi();
+        
+        this.preloadImages(this.player, 'player');
+        this.preloadImages(this.obstacles, 'obstacles');
+        this.preloadImages(this.items, 'items');
+        this.preloadImages(this.ui, 'ui');
+        this.preloadImages(this.bg, 'bg');
         this.preloadSfx();
     }
 
     //Load all assets
-    this.preloadPlayer = function () {
-        this.list['player'] = {};
-        Object.keys(this.player).forEach((k) => {
+    this.preloadImages = function (asset, name) {
+        this.list[name] = {};
+        Object.keys(asset).forEach((k) => {
             if (k !== 'path') {
-                self.list.player[k] = new Asset();
-                self.list.player[k].loadImage(`${self.player.path}${self.player[k]}`);
-            }
-        });
-    }
-
-    this.preloadObstacles = function () {
-        this.list['obstacles'] = {};
-        Object.keys(this.obstacles).forEach((k) => {
-            if (k !== 'path') {
-                self.list.obstacles[k] = new Asset();
-                self.list.obstacles[k].loadImage(`${self.obstacles.path}${self.obstacles[k]}`);
-            }
-        });
-    }
-
-    this.preloadUi = function () {
-        this.list['ui'] = {};
-        Object.keys(this.ui).forEach((k) => {
-            if (k !== 'path') {
-                self.list.ui[k] = new Asset();
-                self.list.ui[k].loadImage(`${self.ui.path}${self.ui[k]}`);
+                self.list[name][k] = new Asset();
+                self.list[name][k].loadImage(`${asset.path}${asset[k]}`);
             }
         });
     }
@@ -107,9 +107,10 @@ var Resources = function () {
         });
     }
 
+    // Checking that all assets are loaded
     this.isLoadComplete = function () {
-        if(self.playerLoadComplete() && self.obstaclesLoadComplete() &&
-           self.uiLoadComplete() && self.sfxLoadComplete()) {
+        if(self.playerLoadComplete() && self.obstaclesLoadComplete() && self.itemsLoadComplete() &&
+           self.uiLoadComplete() && self.bgLoadComplete() && self.sfxLoadComplete()) {
             console.log("Assets loaded", self.list);
             return true;    
         }
@@ -132,10 +133,26 @@ var Resources = function () {
         return true;
     }
 
+    this.itemsLoadComplete = function () {
+        var assets = Object.keys(self.list.items);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.items[assets[i]].isReady()) return false;
+        }
+        return true;
+    }
+
     this.uiLoadComplete = function () {
         var assets = Object.keys(self.list.ui);
         for (let i=0; i < assets.length; i++) {
             if(!self.list.ui[assets[i]].isReady()) return false;
+        }
+        return true;
+    }
+
+    this.bgLoadComplete = function () {
+        var assets = Object.keys(self.list.bg);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.bg[assets[i]].isReady()) return false;
         }
         return true;
     }

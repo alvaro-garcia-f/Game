@@ -315,22 +315,19 @@ var Game = function () {
 
         if (this.player.attempts === 0) {
             this.status = 0;
-            this.loadCounters();
             console.log("Game Over");
         } else {
             this.status = 2;
         }
-
         this.sound.play("late");
     }
 
     this.reachGoal = function () {
         this.status = 2;
-        var pos = 600;
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
         console.log("Congratulations! You are on time!");
-        drawBuilding(self.resources.list.bg.building.element, pos);
+        drawBuilding(self.resources.list.bg.building.element, 600);
         this.sound.play("victory");
     }
 }

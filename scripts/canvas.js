@@ -8,12 +8,21 @@ const ctx = canvas.getContext("2d");
 ctx.font = '15.75px Eight Bit Dragon';
 ctx.lineWidth = 3;
 
-// Drawing on canvas
+// - ENVIROMENT
+function drawBackground(asset, bg) {
+    ctx.drawImage(asset, bg.x, bg.y);
+}
+
 function drawGround() {
     ctx.fillStyle = "#2c2b40";
     ctx.fillRect(0, GROUND, SCR_WIDTH, 64);
 }
 
+function drawBuilding(image, pos) {
+    ctx.drawImage(image, pos, GROUND - 379, 400, 400);
+}
+
+// - INTERFACE
 function drawCounters(attempts, heart, time, clock, distance, flag) {
     //Hearts
     for (let i = 1; i <= attempts; i++) {
@@ -42,13 +51,12 @@ function drawBonusTime(time) {
     ctx.fillText(`${time}s`, 890, 70);
 }
 
+// - GAME ELEMENTS
 //Draws generic elements on the screen. Asset contains the HTML element,
 //Object its position.
 function drawElement(asset, object) {
     ctx.drawImage(asset, object.x, object.y);
 }
 
-function drawBuilding(image, pos) {
-    ctx.drawImage(image, pos, GROUND - 379, 400, 400);
-}
+
 

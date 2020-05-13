@@ -93,7 +93,8 @@ var Resources = function () {
 
     this.bg = {
         path: './assets/img/bg/',
-        building: 'building.png'
+        building: 'building.png',
+        city: 'background_1.png'
     };
 
     this.sfx = {

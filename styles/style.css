@@ -14,8 +14,6 @@ body {
     width: 1000px;
     height: 562px;
     border: 2px solid orange;
-    background-image: url('../assets/img/bg/background_1.png');
-    background-size: contain;
+    background-color: #8ed0ff;
     margin: 0 auto;
-    image-rendering: pixelated;
 }

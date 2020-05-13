@@ -38,7 +38,7 @@ var Game = function () {
     this.timerDistance;
     this.timerObstacle;
     this.level = 0;
-    this.status = 0;                        // 0 - Stopped | 1 - Running  | 2 - Paused 
+    this.status = 0;                        // 0 - Stopped | 1 - Running  | 2 - Load next level 
 
     // Game Setup - Preloads all assets
     this.init = function ()
@@ -77,6 +77,7 @@ var Game = function () {
         // Start animation loop
         console.log("Game Start");
         requestAnimationFrame(loadScrLoop);
+        this.status = 1;
         
         // Start countdowns
         this.timerClock = setInterval(function () {
@@ -309,22 +310,21 @@ var Game = function () {
     //Endings
     this.missedAttempt = function () {
         if (this.player.attempts === 1) {
-            this.over = true
+            this.status = 0;
             clearInterval(this.timerClock);
             clearInterval(this.timerDistance);
             this.player.attempts--;
             this.loadCounters();
             console.log("Game Over");
         } else {
-            this.countDown = 60;
+            this.status = 2;
             this.player.attempts--;
         }
         this.sound.play("late");
-        this.distance = 2000;   
     }
 
     this.reachGoal = function () {
-        this.over = true;
+        this.status = 2;
         var pos = 600;
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);

@@ -79,22 +79,12 @@ var Game = function () {
     this.engine = function () {
         // Detect end game conditions
         if (this.countDown === 0) {             // Life loss or Game Over
-            if (this.player.attempts === 1) {
-                this.over = true
-                clearInterval(this.timerClock);
-                clearInterval(this.timerDistance);
-                this.player.attempts--;
-                this.loadCounters();
-                console.log("Game Over");
-            } else {
-                this.countDown = 60;
-                this.player.attempts--;
-            }
-            this.sound.play("late");
-            this.distance = 2000;    
+            this.missedAttempt();
+            return;
         }
         if (this.distance <= 0) {               // Goal
             this.reachGoal();
+            return;
         }
 
         // Draw enviroment and obstacles
@@ -304,6 +294,22 @@ var Game = function () {
     }
 
     //Endings
+    this.missedAttempt = function () {
+        if (this.player.attempts === 1) {
+            this.over = true
+            clearInterval(this.timerClock);
+            clearInterval(this.timerDistance);
+            this.player.attempts--;
+            this.loadCounters();
+            console.log("Game Over");
+        } else {
+            this.countDown = 60;
+            this.player.attempts--;
+        }
+        this.sound.play("late");
+        this.distance = 2000;    
+    }
+
     this.reachGoal = function () {
         this.over = true;
         var pos = 600;

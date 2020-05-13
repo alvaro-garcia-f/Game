@@ -309,17 +309,18 @@ var Game = function () {
 
     //Endings
     this.missedAttempt = function () {
-        if (this.player.attempts === 1) {
+        clearInterval(this.timerClock);
+        clearInterval(this.timerDistance);
+        this.player.attempts--;
+
+        if (this.player.attempts === 0) {
             this.status = 0;
-            clearInterval(this.timerClock);
-            clearInterval(this.timerDistance);
-            this.player.attempts--;
             this.loadCounters();
             console.log("Game Over");
         } else {
             this.status = 2;
-            this.player.attempts--;
         }
+
         this.sound.play("late");
     }
 

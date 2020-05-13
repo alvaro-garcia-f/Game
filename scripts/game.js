@@ -138,7 +138,9 @@ var Game = function () {
             }
         }
 
+        // If there are no Collisions, background and obstacles scroll
         if (!this.collideObstaclePlayer() && !this.collideVertical()) {
+            this.bg.x--;                                                                                  
             this.obstacles.animateObstacles();
             this.player.hit = false;
         }

@@ -63,6 +63,7 @@ var Game = function () {
 
     this.startGame = function () {
         // Start animation loop
+        console.log("Game Start");
         requestAnimationFrame(loadScrLoop);
         
         // Start countdowns

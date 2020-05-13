@@ -27,6 +27,8 @@ var Asset = function () {
 
 var Resources = function () {
     const self = this;
+
+    // Asset categories
     this.player = {
         path: './assets/img/player/',
         running_0: 'runner_run_0.png',
@@ -75,62 +77,22 @@ var Resources = function () {
     this.list = {}; // Contains all created resources; 
 
     this.startPreload = function () {
-   
-        this.preloadPlayer();
-        this.preloadObstacles();
-        this.preloadItems();
-        this.preloadUi();
-        this.preloadBg();
+        
+        this.preloadImages(this.player, 'player');
+        this.preloadImages(this.obstacles, 'obstacles');
+        this.preloadImages(this.items, 'items');
+        this.preloadImages(this.ui, 'ui');
+        this.preloadImages(this.bg, 'bg');
         this.preloadSfx();
     }
 
     //Load all assets
-    this.preloadPlayer = function () {
-        this.list['player'] = {};
-        Object.keys(this.player).forEach((k) => {
+    this.preloadImages = function (asset, name) {
+        this.list[name] = {};
+        Object.keys(asset).forEach((k) => {
             if (k !== 'path') {
-                self.list.player[k] = new Asset();
-                self.list.player[k].loadImage(`${self.player.path}${self.player[k]}`);
-            }
-        });
-    }
-
-    this.preloadObstacles = function () {
-        this.list['obstacles'] = {};
-        Object.keys(this.obstacles).forEach((k) => {
-            if (k !== 'path') {
-                self.list.obstacles[k] = new Asset();
-                self.list.obstacles[k].loadImage(`${self.obstacles.path}${self.obstacles[k]}`);
-            }
-        });
-    }
-    
-    this.preloadItems = function () {
-        this.list['items'] = {};
-        Object.keys(this.items).forEach((k) => {
-            if (k !== 'path') {
-                self.list.items[k] = new Asset();
-                self.list.items[k].loadImage(`${self.items.path}${self.items[k]}`);
-            }
-        });
-    }
-
-    this.preloadUi = function () {
-        this.list['ui'] = {};
-        Object.keys(this.ui).forEach((k) => {
-            if (k !== 'path') {
-                self.list.ui[k] = new Asset();
-                self.list.ui[k].loadImage(`${self.ui.path}${self.ui[k]}`);
-            }
-        });
-    }
-
-    this.preloadBg = function () {
-        this.list['bg'] = {};
-        Object.keys(this.bg).forEach((k) => {
-            if (k !== 'path') {
-                self.list.bg[k] = new Asset();
-                self.list.bg[k].loadImage(`${self.bg.path}${self.bg[k]}`);
+                self.list[name][k] = new Asset();
+                self.list[name][k].loadImage(`${asset.path}${asset[k]}`);
             }
         });
     }

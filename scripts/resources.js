@@ -37,8 +37,8 @@ var Resources = function () {
         running_3: 'runner_run_3.png',
         running_4: 'runner_run_4.png',
         running_5: 'runner_run_5.png',
-        idle: 'runner_idle_0.png',
-        jumping: 'runner_jump_0.png'
+        idle: 'runner_run_idle.png',
+        jumping: 'runner_run_jump.png'
     };
 
     this.obstacles = {

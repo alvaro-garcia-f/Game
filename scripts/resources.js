@@ -4,7 +4,7 @@ var Asset = function () {
     this.ready = false;
     this.element;
 
-    this.loadImage = function (path) { 
+    this.loadImage = function (path) {
         this.element = new Image();
         this.element.onload = function () {
             self.ready = true;
@@ -13,7 +13,7 @@ var Asset = function () {
     }
 
     this.loadAudio = function (path) {
-        this.element = new Audio();   
+        this.element = new Audio();
         this.element.oncanplay = function () {
             self.ready = true;
         };
@@ -74,7 +74,7 @@ var Resources = function () {
         beer: 'sfx_beer.ogg'
     };
 
-    this.list = {}; // Contains all created resources; 
+    this.list = {}; // Contains all created resources;
 
     this.startPreload = function () {
         
@@ -112,7 +112,7 @@ var Resources = function () {
         if(self.playerLoadComplete() && self.obstaclesLoadComplete() && self.itemsLoadComplete() &&
            self.uiLoadComplete() && self.bgLoadComplete() && self.sfxLoadComplete()) {
             console.log("Assets loaded", self.list);
-            return true;    
+            return true;
         }
         return false;
     }

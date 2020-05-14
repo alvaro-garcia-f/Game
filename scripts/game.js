@@ -102,7 +102,7 @@ var Game = function () {
     // Main game block - Generates procedure every iteration
     this.engine = function () {
         // Detect end game conditions
-        if (this.countDown === 0) {             // Life loss or Game Over
+        if (this.countDown <= 0) {             // Life loss or Game Over
             this.missedAttempt();
             return;
         }

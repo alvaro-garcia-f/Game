@@ -29,6 +29,7 @@ game.init();
 
 // Keyboard listeners
 window.addEventListener("keydown", (e) => {
+    e.preventDefault();
     switch (e.key) {
         case "ArrowLeft":
             game.keyLeft = true;
@@ -43,6 +44,7 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
+    e.preventDefault();
     switch (e.key) {
         case "ArrowLeft":
             game.keyLeft = false;

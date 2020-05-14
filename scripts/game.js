@@ -375,7 +375,6 @@ var Game = function () {
         console.log("Congratulations! You are on time!");
         this.status = 3;
         this.level++;
-        drawBuilding(self.resources.list.bg.building.element, 600);
         this.sound.play("victory");
     }
 }

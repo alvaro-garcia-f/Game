@@ -164,5 +164,11 @@ function drawGameOver () {
     drawMainText("GAME OVER", 'gameover');
 }
 
+function animateGoal () {
+    var pos = SCR_WIDTH;
+    drawBuilding(game.resources.list.bg.building.element, pos);
+
+}
+
 
 

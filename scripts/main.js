@@ -13,7 +13,8 @@ function loadScrLoop() {
  
     if(game.status === 3) {                                        // Goal reached
         cancelAnimationFrame(id);
-        game.setUpLevel();
+        animateGoal();
+       // game.setUpLevel();
     }
     if(game.status === 0) {                                         // Game Over
         cancelAnimationFrame(id);

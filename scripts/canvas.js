@@ -165,10 +165,16 @@ function drawGameOver () {
 }
 
 function animateGoal () {
-    var pos = 600; //SCR_WIDTH;
-    ctx.drawImage(game.resources.list.bg.city.element ,0,0);
-    drawGround();
-    drawBuilding(game.resources.list.bg.building.element, pos);
+    var pos = SCR_WIDTH;
+    var goalAnimation = requestAnimationFrame( function animation() {
+        ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
+        ctx.drawImage(game.resources.list.bg.city.element ,0,0);
+        drawGround();
+        drawBuilding(game.resources.list.bg.building.element, pos);
+        pos -= 2;
+        if (pos <= 600) cancelAnimationFrame(goalAnimation); 
+        else requestAnimationFrame(animation)    
+    });
 }
 
 

@@ -74,8 +74,8 @@ function drawElement(asset, object) {
 
 // - TRANSITION SCREENS
 function drawGameOver () {
-    ctx.strokeStyle = '#333';
     resetColor();
+    ctx.drawImage(game.resources.list.bg.city.element ,0,0);
     ctx.strokeText("You have been expelled!", 500, 270);
     ctx.fillText("You have been expelled!", 500, 270);
     ctx.strokeText("GAME OVER", 500, 270);

@@ -98,8 +98,11 @@ function drawTopText(text) {
 function drawMainText(text, style) {
     resetFont();
     setShadow();
-    ctx.font = '42px Eight Bit Dragon';
-    ctx.lineWidth = 6;
+
+    if (style !== 'day') {
+        ctx.font = '42px Eight Bit Dragon';
+        ctx.lineWidth = 6;
+    }
 
     //Create gradient
     var grad = ctx.createLinearGradient(0, 240, 0, 280);
@@ -108,6 +111,7 @@ function drawMainText(text, style) {
         grad.addColorStop(.1, '#d10000');
         grad.addColorStop(.5, '#8a0000');
         grad.addColorStop(1, 'black');
+        ctx.fillStyle = grad;
     }
     
     if (style === 'gameover') {
@@ -116,12 +120,18 @@ function drawMainText(text, style) {
         grad.addColorStop(.5, '#d15000');
         grad.addColorStop(.9, '#d10000');
         grad.addColorStop(1, '#8a0000');
+        ctx.fillStyle = grad;
     }
-    ctx.fillStyle = grad;
     
     //Print Text
     ctx.strokeText(text, 500, 280);
     ctx.fillText(text, 500, 280);
+}
+
+function drawNextLevel(text) {
+    ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    ctx.drawImage(game.resources.list.bg.city.element ,0,0);
+    drawMainText(text, 'day');
 }
 
 function drawPunishment (attempts) {

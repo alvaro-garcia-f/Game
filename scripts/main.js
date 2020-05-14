@@ -7,7 +7,8 @@ function loadScrLoop() {
     if(game.status === 2) {                                        // Life loss
         cancelAnimationFrame(id);
         drawPunishment(game.player.attempts);
-        setTimeout(game.setUpLevel, 3000);
+        setTimeout(drawNextLevel, 3000, `Day ${game.level}`);
+        setTimeout(game.setUpLevel, 6000);
     }
  
     if(game.status === 3) {                                        // Goal reached

@@ -46,7 +46,7 @@ var Game = function () {
     this.timerClock;
     this.timerDistance;
     this.timerObstacle;
-    this.level = 0;
+    this.level = 1;
     this.status = 0;                        // 0-Stopped | 1-Running  | 2-Life Loss | 3-Goal reached 
     this.bonusStyle = false;                // used to make timer blink when item picked up
 
@@ -75,7 +75,6 @@ var Game = function () {
 
     // Initialize player position, counters and cleans obstacles
     this.setUpLevel = function () {
-        self.level++;
         self.player.x = 64;
         self.player.y = GROUND - self.player.h;
         self.player.status = 'idle';
@@ -353,12 +352,14 @@ var Game = function () {
             console.log("Game Over");
         } else {
             this.status = 2;
+            this.level++;
         }
         this.sound.play("late");
     }
 
     this.reachGoal = function () {
         this.status = 3;
+        this.level++;
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
         console.log("Congratulations! You are on time!");

@@ -48,6 +48,7 @@ var Game = function () {
     this.timerObstacle;
     this.level = 0;
     this.status = 0;                        // 0 - Stopped | 1 - Running  | 2 - Load next level 
+    this.bonusStyle = false;                // used to make timer blink when item picked up
 
     // Game Setup - Preloads all assets
     this.init = function ()
@@ -153,7 +154,12 @@ var Game = function () {
             this.item.visible = false;
             this.sound.play("beer");
             this.countDown += 5;
-            drawBonusTime(self.countDown);
+            var counter = 4;                                    // Odd number, so bonusStyle can go back to false
+            var bonusTimer = setInterval (() => {
+                self.bonusStyle = !self.bonusStyle;
+                counter--;
+                if (counter === 0) clearInterval(bonusTimer);                   
+            }, 160);
         }
     }
     
@@ -161,7 +167,7 @@ var Game = function () {
     this.loadCounters = function () {
         drawCounters(this.player.attempts, this.resources.list.ui.heart.element,
                      this.countDown, this.resources.list.ui.clock.element,
-                     this.distance, this.resources.list.ui.flag.element);
+                     this.distance, this.resources.list.ui.flag.element, this.bonusStyle);
     }
 
 

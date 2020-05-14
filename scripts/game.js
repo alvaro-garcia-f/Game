@@ -130,13 +130,15 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
+        
         this.browserFrames++;
         if (this.browserFrames === 6) {
             this.browserFrames = 1;
             this.player.frame++;
-            if(!this.collideVertical())
-                this.player.updateStatus(`running_${this.player.frame%5}`);
+            this.player.updateStatus(`running_${this.player.frame%5}`);
         }
+        //If after moving the player is still on a box, go back to idle status
+        if (this.collideVertical()) this.player.updateStatus('idle'); 
 
         //Detect collisions
         if (this.collideObstaclePlayer()) {
@@ -212,12 +214,15 @@ var Game = function () {
         }
     }
 
-    //Movement
+    //- MOVEMENT
     this.movePlayer = function (direction) {
-        if (!this.collideVertical() && this.player.position !== GROUND) {
+        // If player moves out an obstacles, falls to ground
+        if (!this.collideVertical() && this.player.position !== GROUND && !this.player.jumping) {
             this.player.jumping = true;
             this.player.land(GROUND);
         }
+
+        // Move player in the correct direction
         if (direction === "left") this.movePlayerLeft();
         if (direction === "right") this.movePlayerRight();
         if (direction === "jump") {
@@ -227,6 +232,8 @@ var Game = function () {
                 this.player.vSpeed = -10;
             }
             this.player.jump();
+
+            // Control landing on ground, next obstacle or previous obstacle
             if (this.collideVertical() && this.player.location === "n") { this.player.land(this.obstacles.next().y);}
             else if (this.collideVertical() && this.player.location === "p") { this.player.land(this.obstacles.previous().y);}
             else this.player.land(GROUND);
@@ -251,7 +258,7 @@ var Game = function () {
         this.checkObstacleCrossed();
     }
 
-    // Obstacle and Items positioning and generations
+    //- OBSTACLES & ITEMS - Obstacle and Items positioning and generation
     this.generateObstacle = function () {
         if (!self.obstacles.bufferFull())
             self.obstacles.createObstacle();
@@ -278,7 +285,7 @@ var Game = function () {
         if(this.bg2.x === -1000) this.bg2.x = SCR_WIDTH;
     }
 
-    // Collisions
+    //- COLLISIONS
     this.collideLeft = function () {
         return this.obstacles.previous() &&
                this.player.x - this.player.runSpeed <= this.obstacles.previous().x + this.obstacles.previous().w &&
@@ -351,9 +358,10 @@ var Game = function () {
         this.player.attempts--;
 
         if (this.player.attempts === 0) {
-            this.status = 0;
             console.log("Game Over");
+            this.status = 0;
         } else {
+            console.log("I'm sorry! You are late!");
             this.status = 2;
             this.level++;
         }
@@ -361,12 +369,12 @@ var Game = function () {
     }
 
     this.reachGoal = function () {
-        this.status = 3;
-        this.level++;
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
         clearInterval(this.timerObstacle);
         console.log("Congratulations! You are on time!");
+        this.status = 3;
+        this.level++;
         drawBuilding(self.resources.list.bg.building.element, 600);
         this.sound.play("victory");
     }

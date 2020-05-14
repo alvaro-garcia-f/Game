@@ -169,9 +169,6 @@ function animateGoal () {
     var goalAnimation = requestAnimationFrame( function animation() {
         ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
         game.loadEnviroment();
-
-       // ctx.drawImage(game.resources.list.bg.city.element ,0,0);
-      //  drawGround();
         drawBuilding(game.resources.list.bg.building.element, pos);
         pos -= 2;
         if (pos <= 600) cancelAnimationFrame(goalAnimation); 

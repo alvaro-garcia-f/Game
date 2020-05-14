@@ -130,13 +130,6 @@ var Game = function () {
             this.movePlayer("jump");
         }
         this.loadPlayer();
-        
-        this.browserFrames++;
-        if (this.browserFrames === 6) {
-            this.browserFrames = 1;
-            this.player.frame++;
-            this.player.updateStatus(`running_${this.player.frame%5}`);
-        }
         //If after moving the player is still on a box, go back to idle status
         if (this.collideVertical()) this.player.updateStatus('idle'); 
 
@@ -187,6 +180,12 @@ var Game = function () {
         var sprite = `${this.player.status.split("_")[0]}_${this.player.attempts}`;
         if (this.player.status.split('_')[0] === 'running') sprite = `${sprite}_${this.player.status.split("_")[1]}`; 
         drawElement(this.resources.list.player[sprite].element, this.player);
+        this.browserFrames++;
+        if (this.browserFrames === 6) {
+            this.browserFrames = 1;
+            this.player.frame++;
+            this.player.updateStatus(`running_${this.player.frame%5}`);
+        }
     }
 
     this.loadObstacle = function () {

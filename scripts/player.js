@@ -55,7 +55,7 @@ var Player = function () {
     this.landed = false;             // Helps detect when caracter goes from moving to idle
     this.hit = false;                // Prevents obstacle hit sound to be played more than once
     this.frame = 0;                  // Running animation frame
-    this.attempts = 1;               // Lifes
+    this.attempts = 2;               // Lifes
 
     this.moveLeft = function () {
         this.status = `running_${this.frame%5}`;

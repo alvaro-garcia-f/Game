@@ -10,11 +10,13 @@ ctx.lineWidth = 3;
 ctx.textAlign = "center"
 
 //Reset basic font color
-function resetColor() {
+function resetFont() {
+    ctx.font = '15.75px Eight Bit Dragon';
     ctx.strokeStyle = '#333';
     ctx.fillStyle = '#fff';
     ctx.shadowOffsetY = 0;
     ctx.shadowBlur = 0;
+    ctx.lineWidth = 3;
 }
 
 //Set font shadow
@@ -45,7 +47,7 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
         ctx.drawImage(heart, 25 * i, 50, heart.width / 2, heart.height / 2);
     }
 
-    resetColor();
+    resetFont();
     
     //Flag + Distance
     ctx.drawImage(flag, 430, 50, flag.width / 1.5, flag.height / 1.5);
@@ -67,13 +69,6 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
 
 }
 
-//Draw text alerts on the screen
-function drawText(text) {
-    resetColor();
-    ctx.strokeText(text, 500, 270);
-    ctx.fillText(text, 500, 270);
-}
-
 // - GAME ELEMENTS
 //Draws generic elements on the screen. Asset contains the HTML element,
 //Object its position.
@@ -82,13 +77,59 @@ function drawElement(asset, object) {
 }
 
 // - TRANSITION SCREENS
+//Draw text alerts on the screen
+function drawLevel(level) {
+    resetFont();
+    setShadow();
+    ctx.strokeText(`Day ${level}`, 500, 270);
+    ctx.fillText(`Day ${level}`, 500, 270);
+}
+
+function drawPunishment (attempts) {
+    //Draw Background
+    ctx.drawImage(game.resources.list.bg.city.element ,0,0);
+    
+    resetFont();
+    setShadow();
+
+    //Print top message
+    ctx.strokeText("You are late!", 500, 220);
+    ctx.fillText("You are late!", 500, 220);
+
+    ctx.font = '42px Eight Bit Dragon';
+    ctx.lineWidth = 6;
+
+    //Create gradient
+    var grad = ctx.createLinearGradient(0, 240, 0, 280);
+    grad.addColorStop(0, 'black');
+    grad.addColorStop(.1, '#d10000');
+    grad.addColorStop(.5, '#8a0000');
+    grad.addColorStop(1, 'black');
+    ctx.fillStyle = grad;
+
+    //Print Punishment
+    ctx.strokeText("PUNISHMENT", 500, 280);
+    ctx.fillText("PUNISHMENT", 500, 280);
+
+    //Print Bottom message
+    if (attempts === 4) var text = "Dye your hair!";
+    if (attempts === 3) var text = "Shave your head!";
+    if (attempts === 2) var text = "Dress like Urkel!";
+    if (attempts === 1) var text = "You know what to do...";
+
+    resetFont();
+    setShadow();
+    ctx.strokeText(text, 500, 320);
+    ctx.fillText(text, 500, 320);
+}
+
 function drawGameOver () {
     //Draw Background
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
     
-    resetColor();
+    resetFont();
     setShadow();
-    
+
     //Print top message
     ctx.strokeText("You have been expelled!", 500, 220);
     ctx.fillText("You have been expelled!", 500, 220);

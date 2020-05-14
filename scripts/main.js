@@ -3,12 +3,18 @@ var id;
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
     game.engine(); 
-    if(game.status === 1) id = requestAnimationFrame(loadScrLoop);
-    if(game.status === 2) {
+    if(game.status === 1) id = requestAnimationFrame(loadScrLoop); // Game running
+    if(game.status === 2) {                                        // Life loss
+        cancelAnimationFrame(id);
+        drawPunishment(game.player.attempts);
+        setTimeout(game.setUpLevel, 3000);
+    }
+ 
+    if(game.status === 3) {                                        // Goal reached
         cancelAnimationFrame(id);
         game.setUpLevel();
     }
-    if(game.status === 0) {
+    if(game.status === 0) {                                         // Game Over
         cancelAnimationFrame(id);
         drawGameOver();
     }

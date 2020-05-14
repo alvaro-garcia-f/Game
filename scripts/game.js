@@ -47,7 +47,7 @@ var Game = function () {
     this.timerDistance;
     this.timerObstacle;
     this.level = 0;
-    this.status = 0;                        // 0 - Stopped | 1 - Running  | 2 - Load next level 
+    this.status = 0;                        // 0-Stopped | 1-Running  | 2-Life Loss | 3-Goal reached 
     this.bonusStyle = false;                // used to make timer blink when item picked up
 
     // Game Setup - Preloads all assets
@@ -73,14 +73,14 @@ var Game = function () {
 
     // Initializes player positions, counters and cleans obstacles, print level on screen    
     this.setUpLevel = function () {
-        this.level++;
-        this.player.x = 64;
-        this.player.y = GROUND - this.player.h;
-        this.player.status = 'idle';
-        this.countDown = 5;  // <--- Test
-        this.distance = 2000;
-        this.obstacles.emptyBuffer();
-        this.startGame();
+        self.level++;
+        self.player.x = 64;
+        self.player.y = GROUND - self.player.h;
+        self.player.status = 'idle';
+        self.countDown = 5;  // <--- Test
+        self.distance = 2000;
+        self.obstacles.emptyBuffer();
+        self.startGame();
     }
 
     this.startGame = function () {
@@ -354,7 +354,7 @@ var Game = function () {
     }
 
     this.reachGoal = function () {
-        this.status = 2;
+        this.status = 3;
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
         console.log("Congratulations! You are on time!");

@@ -79,6 +79,29 @@ function drawElement(asset, object) {
 }
 
 // - TRANSITION SCREENS
+//Draw main title text
+function drawTitleText() {
+    ctx.font = '63px Eight Bit Dragon';
+    ctx.strokeStyle = '#333';
+    ctx.lineWidth = 9;
+    setShadow();
+
+    var grad = ctx.createLinearGradient(0, 140, 0, 200);
+    grad.addColorStop(0, '#d46702');
+    grad.addColorStop(.1, '#d1ae00');
+    grad.addColorStop(.5, '#d15000');
+    grad.addColorStop(.9, '#d10000');
+    grad.addColorStop(1, '#8a0000');
+    ctx.fillStyle = grad;
+    
+    ctx.strokeText('UNNING LAT', 500, 200);
+    ctx.fillText('UNNING LAT', 500, 200);
+    ctx.font = '84px Eight Bit Dragon';
+    ctx.lineWidth = 11;
+    ctx.strokeText('R                E', 500, 215);
+    ctx.fillText('R                E', 500, 215);      
+}
+
 //Draw text alerts on the screen
 function drawLevel(level) {
     resetFont();
@@ -177,15 +200,17 @@ function drawGameOver () {
 
 // ANIMATION SCREENS
 function animateTitle () {
-var pos = SCR_HEIGHT;
-animationId = requestAnimationFrame( function animation() {
-    ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
-    ctx.drawImage(game.resources.list.bg.city.element, 0, pos);
-    pos -= 2;
-    if (pos > 0)
-        requestAnimationFrame(animation);
-    else 
-         cancelAnimationFrame(animationId);
+    var pos = SCR_HEIGHT;
+    animationId = requestAnimationFrame( function animation() {
+        ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
+        ctx.drawImage(game.resources.list.bg.city.element, 0, pos);
+        pos -= 2;
+        if (pos >= 0)
+            requestAnimationFrame(animation);
+        else {
+            cancelAnimationFrame(animationId);
+            drawTitleText();
+        }
     });
 }
 

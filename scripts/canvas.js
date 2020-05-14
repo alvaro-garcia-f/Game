@@ -94,27 +94,44 @@ function drawTopText(text) {
     ctx.fillText(text, 500, 220);
 }
 
+//Print main message
+function drawMainText(text, style) {
+    resetFont();
+    setShadow();
+    ctx.font = '42px Eight Bit Dragon';
+    ctx.lineWidth = 6;
+
+    //Create gradient
+    var grad = ctx.createLinearGradient(0, 240, 0, 280);
+    if(style === 'punishment') {
+        grad.addColorStop(0, 'black');
+        grad.addColorStop(.1, '#d10000');
+        grad.addColorStop(.5, '#8a0000');
+        grad.addColorStop(1, 'black');
+    }
+    
+    if (style === 'gameover') {
+        grad.addColorStop(0, '#d46702');
+        grad.addColorStop(.1, '#d1ae00');
+        grad.addColorStop(.5, '#d15000');
+        grad.addColorStop(.9, '#d10000');
+        grad.addColorStop(1, '#8a0000');
+    }
+    ctx.fillStyle = grad;
+    
+    //Print Text
+    ctx.strokeText(text, 500, 280);
+    ctx.fillText(text, 500, 280);
+}
+
 function drawPunishment (attempts) {
     //Draw Background
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
     
     drawTopText("You are late!");
 
-    ctx.font = '42px Eight Bit Dragon';
-    ctx.lineWidth = 6;
-
-    //Create gradient
-    var grad = ctx.createLinearGradient(0, 240, 0, 280);
-    grad.addColorStop(0, 'black');
-    grad.addColorStop(.1, '#d10000');
-    grad.addColorStop(.5, '#8a0000');
-    grad.addColorStop(1, 'black');
-    ctx.fillStyle = grad;
-
-    //Print Punishment
-    ctx.strokeText("PUNISHMENT", 500, 280);
-    ctx.fillText("PUNISHMENT", 500, 280);
-
+    drawMainText('PUNISHMENT', 'punishment');
+    
     //Print Bottom message
     if (attempts === 4) var text = "Dye your hair!";
     if (attempts === 3) var text = "Shave your head!";
@@ -133,21 +150,8 @@ function drawGameOver () {
     
     drawTopText("You have been expelled!", 500, 220);
 
-    ctx.font = '42px Eight Bit Dragon';
-    ctx.lineWidth = 6;
-
-    //Create gradient
-    var grad = ctx.createLinearGradient(0, 240, 0, 280);
-    grad.addColorStop(0, '#d46702');
-    grad.addColorStop(.1, '#d1ae00');
-    grad.addColorStop(.5, '#d15000');
-    grad.addColorStop(.9, '#d10000');
-    grad.addColorStop(1, '#8a0000');
-    ctx.fillStyle = grad;
-
     //Print game over
-    ctx.strokeText("GAME OVER", 500, 280);
-    ctx.fillText("GAME OVER", 500, 280);
+    drawMainText("GAME OVER", 'gameover');
 }
 
 

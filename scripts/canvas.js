@@ -158,7 +158,7 @@ function drawGameOver () {
     //Draw Background
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
     
-    drawTopText("You have been expelled!", 500, 220);
+    drawTopText("You have been expelled!");
 
     //Print game over
     drawMainText("GAME OVER", 'gameover');
@@ -169,9 +169,14 @@ function animateGoal () {
     var goalAnimation = requestAnimationFrame( function animation() {
         ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
         game.loadEnviroment();
+        game.loadPlayer();
         drawBuilding(game.resources.list.bg.building.element, pos);
         pos -= 2;
-        if (pos <= 600) cancelAnimationFrame(goalAnimation); 
+        if (pos <= 600) { 
+            cancelAnimationFrame(goalAnimation); 
+            drawTopText("You are on time!");
+            drawMainText("CONGRATULATIONS", 'gameover');        
+        }
         else requestAnimationFrame(animation)    
     });
 }

@@ -15,7 +15,7 @@ function loadScrLoop() {
         cancelAnimationFrame(id);
         game.loadEnviroment();
         animateGoal();
-       // game.setUpLevel();
+        setTimeout(game.setUpLevel, 3000);
     }
     if(game.status === 0) {                                         // Game Over
         cancelAnimationFrame(id);

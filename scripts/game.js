@@ -77,7 +77,7 @@ var Game = function () {
         self.player.x = 64;
         self.player.y = GROUND - self.player.h;
         self.player.status = 'idle';
-        self.countDown = 5;  // <--- Test
+        self.countDown = 60; 
         self.distance = 2000;
         self.obstacles.emptyBuffer();
         self.startGame();

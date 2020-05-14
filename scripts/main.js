@@ -1,6 +1,6 @@
 var id;
 
-// Animation Loop
+//- MAIN LOOP
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
     game.engine(); 
@@ -8,13 +8,11 @@ function loadScrLoop() {
     if(game.status === 2) {                                        // Life loss
         cancelAnimationFrame(id);
         drawPunishment(game.player.attempts);
-       // setTimeout(drawNextLevel, 3000, `Day ${game.level}`);
         setTimeout(game.setUpLevel, 3000);
     }
  
     if(game.status === 3) {                                        // Goal reached
         cancelAnimationFrame(id);
-    //    setTimeout(drawNextLevel, 3000, `Day ${game.level}`);
         game.setUpLevel();
     }
     if(game.status === 0) {                                         // Game Over
@@ -23,11 +21,11 @@ function loadScrLoop() {
     }
 }
 
-// Initialize game
+//- INITIALIZE GAME
 var game = new Game();
 game.init();
 
-// Keyboard listeners
+// KEYBOARD LISTENERS
 window.addEventListener("keydown", (e) => {
     e.preventDefault();
     switch (e.key) {

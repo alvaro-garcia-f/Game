@@ -124,6 +124,15 @@ function drawMainText(text, style) {
         grad.addColorStop(1, '#8a0000');
         ctx.fillStyle = grad;
     }
+
+    if (style === 'congratulations') {
+        grad.addColorStop(0, '#1e73fc');
+        grad.addColorStop(.1, '#65aaf7');
+        grad.addColorStop(.5, '#4287f5');
+        grad.addColorStop(.9, '#1e73fc');
+        grad.addColorStop(1, '#003180');
+        ctx.fillStyle = grad;
+    }
     
     //Print Text
     ctx.strokeText(text, 500, 280);
@@ -184,7 +193,7 @@ function animateGoal () {
             game.loadPlayer();
         }
 
-        // If the building is still moving, aniamte background
+        // If the building is still moving, animate background
         if(pos > 600) {
             pos -= 2;
             game.bg.x -= 0.5;
@@ -197,7 +206,7 @@ function animateGoal () {
         else {
             cancelAnimationFrame(animationId);
             drawTopText("You are on Time!");
-            drawMainText("CONGRATULATIONS", 'gameover');
+            drawMainText("CONGRATULATIONS", 'congratulations');
             setTimeout(game.setUpLevel, 3000);
         }
     });

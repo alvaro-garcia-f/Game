@@ -165,9 +165,10 @@ function drawGameOver () {
 }
 
 function animateGoal () {
-    var pos = SCR_WIDTH;
+    var pos = 600; //SCR_WIDTH;
+    ctx.drawImage(game.resources.list.bg.city.element ,0,0);
+    drawGround();
     drawBuilding(game.resources.list.bg.building.element, pos);
-
 }
 
 

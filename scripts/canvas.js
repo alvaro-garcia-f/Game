@@ -7,6 +7,7 @@ const ctx = canvas.getContext("2d");
 //Set up font
 ctx.font = '15.75px Eight Bit Dragon';
 ctx.lineWidth = 3;
+ctx.textAlign = "center"
 
 // - ENVIROMENT
 function drawBackground(asset, bg) {
@@ -34,8 +35,8 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
     
     //Flag + Distance
     ctx.drawImage(flag, 430, 50, flag.width / 1.5, flag.height / 1.5);
-    ctx.strokeText(`${distance}m`, 470, 75);
-    ctx.fillText(`${distance}m`, 470, 75);
+    ctx.strokeText(`${distance}m`, 495, 75);
+    ctx.fillText(`${distance}m`, 495, 75);
     
     //Clock + Time
     ctx.drawImage(clock, 850, 50, clock.width / 1.5, clock.height / 1.5);
@@ -43,11 +44,11 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
     if(bonusStyle) {
         ctx.strokeStyle = 'lime';
         ctx.fillStyle = 'lime';
-        ctx.strokeText(`${time}s`, 890, 73);
-        ctx.fillText(`${time}s`, 890, 73);
+        ctx.strokeText(`${time}s`, 905, 73);
+        ctx.fillText(`${time}s`, 905, 73);
     } else {
-        ctx.strokeText(`${time}s`, 890, 75);
-        ctx.fillText(`${time}s`, 890, 75);
+        ctx.strokeText(`${time}s`, 905, 75);
+        ctx.fillText(`${time}s`, 905, 75);
     }
 
 }
@@ -56,8 +57,8 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
 function drawText(text) {
     ctx.strokeStyle = '#333';
     ctx.fillStyle = '#fff';
-    ctx.strokeText(text, 470, 270);
-    ctx.fillText(text, 470, 270);
+    ctx.strokeText(text, 500, 270);
+    ctx.fillText(text, 500, 270);
 }
 
 // - GAME ELEMENTS
@@ -65,6 +66,14 @@ function drawText(text) {
 //Object its position.
 function drawElement(asset, object) {
     ctx.drawImage(asset, object.x, object.y);
+}
+
+// - TRANSITION SCREENS
+function drawGameOver () {
+    ctx.strokeStyle = '#333';
+    ctx.fillStyle = '#fff';
+    ctx.strokeText("You have been expelled!", 500, 270);
+    ctx.fillText("You have been expelled!", 500, 270);
 }
 
 

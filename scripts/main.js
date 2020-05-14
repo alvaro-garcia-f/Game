@@ -8,7 +8,10 @@ function loadScrLoop() {
         cancelAnimationFrame(id);
         game.setUpLevel();
     }
-    if(game.status === 0) cancelAnimationFrame(id);
+    if(game.status === 0) {
+        cancelAnimationFrame(id);
+        drawGameOver();
+    }
 }
 
 // Initialize game

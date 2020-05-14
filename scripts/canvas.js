@@ -173,12 +173,19 @@ function animateGoal () {
         ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
         game.loadEnviroment();
         
-        if (game.player.y > GROUND) game.player.y = GROUND;
-        game.loadPlayer();
+        // If player is in the air make him fall
+        if (game.player.y < GROUND - game.player.h) 
+            game.player.y = GROUND - game.player.h;
+
+        // If player is not inside the building make him walk
+        if (game.player.x < 650) {
+            game.player.x += game.player.runSpeed;
+            game.loadPlayer();
+        }
 
         drawBuilding(game.resources.list.bg.building.element, pos);
-        pos -= 2;
-        if (pos > 600) requestAnimationFrame(animation);
+        if(pos > 600) pos -= 2;
+        if (pos > 600 || game.player.x < 650) requestAnimationFrame(animation);
         else {
             cancelAnimationFrame(animationId);
             drawTopText("You are on Time!");

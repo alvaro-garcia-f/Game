@@ -85,16 +85,20 @@ function drawLevel(level) {
     ctx.fillText(`Day ${level}`, 500, 270);
 }
 
+//Print top message
+function drawTopText(text) {
+    resetFont();
+    setShadow();
+
+    ctx.strokeText(text, 500, 220);
+    ctx.fillText(text, 500, 220);
+}
+
 function drawPunishment (attempts) {
     //Draw Background
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
     
-    resetFont();
-    setShadow();
-
-    //Print top message
-    ctx.strokeText("You are late!", 500, 220);
-    ctx.fillText("You are late!", 500, 220);
+    drawTopText("You are late!");
 
     ctx.font = '42px Eight Bit Dragon';
     ctx.lineWidth = 6;

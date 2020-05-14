@@ -50,7 +50,8 @@ var Game = function () {
     this.status = 0;                        // 0-Stopped | 1-Running  | 2-Life Loss | 3-Goal reached 
     this.bonusStyle = false;                // used to make timer blink when item picked up
 
-    // Game Setup - Preloads all assets
+    //- GAME SETUP 
+    // Preload all assets
     this.init = function ()
     {
         this.resources.startPreload();
@@ -61,6 +62,7 @@ var Game = function () {
         setTimeout(self.loadWhenReady, 300);
     }
 
+    // When all assets are ready set up next level
     this.loadWhenReady = function () {
         if (self.resources.isLoadComplete()) {
             self.sound.load(self.resources.list.sfx);
@@ -71,13 +73,13 @@ var Game = function () {
         }
     }
 
-    // Initializes player positions, counters and cleans obstacles, print level on screen    
+    // Initialize player position, counters and cleans obstacles
     this.setUpLevel = function () {
         self.level++;
         self.player.x = 64;
         self.player.y = GROUND - self.player.h;
         self.player.status = 'idle';
-        self.countDown = 60; 
+        self.countDown = 5;//60; 
         self.distance = 2000;
         self.obstacles.emptyBuffer();
         self.startGame();
@@ -93,9 +95,11 @@ var Game = function () {
         this.timerClock = setInterval(function () {
             self.countDown--;
         }, 1000);
+
         this.timerDistance = setInterval(function () {
             if (self.player.status !== 'idle') self.distance--;
         }, 10); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
+        
         this.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
     

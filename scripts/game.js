@@ -78,28 +78,29 @@ var Game = function () {
         self.player.x = 64;
         self.player.y = GROUND - self.player.h;
         self.player.status = 'idle';
-        self.countDown = 5;//60; 
+        self.countDown = 60; 
         self.distance = 2000;
         self.obstacles.emptyBuffer();
-        self.startGame();
+        drawNextLevel(`Day ${self.level}`);
+        setTimeout(self.startGame, 3000);
     }
 
     this.startGame = function () {
         // Start animation loop
         console.log("Game Start");
         requestAnimationFrame(loadScrLoop);
-        this.status = 1;
+        self.status = 1;
         
         // Start countdowns
-        this.timerClock = setInterval(function () {
+        self.timerClock = setInterval(function () {
             self.countDown--;
         }, 1000);
 
-        this.timerDistance = setInterval(function () {
+        self.timerDistance = setInterval(function () {
             if (self.player.status !== 'idle') self.distance--;
         }, 10); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
         
-        this.timerObstacle = setInterval(self.generateObstacle, 1000);
+        self.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
     
     // Main game block - Generates procedure every iteration
@@ -345,6 +346,8 @@ var Game = function () {
     this.missedAttempt = function () {
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
+        clearInterval(this.timerObstacle);
+
         this.player.attempts--;
 
         if (this.player.attempts === 0) {
@@ -362,6 +365,7 @@ var Game = function () {
         this.level++;
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
+        clearInterval(this.timerObstacle);
         console.log("Congratulations! You are on time!");
         drawBuilding(self.resources.list.bg.building.element, 600);
         this.sound.play("victory");

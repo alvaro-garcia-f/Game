@@ -1,4 +1,5 @@
 var id;
+
 // Animation Loop
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
@@ -8,11 +9,12 @@ function loadScrLoop() {
         cancelAnimationFrame(id);
         drawPunishment(game.player.attempts);
         setTimeout(drawNextLevel, 3000, `Day ${game.level}`);
-        setTimeout(game.setUpLevel, 6000);
+        game.setUpLevel();
     }
  
     if(game.status === 3) {                                        // Goal reached
         cancelAnimationFrame(id);
+        setTimeout(drawNextLevel, 3000, `Day ${game.level}`);
         game.setUpLevel();
     }
     if(game.status === 0) {                                         // Game Over

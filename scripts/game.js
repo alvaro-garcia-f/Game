@@ -66,7 +66,8 @@ var Game = function () {
     this.loadWhenReady = function () {
         if (self.resources.isLoadComplete()) {
             self.sound.load(self.resources.list.sfx);
-            self.setUpLevel();
+            animateTitle();
+            //self.setUpLevel();
             return;
         } else {
             setTimeout(self.loadWhenReady, 300);

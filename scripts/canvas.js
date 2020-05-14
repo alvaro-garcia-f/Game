@@ -167,7 +167,7 @@ function drawPunishment (attempts) {
 
 function drawGameOver () {
     //Draw Background
-    ctx.drawImage(game.resources.list.bg.city.element ,0,0);
+    ctx.drawImage(game.resources.list.bg.city.element, 0, 0);
     
     drawTopText("You have been expelled!");
 
@@ -176,6 +176,19 @@ function drawGameOver () {
 }
 
 // ANIMATION SCREENS
+function animateTitle () {
+var pos = SCR_HEIGHT;
+animationId = requestAnimationFrame( function animation() {
+    ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    ctx.drawImage(game.resources.list.bg.city.element, 0, pos);
+    pos -= 2;
+    if (pos > 0)
+        requestAnimationFrame(animation);
+    else 
+         cancelAnimationFrame(animationId);
+    });
+}
+
 function animateGoal () {
     var pos = SCR_WIDTH;
     animationId = requestAnimationFrame( function animation() {
@@ -202,7 +215,7 @@ function animateGoal () {
 
         drawBuilding(game.resources.list.bg.building.element, pos);
 
-        if (pos > 600 || game.player.x < 1000 - pos) requestAnimationFrame(animation);
+        if (pos > 600 || game.player.x < 1000 - pos) { requestAnimationFrame(animation); }
         else {
             cancelAnimationFrame(animationId);
             drawTopText("You are on Time!");

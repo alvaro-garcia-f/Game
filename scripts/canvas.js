@@ -131,22 +131,18 @@ function drawGameOver () {
     //Draw Background
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
     
-    resetFont();
-    setShadow();
-
-    //Print top message
-    ctx.strokeText("You have been expelled!", 500, 220);
-    ctx.fillText("You have been expelled!", 500, 220);
+    drawTopText("You have been expelled!", 500, 220);
 
     ctx.font = '42px Eight Bit Dragon';
     ctx.lineWidth = 6;
 
     //Create gradient
     var grad = ctx.createLinearGradient(0, 240, 0, 280);
-    grad.addColorStop(0, 'white');
-    grad.addColorStop(.1, 'yellow');
-    grad.addColorStop(.5, 'orange');
-    grad.addColorStop(1, 'red');
+    grad.addColorStop(0, '#d46702');
+    grad.addColorStop(.1, '#d1ae00');
+    grad.addColorStop(.5, '#d15000');
+    grad.addColorStop(.9, '#d10000');
+    grad.addColorStop(1, '#8a0000');
     ctx.fillStyle = grad;
 
     //Print game over

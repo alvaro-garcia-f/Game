@@ -77,7 +77,7 @@ var Game = function () {
         this.player.x = 64;
         this.player.y = GROUND - this.player.h;
         this.player.status = 'idle';
-        this.countDown = 60;
+        this.countDown = 5;  // <--- Test
         this.distance = 2000;
         this.obstacles.emptyBuffer();
         this.startGame();

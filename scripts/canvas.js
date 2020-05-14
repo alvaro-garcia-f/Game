@@ -75,11 +75,32 @@ function drawElement(asset, object) {
 // - TRANSITION SCREENS
 function drawGameOver () {
     resetColor();
+    //Draw Background
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
-    ctx.strokeText("You have been expelled!", 500, 270);
-    ctx.fillText("You have been expelled!", 500, 270);
-    ctx.strokeText("GAME OVER", 500, 270);
-    ctx.fillText("GAME OVER", 500, 270);
+
+    //Set font shadow
+    ctx.shadowColor = 'black';
+    ctx.shadowOffsetY = 2;
+    ctx.shadowBlur = 2;
+
+    //Print top message
+    ctx.strokeText("You have been expelled!", 500, 220);
+    ctx.fillText("You have been expelled!", 500, 220);
+
+    ctx.font = '42px Eight Bit Dragon';
+    ctx.lineWidth = 6;
+
+    //Create gradient
+    var grad = ctx.createLinearGradient(0, 240, 0, 280);
+    grad.addColorStop(0, 'white');
+    grad.addColorStop(.1, 'yellow');
+    grad.addColorStop(.5, 'orange');
+    grad.addColorStop(1, 'red');
+    ctx.fillStyle = grad;
+
+    //Print game over
+    ctx.strokeText("GAME OVER", 500, 280);
+    ctx.fillText("GAME OVER", 500, 280);
 }
 
 

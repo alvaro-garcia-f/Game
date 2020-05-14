@@ -9,6 +9,12 @@ ctx.font = '15.75px Eight Bit Dragon';
 ctx.lineWidth = 3;
 ctx.textAlign = "center"
 
+// Set basic font color
+function resetColor() {
+    ctx.strokeStyle = '#333';
+    ctx.fillStyle = '#fff';
+}
+
 // - ENVIROMENT
 function drawBackground(asset, bg) {
     ctx.drawImage(asset, bg.x, bg.y);
@@ -30,8 +36,7 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
         ctx.drawImage(heart, 25 * i, 50, heart.width / 2, heart.height / 2);
     }
 
-    ctx.strokeStyle = '#333';
-    ctx.fillStyle = '#fff';
+    resetColor();
     
     //Flag + Distance
     ctx.drawImage(flag, 430, 50, flag.width / 1.5, flag.height / 1.5);
@@ -55,8 +60,7 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
 
 //Draw text alerts on the screen
 function drawText(text) {
-    ctx.strokeStyle = '#333';
-    ctx.fillStyle = '#fff';
+    resetColor();
     ctx.strokeText(text, 500, 270);
     ctx.fillText(text, 500, 270);
 }
@@ -71,9 +75,11 @@ function drawElement(asset, object) {
 // - TRANSITION SCREENS
 function drawGameOver () {
     ctx.strokeStyle = '#333';
-    ctx.fillStyle = '#fff';
+    resetColor();
     ctx.strokeText("You have been expelled!", 500, 270);
     ctx.fillText("You have been expelled!", 500, 270);
+    ctx.strokeText("GAME OVER", 500, 270);
+    ctx.fillText("GAME OVER", 500, 270);
 }
 
 

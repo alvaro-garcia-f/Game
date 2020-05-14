@@ -9,10 +9,19 @@ ctx.font = '15.75px Eight Bit Dragon';
 ctx.lineWidth = 3;
 ctx.textAlign = "center"
 
-// Set basic font color
+//Reset basic font color
 function resetColor() {
     ctx.strokeStyle = '#333';
     ctx.fillStyle = '#fff';
+    ctx.shadowOffsetY = 0;
+    ctx.shadowBlur = 0;
+}
+
+//Set font shadow
+function setShadow() {
+    ctx.shadowColor = 'black';
+    ctx.shadowOffsetY = 2;
+    ctx.shadowBlur = 2;
 }
 
 // - ENVIROMENT
@@ -74,15 +83,12 @@ function drawElement(asset, object) {
 
 // - TRANSITION SCREENS
 function drawGameOver () {
-    resetColor();
     //Draw Background
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
-
-    //Set font shadow
-    ctx.shadowColor = 'black';
-    ctx.shadowOffsetY = 2;
-    ctx.shadowBlur = 2;
-
+    
+    resetColor();
+    setShadow();
+    
     //Print top message
     ctx.strokeText("You have been expelled!", 500, 220);
     ctx.fillText("You have been expelled!", 500, 220);

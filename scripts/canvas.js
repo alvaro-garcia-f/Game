@@ -178,14 +178,22 @@ function animateGoal () {
             game.player.y = GROUND - game.player.h;
 
         // If player is not inside the building make him walk
-        if (game.player.x < 650) {
+        if (game.player.x < pos) {
+            console.log(game.player.x);
             game.player.x += game.player.runSpeed;
             game.loadPlayer();
         }
 
+        // If the building is still moving, aniamte background
+        if(pos > 600) {
+            pos -= 2;
+            game.bg.x -= 0.5;
+            game.bg2.x -= 0.5;
+        }
+
         drawBuilding(game.resources.list.bg.building.element, pos);
-        if(pos > 600) pos -= 2;
-        if (pos > 600 || game.player.x < 650) requestAnimationFrame(animation);
+
+        if (pos > 600 || game.player.x < 1000 - pos) requestAnimationFrame(animation);
         else {
             cancelAnimationFrame(animationId);
             drawTopText("You are on Time!");

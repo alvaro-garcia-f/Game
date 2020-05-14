@@ -4,20 +4,27 @@ var id;
 function loadScrLoop() {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
     game.engine(); 
-    if(game.status === 1) id = requestAnimationFrame(loadScrLoop); // Game running
-    if(game.status === 2) {                                        // Life loss
+
+    // Status === 1 - Game running -> Iterate
+    if(game.status === 1) id = requestAnimationFrame(loadScrLoop);
+    
+    // Status === 2 - Level ended with missedAttempt()
+    if(game.status === 2) {                           
         cancelAnimationFrame(id);
         drawPunishment(game.player.attempts);
         setTimeout(game.setUpLevel, 3000);
     }
  
-    if(game.status === 3) {                                        // Goal reached
+    // Status === 3 - Level ended with ReachGoal()
+    // animateGoal() shows animation and launches next level    
+    if(game.status === 3) {               
         cancelAnimationFrame(id);
         game.loadEnviroment();
-        animateGoal();
-        setTimeout(game.setUpLevel, 3000);
+        animateGoal();                                              
     }
-    if(game.status === 0) {                                         // Game Over
+
+    // Status === 0 - Game Over
+    if(game.status === 0) {
         cancelAnimationFrame(id);
         drawGameOver();
     }

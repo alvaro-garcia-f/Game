@@ -1,6 +1,8 @@
 const SCR_WIDTH = 1000;
 const SCR_HEIGHT = 562;
 const GROUND = 498;
+var animationId;
+var animationOver = false;
 
 const canvas = document.getElementById("screen");
 const ctx = canvas.getContext("2d");
@@ -164,22 +166,24 @@ function drawGameOver () {
     drawMainText("GAME OVER", 'gameover');
 }
 
+// ANIMATION SCREENS
 function animateGoal () {
     var pos = SCR_WIDTH;
-    var goalAnimation = requestAnimationFrame( function animation() {
+    animationId = requestAnimationFrame( function animation() {
         ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
         game.loadEnviroment();
+        
+        if (game.player.y > GROUND) game.player.y = GROUND;
         game.loadPlayer();
+
         drawBuilding(game.resources.list.bg.building.element, pos);
         pos -= 2;
-        if (pos <= 600) { 
-            cancelAnimationFrame(goalAnimation); 
-            drawTopText("You are on time!");
-            drawMainText("CONGRATULATIONS", 'gameover');        
+        if (pos > 600) requestAnimationFrame(animation);
+        else {
+            cancelAnimationFrame(animationId);
+            drawTopText("You are on Time!");
+            drawMainText("CONGRATULATIONS", 'gameover');
+            setTimeout(game.setUpLevel, 3000);
         }
-        else requestAnimationFrame(animation)    
     });
 }
-
-
-

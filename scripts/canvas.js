@@ -127,12 +127,32 @@ function styleText (style) {
 
     var grad = ctx.createLinearGradient(0, 240, 0, 280);
 
+    // Goal reached
     if (style === 'congratulations') {
         grad.addColorStop(0, '#1e73fc');
         grad.addColorStop(.1, '#65aaf7');
         grad.addColorStop(.5, '#4287f5');
         grad.addColorStop(.9, '#1e73fc');
         grad.addColorStop(1, '#003180');
+        ctx.fillStyle = grad;
+    }
+
+    // Punishment
+    if(style === 'punishment') {
+        grad.addColorStop(0, 'black');
+        grad.addColorStop(.1, '#d10000');
+        grad.addColorStop(.5, '#8a0000');
+        grad.addColorStop(1, 'black');
+        ctx.fillStyle = grad;
+    }
+
+    // Game over
+    if (style === 'gameover') {
+        grad.addColorStop(0, '#d46702');
+        grad.addColorStop(.1, '#d1ae00');
+        grad.addColorStop(.5, '#d15000');
+        grad.addColorStop(.9, '#d10000');
+        grad.addColorStop(1, '#8a0000');
         ctx.fillStyle = grad;
     }
 }
@@ -142,33 +162,11 @@ function drawMainText(text, style) {
     resetFont();
     setShadow();
 
-    if (style !== 'day') {
-        ctx.font = '42px Eight Bit Dragon';
-        ctx.lineWidth = 6;
-    }
-
     //Create gradient
     var grad = ctx.createLinearGradient(0, 240, 0, 280);
-    if(style === 'punishment') {
-        grad.addColorStop(0, 'black');
-        grad.addColorStop(.1, '#d10000');
-        grad.addColorStop(.5, '#8a0000');
-        grad.addColorStop(1, 'black');
-        ctx.fillStyle = grad;
-    }
-    
-    if (style === 'gameover') {
-        grad.addColorStop(0, '#d46702');
-        grad.addColorStop(.1, '#d1ae00');
-        grad.addColorStop(.5, '#d15000');
-        grad.addColorStop(.9, '#d10000');
-        grad.addColorStop(1, '#8a0000');
-        ctx.fillStyle = grad;
-    }
 
-    if (style === 'congratulations') styleText('congratulations');
+    if (style !== 'day') styleText(style);
     
-    //Print Text
     ctx.strokeText(text, 500, 280);
     ctx.fillText(text, 500, 280);
 }
@@ -177,6 +175,7 @@ function drawMainText(text, style) {
 function drawBottomText(text) {
     resetFont();
     setShadow();
+
     ctx.strokeText(text, 500, 320);
     ctx.fillText(text, 500, 320);
 }
@@ -184,7 +183,9 @@ function drawBottomText(text) {
 // - TRANSITION SCREENS
 function drawNextLevel(text) {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
+
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
+
     drawMainText(text, 'day');
 }
 
@@ -211,13 +212,18 @@ function drawGameOver () {
     
     drawTopText("You have been expelled!");
 
-    //Print game over
     drawMainText("GAME OVER", 'gameover');
+
+    drawBottomText(`You lasted ${game.level} days`);
 }
 
 // ANIMATION SCREENS
+// Title scren animation
 function animateTitle () {
     var pos = SCR_HEIGHT;
+
+    // Animation loop - Scroll background up and then print title
+    // Sets game status = 0 to wait for Space abr to be pressed to start
     animationId = requestAnimationFrame( function animation() {
         ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
         ctx.drawImage(game.resources.list.bg.city.element, 0, pos);
@@ -232,8 +238,12 @@ function animateTitle () {
     });
 }
 
+// Goal reached animation
 function animateGoal () {
     var pos = SCR_WIDTH;
+
+    // Animation loop - Scrolls building in from right border and makes player walk inside
+    // After 3 seconds, starts the next level
     animationId = requestAnimationFrame( function animation() {
         ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
         game.loadEnviroment();

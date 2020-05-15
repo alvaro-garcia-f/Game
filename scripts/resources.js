@@ -107,6 +107,12 @@ var Resources = function () {
         beer: 'sfx_beer.ogg'
     };
 
+    this.ost = {
+        path: '',
+        intro: '',
+        lvl_1: ''
+    };
+
     this.list = {}; // Contains all created resources;
 
     this.startPreload = function () {
@@ -116,7 +122,8 @@ var Resources = function () {
         this.preloadImages(this.items, 'items');
         this.preloadImages(this.ui, 'ui');
         this.preloadImages(this.bg, 'bg');
-        this.preloadSfx();
+        this.preloadAudio(this.sfx, 'sfx');
+       // this.preloadOst();
     }
 
     //Load all assets
@@ -130,12 +137,12 @@ var Resources = function () {
         });
     }
 
-    this.preloadSfx = function () {
-        this.list['sfx'] = {};
-        Object.keys(this.sfx).forEach((k) => {
+    this.preloadAudio = function (asset, name) {
+        this.list[name] = {};
+        Object.keys(asset).forEach((k) => {
             if (k !== 'path') {
-                self.list.sfx[k] = new Asset();
-                self.list.sfx[k].loadAudio(`${this.sfx.path}${this.sfx[k]}`);
+                self.list[name][k] = new Asset();
+                self.list[name][k].loadAudio(`${asset.path}${asset[k]}`);
             }
         });
     }

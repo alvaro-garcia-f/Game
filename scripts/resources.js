@@ -108,9 +108,9 @@ var Resources = function () {
     };
 
     this.ost = {
-        path: '',
-        intro: '',
-        lvl_1: ''
+        path: './assets/sound/ost/',
+        intro: 'ost_intro.ogg',
+        lvl_1: 'ost_lvl_1.ogg'
     };
 
     this.list = {}; // Contains all created resources;
@@ -123,7 +123,8 @@ var Resources = function () {
         this.preloadImages(this.ui, 'ui');
         this.preloadImages(this.bg, 'bg');
         this.preloadAudio(this.sfx, 'sfx');
-       // this.preloadOst();
+        this.preloadAudio(this.ost, 'ost');
+
     }
 
     //Load all assets

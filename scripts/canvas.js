@@ -121,6 +121,22 @@ function drawTopText(text) {
     ctx.fillText(text, 500, 220);
 }
 
+function styleText (style) {
+    ctx.font = '42px Eight Bit Dragon';
+    ctx.lineWidth = 6;
+
+    var grad = ctx.createLinearGradient(0, 240, 0, 280);
+
+    if (style === 'congratulations') {
+        grad.addColorStop(0, '#1e73fc');
+        grad.addColorStop(.1, '#65aaf7');
+        grad.addColorStop(.5, '#4287f5');
+        grad.addColorStop(.9, '#1e73fc');
+        grad.addColorStop(1, '#003180');
+        ctx.fillStyle = grad;
+    }
+}
+
 //Print main message
 function drawMainText(text, style) {
     resetFont();
@@ -150,14 +166,7 @@ function drawMainText(text, style) {
         ctx.fillStyle = grad;
     }
 
-    if (style === 'congratulations') {
-        grad.addColorStop(0, '#1e73fc');
-        grad.addColorStop(.1, '#65aaf7');
-        grad.addColorStop(.5, '#4287f5');
-        grad.addColorStop(.9, '#1e73fc');
-        grad.addColorStop(1, '#003180');
-        ctx.fillStyle = grad;
-    }
+    if (style === 'congratulations') styleText('congratulations');
     
     //Print Text
     ctx.strokeText(text, 500, 280);

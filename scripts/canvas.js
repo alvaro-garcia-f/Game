@@ -1,11 +1,12 @@
 const SCR_WIDTH = 1000;
 const SCR_HEIGHT = 562;
 const GROUND = 498;
+
 var animationId;
-var animationOver = false;
 
 const canvas = document.getElementById("screen");
 const ctx = canvas.getContext("2d");
+
 //Set up font
 ctx.font = '15.75px Eight Bit Dragon';
 ctx.lineWidth = 3;
@@ -14,10 +15,13 @@ ctx.textAlign = "center"
 //Reset basic font color
 function resetFont() {
     ctx.font = '15.75px Eight Bit Dragon';
+
     ctx.strokeStyle = '#333';
     ctx.fillStyle = '#fff';
+
     ctx.shadowOffsetY = 0;
     ctx.shadowBlur = 0;
+
     ctx.lineWidth = 3;
 }
 
@@ -44,6 +48,7 @@ function drawBuilding(image, pos) {
 
 // - INTERFACE
 function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) {
+    
     //Hearts
     for (let i = 1; i <= attempts; i++) {
         ctx.drawImage(heart, 25 * i, 50, heart.width / 2, heart.height / 2);
@@ -53,6 +58,7 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
     
     //Flag + Distance
     ctx.drawImage(flag, 430, 50, flag.width / 1.5, flag.height / 1.5);
+
     ctx.strokeText(`${distance}m`, 495, 75);
     ctx.fillText(`${distance}m`, 495, 75);
     
@@ -62,6 +68,7 @@ function drawCounters(attempts, heart, time, clock, distance, flag, bonusStyle) 
     if(bonusStyle) {
         ctx.strokeStyle = 'lime';
         ctx.fillStyle = 'lime';
+
         ctx.strokeText(`${time}s`, 905, 73);
         ctx.fillText(`${time}s`, 905, 73);
     } else {
@@ -133,6 +140,7 @@ function drawTitleText() {
 
     ctx.font = '84px Eight Bit Dragon';
     ctx.lineWidth = 11;
+
     ctx.strokeText('R                E', 500, 215);
     ctx.fillText('R                E', 500, 215);
     
@@ -252,7 +260,6 @@ function animateGoal () {
         if (game.player.y < GROUND - game.player.h) {
             game.player.jump();
             game.player.land(GROUND);
-           // game.player.y = GROUND - game.player.h;
         }
 
         // If player is not inside the building make him walk

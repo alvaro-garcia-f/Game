@@ -4,7 +4,7 @@ const GRAVITY = 0.5;
 var audioPlayer = function () {
     this.sfx = {};
     
-    this.load = function (sounds) {
+    this.loadSfx = function (sounds) {
         this.sfx = sounds;
     }
 
@@ -66,7 +66,7 @@ var Game = function () {
     // When all assets are ready set up next level
     this.loadWhenReady = function () {
         if (self.resources.isLoadComplete()) {
-            self.sound.load(self.resources.list.sfx);
+            self.sound.loadSfx(self.resources.list.sfx);
             animateTitle();
             return;
         } else {

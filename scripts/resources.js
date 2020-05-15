@@ -151,7 +151,7 @@ var Resources = function () {
     // Checking that all assets are loaded
     this.isLoadComplete = function () {
         if(self.playerLoadComplete() && self.obstaclesLoadComplete() && self.itemsLoadComplete() &&
-           self.uiLoadComplete() && self.bgLoadComplete() && self.sfxLoadComplete()) {
+           self.uiLoadComplete() && self.bgLoadComplete() && self.sfxLoadComplete() && self.ostLoadComplete()) {
             console.log("Assets loaded", self.list);
             return true;
         }
@@ -202,6 +202,14 @@ var Resources = function () {
         var assets = Object.keys(self.list.sfx);
         for (let i=0; i < assets.length; i++) {
             if(!self.list.sfx[assets[i]].isReady()) return false;
+        }
+        return true;
+    }
+
+    this.ostLoadComplete = function () {
+        var assets = Object.keys(self.list.ost);
+        for (let i=0; i < assets.length; i++) {
+            if(!self.list.ost[assets[i]].isReady()) return false;
         }
         return true;
     }

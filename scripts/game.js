@@ -16,9 +16,16 @@ var audioPlayer = function () {
 // Game Class - Handles world creation and interaction
 var Game = function () {
     const self = this;
+    this.status = -1;         // -1-Stopped | 0-Title | 1-Running  | 2-Life Loss | 3-Goal reached 
+    
     this.keyLeft = false;
     this.keyRight = false;
     this.keyJump = false;
+    
+    this.resources = new Resources ();
+    this.obstacles = new ObstacleBuffer (); 
+    this.player = new Player ();
+    this.browserFrames = 0;                  // Counts amount of animationFrames. Every 10, changes player running sprite. 
     this.bg = {                               // Background position
         x: 0,
         y: 0
@@ -27,38 +34,28 @@ var Game = function () {
         x: SCR_WIDTH,
         y: 0
     }
-
-    this.resources = new Resources ();
-    this.obstacles = new ObstacleBuffer (); 
-    this.player = new Player ();
-    this.browserFrames = 0;                  // Counts amount of animationFrames. Every 10, changes player running sprite. 
     this.item = {
         w: 29,
         h: 31,
         x: 1000,
         y: 350,
-        visible: true
+        visible: true,
+        collected: false
     };
-
     this.sound = new audioPlayer();
-    this.distance = 2000;
+
+    this.level = 1;
+    this.distance = 500;
     this.countDown = 60;
     this.timerClock;
     this.timerDistance;
     this.timerObstacle;
-    this.level = 1;
-    this.status = -1;         // -1-Stopped | 0-Title | 1-Running  | 2-Life Loss | 3-Goal reached 
-    this.bonusStyle = false;  // True on intervals when item picked up. Makes countDown green
 
     //- GAME SETUP 
     // Preload all assets
     this.init = function ()
     {
         this.resources.startPreload();
-        //begin testing
-        //this.obstacles.createObstacle(); // <--- this is the only creation point at the moment
-        // this.startGame();
-        //end testing  
         setTimeout(self.loadWhenReady, 300);
     }
 
@@ -80,7 +77,7 @@ var Game = function () {
         self.player.status = 'idle';
         self.countDown = 60; 
         self.distance = 2000;
-        this.item.visible = false;
+        self.item.visible = false;
         self.obstacles.emptyBuffer();
         drawNextLevel(`Day ${self.level}`);
         setTimeout(self.startGame, 3000);
@@ -101,7 +98,7 @@ var Game = function () {
 
         self.timerDistance = setInterval(function () {
             if (self.player.status !== 'idle') self.distance--;
-        }, 10); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
+        }, 30); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
         
         self.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
@@ -162,7 +159,7 @@ var Game = function () {
     this.loadCounters = function () {
         drawCounters(this.player.attempts, this.resources.list.ui.heart.element,
                      this.countDown, this.resources.list.ui.clock.element,
-                     this.distance, this.resources.list.ui.flag.element, this.bonusStyle);
+                     this.distance, this.resources.list.ui.flag.element, this.item.collected);
     }
 
     //Draws background and floor
@@ -280,7 +277,7 @@ var Game = function () {
             //Make title blink in green
             var counter = 4;                                    
             var bonusTimer = setInterval (() => {
-                self.bonusStyle = !self.bonusStyle;
+                self.item.collected = !self.item.collected;
                 counter--;
                 if (counter === 0) clearInterval(bonusTimer);                   
             }, 160);

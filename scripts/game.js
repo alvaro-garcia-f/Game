@@ -252,7 +252,7 @@ var Game = function () {
     this.loadItem = function () {
         if (this.item.visible) {
             drawElement(this.resources.list.items.beer.element, this.item);
-            this.item.x -= 2;
+            this.item.x -= 1 + this.difficulty;
         }
 
         if (this.item.x + this.item.w <= 0) {

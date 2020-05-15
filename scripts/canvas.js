@@ -79,23 +79,58 @@ function drawElement(asset, object) {
 }
 
 // - TEXT 
+// Set style for Main text
+function styleText (style) {
+    ctx.font = '42px Eight Bit Dragon';
+    ctx.lineWidth = 6;
+
+    if (style === 'title') 
+        var grad = ctx.createLinearGradient(0, 140, 0, 200);
+    else
+        var grad = ctx.createLinearGradient(0, 240, 0, 280);
+
+    // Goal reached
+    if (style === 'congratulations') {
+        grad.addColorStop(0, '#1e73fc');
+        grad.addColorStop(.1, '#65aaf7');
+        grad.addColorStop(.5, '#4287f5');
+        grad.addColorStop(.9, '#1e73fc');
+        grad.addColorStop(1, '#003180');
+        ctx.fillStyle = grad;
+    }
+
+    // Punishment
+    if(style === 'punishment') {
+        grad.addColorStop(0, 'black');
+        grad.addColorStop(.1, '#d10000');
+        grad.addColorStop(.5, '#8a0000');
+        grad.addColorStop(1, 'black');
+        ctx.fillStyle = grad;
+    }
+
+    // Game over
+    if (style === 'gameover' || style === 'title') {
+        grad.addColorStop(0, '#d46702');
+        grad.addColorStop(.1, '#d1ae00');
+        grad.addColorStop(.5, '#d15000');
+        grad.addColorStop(.9, '#d10000');
+        grad.addColorStop(1, '#8a0000');
+        ctx.fillStyle = grad;
+    }
+}
+
 //Draw main title text
 function drawTitleText() {
+    styleText('title');
+    setShadow();
+
     ctx.font = '63px Eight Bit Dragon';
     ctx.strokeStyle = '#333';
     ctx.lineWidth = 9;
-    setShadow();
-
-    var grad = ctx.createLinearGradient(0, 140, 0, 200);
-    grad.addColorStop(0, '#d46702');
-    grad.addColorStop(.1, '#d1ae00');
-    grad.addColorStop(.5, '#d15000');
-    grad.addColorStop(.9, '#d10000');
-    grad.addColorStop(1, '#8a0000');
-    ctx.fillStyle = grad;
     
     ctx.strokeText('UNNING LAT', 500, 200);
     ctx.fillText('UNNING LAT', 500, 200);
+
     ctx.font = '84px Eight Bit Dragon';
     ctx.lineWidth = 11;
     ctx.strokeText('R                E', 500, 215);
@@ -121,41 +156,6 @@ function drawTopText(text) {
     ctx.fillText(text, 500, 220);
 }
 
-function styleText (style) {
-    ctx.font = '42px Eight Bit Dragon';
-    ctx.lineWidth = 6;
-
-    var grad = ctx.createLinearGradient(0, 240, 0, 280);
-
-    // Goal reached
-    if (style === 'congratulations') {
-        grad.addColorStop(0, '#1e73fc');
-        grad.addColorStop(.1, '#65aaf7');
-        grad.addColorStop(.5, '#4287f5');
-        grad.addColorStop(.9, '#1e73fc');
-        grad.addColorStop(1, '#003180');
-        ctx.fillStyle = grad;
-    }
-
-    // Punishment
-    if(style === 'punishment') {
-        grad.addColorStop(0, 'black');
-        grad.addColorStop(.1, '#d10000');
-        grad.addColorStop(.5, '#8a0000');
-        grad.addColorStop(1, 'black');
-        ctx.fillStyle = grad;
-    }
-
-    // Game over
-    if (style === 'gameover') {
-        grad.addColorStop(0, '#d46702');
-        grad.addColorStop(.1, '#d1ae00');
-        grad.addColorStop(.5, '#d15000');
-        grad.addColorStop(.9, '#d10000');
-        grad.addColorStop(1, '#8a0000');
-        ctx.fillStyle = grad;
-    }
-}
 
 //Print main message
 function drawMainText(text, style) {
@@ -249,8 +249,11 @@ function animateGoal () {
         game.loadEnviroment();
         
         // If player is in the air make him fall
-        if (game.player.y < GROUND - game.player.h) 
-            game.player.y = GROUND - game.player.h;
+        if (game.player.y < GROUND - game.player.h) {
+            game.player.jump();
+            game.player.land(GROUND);
+           // game.player.y = GROUND - game.player.h;
+        }
 
         // If player is not inside the building make him walk
         if (game.player.x < pos) {

@@ -358,7 +358,7 @@ var Game = function () {
                this.item.y <= this.player.y + this.player.h;
     }
 
-    //- ENDINGS
+    //- LEVEL AND GAME ENDINGS
     this.missedAttempt = function () {
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);

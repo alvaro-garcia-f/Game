@@ -3,13 +3,33 @@ const GRAVITY = 0.5;
 // Audio Player Class - Handles audio (SFX or OST)
 var audioPlayer = function () {
     this.sfx = {};
+    this.ost = {};
     
     this.loadSfx = function (sounds) {
         this.sfx = sounds;
     }
 
-    this.play = function (event) {
+    this.loadOst = function (sounds) {
+        this.ost = sounds;
+    }
+
+    this.playSfx = function (event) {
         if (this.sfx[event]) this.sfx[event].element.play();
+    }
+
+    this.playOst = function (track) {
+        if (this.ost[track]) {
+            this.ost[track].element.loop = true;
+            this.ost[track].element.play();
+        }
+    }
+
+    this.stop = function (track) {
+        if (this.ost[track]) {
+            this.ost[track].element.pause();
+            this.ost[track].element.currentTime = 0;
+            this.ost[track].element.loop = true;
+        }
     }
 }
 
@@ -67,6 +87,8 @@ var Game = function () {
     this.loadWhenReady = function () {
         if (self.resources.isLoadComplete()) {
             self.sound.loadSfx(self.resources.list.sfx);
+            self.sound.loadOst(self.resources.list.ost);
+            self.sound.playOst('intro');
             animateTitle();
             return;
         } else {
@@ -100,7 +122,9 @@ var Game = function () {
     //Start counters, launches obstacles, starts main loop
     this.startGame = function () {
         // Start animation loop
+        self.sound.stop("intro");
         console.log("Game Start");
+        self.sound.playOst("lvl_1");
         requestAnimationFrame(loadScrLoop);
         self.status = 1;
         
@@ -121,12 +145,14 @@ var Game = function () {
 
         // Detect end game conditions
         // Countdown reaches 0 - Life loss or Game Over
-        if (this.countDown <= 0) {             
+        if (this.countDown <= 0) {
+            this.sound.stop("lvl_1");             
             this.missedAttempt();
             return;
         }
         // Distance reaches 0 - Goal
-        if (this.distance <= 0) {      
+        if (this.distance <= 0) { 
+            this.sound.stop("lvl_1");     
             this.reachGoal();
             return;
         }
@@ -155,7 +181,7 @@ var Game = function () {
         if (this.collideObstaclePlayer()) {
             this.player.updateStatus('idle');
             if(!this.player.hit) {
-                this.sound.play("hit");
+                this.sound.playSfx("hit");
                 this.player.hit = true;
             }
         }
@@ -236,7 +262,7 @@ var Game = function () {
         if (direction === "right") this.movePlayerRight();
         if (direction === "jump") {
             if (!this.player.jumping) {
-                this.sound.play("jump");
+                this.sound.playSfx("jump");
                 this.player.jumping = true;
                 this.player.vSpeed = -10;
             }
@@ -247,7 +273,7 @@ var Game = function () {
             this.checkObstacleCrossed();
 
             if (this.player.landed) {
-                this.sound.play("land");
+                this.sound.playSfx("land");
                 this.player.landed = false;
             }
         }
@@ -284,7 +310,7 @@ var Game = function () {
     this.pickUpItem = function () {
         if (this.item.visible && this.collidePlayerItem()) {
             this.item.visible = false;
-            this.sound.play("beer");
+            this.sound.playSfx("beer");
             this.countDown += 5;
             
             //Make title blink in green
@@ -420,7 +446,7 @@ var Game = function () {
             this.status = 2;
             this.level++;
         }
-        this.sound.play("late");
+        this.sound.playSfx("late");
     }
 
     this.reachGoal = function () {
@@ -432,6 +458,6 @@ var Game = function () {
         this.status = 3;
         this.level++;
         this.difficulty++;
-        this.sound.play("victory");
+        this.sound.playSfx("victory");
     }
 }

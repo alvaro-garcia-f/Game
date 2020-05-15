@@ -50,7 +50,7 @@ window.addEventListener('keydown', (e) => {
         case ' ':
             if (game.status === 0) {
                 game.status = -1;
-                game.sound.play('beer');
+                game.sound.playSfx('beer');
                 game.setUpLevel();
             }
             break;

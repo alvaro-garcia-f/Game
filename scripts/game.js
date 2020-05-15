@@ -290,14 +290,18 @@ var Game = function () {
     }
     
     this.movePlayerLeft = function () {
-        if (!this.collideLeft()) { this.player.moveLeft(); }
-        else { this.player.updateStatus('idle'); }
+        if (!this.collideLeft())
+            this.player.moveLeft();
+        else 
+            this.player.updateStatus('idle');
         this.checkObstacleCrossed();
     }
     
     this.movePlayerRight = function () {
-        if (!this.collideRight()) this.player.moveRight();
-        else { this.player.updateStatus('idle'); }
+        if (!this.collideRight()) 
+            this.player.moveRight();
+        else 
+            this.player.updateStatus('idle');
         this.checkObstacleCrossed();
     }
     
@@ -336,6 +340,7 @@ var Game = function () {
     //If there are no collisions animate the elements
     this.animateEnviroment = function () {
         if (!this.collideObstaclePlayer() && !this.collideVertical()) {
+            console.log(this.player.x + this.player.w , "-", this.obstacles.next().x);
             this.animateBackground();                                                                                  
             this.obstacles.animateObstacles();
             this.player.hit = false;
@@ -427,7 +432,8 @@ var Game = function () {
 
     //Player stands idle and moving obstacle collides with him
     this.collideObstaclePlayer = function () {
-        return this.obstacles.next() && this.collideRight();
+        return this.obstacles.next() && this.collideRight() ||
+               this.obstacles.next() && this.collideVertical();
     }
 
     //Player collides with item

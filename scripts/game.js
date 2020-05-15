@@ -74,6 +74,7 @@ var Game = function () {
     this.timerClock;
     this.timerDistance;
     this.timerObstacle;
+    this.goalReached = false;
 
     //- GAME SETUP 
     // Preload all assets
@@ -102,14 +103,22 @@ var Game = function () {
         self.player.y = GROUND - self.player.h;
         self.player.status = 'idle';
 
-        //Decrease counter and increase distance with difficulty
-        if (self.maxCountDown > 10) {
-            self.countDown = self.maxCountDown; 
-            self.maxCountDown -= self.difficulty;
-        }
-        self.baseDistance += 100 * self.difficulty;
+        //Increase distance with difficulty
+        if(self.goalReached)
+            self.baseDistance += 100 * self.difficulty;
+        
         self.distance = self.baseDistance;
 
+        //Increase distance with difficulty
+        if (self.goalReached)
+            self.maxCountDown -= self.difficulty;
+        
+        if (self.maxCountDown > 10) 
+            self.countDown = self.maxCountDown; 
+        else 
+            self.countDown = 10;    
+        
+        self.goalReached = false;
         self.item.visible = false;
         self.obstacles.emptyBuffer();
         self.bg.x = 0;
@@ -458,6 +467,7 @@ var Game = function () {
         this.status = 3;
         this.level++;
         this.difficulty++;
+        this.goalReached = true;
         this.sound.playSfx("victory");
     }
 }

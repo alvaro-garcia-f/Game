@@ -120,22 +120,24 @@ var Game = function () {
             this.reachGoal();
             return;
         }
-
-        // Draw enviroment and obstacles
-        this.loadEnviroment();
-        this.generateObstacle();
-        this.loadObstacle();
-        this.loadCounters();
-        this.generateItem();
-        this.loadItem();
-
+        
         // Detect key pressed and move player
         if (this.keyLeft) this.movePlayer("left");
         if (this.keyRight) this.movePlayer("right");
         if (this.keyJump || this.player.jumping) {
             this.movePlayer("jump");
         }
+        
+        this.generateObstacle();
+        this.generateItem();
+
+        // Draw enviroment and obstacles
+        this.loadEnviroment();
+        this.loadObstacle();
+        this.loadCounters();
+        this.loadItem();
         this.loadPlayer();
+        
         //If after moving the player is still on a box, go back to idle status
         if (this.collideVertical()) this.player.updateStatus('idle'); 
 
@@ -149,12 +151,8 @@ var Game = function () {
         }
 
         // If there are no Collisions, background and obstacles scroll
-        if (!this.collideObstaclePlayer() && !this.collideVertical()) {
-            this.animateBackground();                                                                                  
-            this.obstacles.animateObstacles();
-            this.player.hit = false;
-        }
-
+        this.animateEnviroment();
+        
         // If item visible and collides with player increase countDown
         if (this.item.visible && this.collidePlayerItem()) {
             this.item.visible = false;
@@ -171,18 +169,21 @@ var Game = function () {
     }
     
     //- LOADERS - Print elements on screen
+    //Draws heart counter, flag, distance, clock and time left
     this.loadCounters = function () {
         drawCounters(this.player.attempts, this.resources.list.ui.heart.element,
                      this.countDown, this.resources.list.ui.clock.element,
                      this.distance, this.resources.list.ui.flag.element, this.bonusStyle);
     }
 
+    //Draws background and floor
     this.loadEnviroment = function () {
         drawBackground(this.resources.list.bg.city.element, this.bg);
         drawBackground(this.resources.list.bg.city.element, this.bg2);
         drawGround();
     }
 
+    //Detect the correct sprite and draws the player
     this.loadPlayer = function () {
         var sprite = `${this.player.status.split("_")[0]}_${this.player.attempts}`;
         
@@ -198,6 +199,7 @@ var Game = function () {
         }
     }
 
+    //Draws every obstacle in front and behind player
     this.loadObstacle = function () {
         if (this.obstacles.bufferFront.length > 0) {
             this.obstacles.bufferFront.forEach((o) => {
@@ -212,6 +214,7 @@ var Game = function () {
         }
     }
 
+    //Generate item on the right border of the screen and animates it
     this.loadItem = function () {
         if (this.item.visible) {
             drawElement(this.resources.list.items.beer.element, this.item);
@@ -224,12 +227,10 @@ var Game = function () {
     }
 
     //- MOVEMENT
+    //Detect in which direction the player is moving and act accordingly
     this.movePlayer = function (direction) {
         // If player moves out an obstacles, falls to ground
-        if (!this.collideVertical() && this.player.position !== GROUND && !this.player.jumping) {
-            this.player.jumping = true;
-            this.player.land(GROUND);
-        }
+       this.playerFall();
 
         // Move player in the correct direction
         if (direction === "left") this.movePlayerLeft();
@@ -243,9 +244,7 @@ var Game = function () {
             this.player.jump();
 
             // Control landing on ground, next obstacle or previous obstacle
-            if (this.collideVertical() && this.player.location === "n") { this.player.land(this.obstacles.next().y);}
-            else if (this.collideVertical() && this.player.location === "p") { this.player.land(this.obstacles.previous().y);}
-            else this.player.land(GROUND);
+            this.playerLands();
             this.checkObstacleCrossed();
 
             if (this.player.landed) {
@@ -254,17 +253,41 @@ var Game = function () {
             }
         }
     }
-
+    
     this.movePlayerLeft = function () {
         if (!this.collideLeft()) { this.player.moveLeft(); }
         else { this.player.updateStatus('idle'); }
         this.checkObstacleCrossed();
     }
-
+    
     this.movePlayerRight = function () {
         if (!this.collideRight()) this.player.moveRight();
         else { this.player.updateStatus('idle'); }
         this.checkObstacleCrossed();
+    }
+    
+    //Detect if player is running out of an obstacle and makes him fall
+    this.playerFall = function () {
+        if (!this.collideVertical() && this.player.position !== GROUND && !this.player.jumping) {
+            this.player.jumping = true;
+            this.player.land(GROUND);
+        }
+    }
+
+    //Detects where player lands (previous or next obstacle or ground) after a jump or fall
+    this.playerLands = function () {
+        if (this.collideVertical() && this.player.location === "n") { this.player.land(this.obstacles.next().y);}
+            else if (this.collideVertical() && this.player.location === "p") { this.player.land(this.obstacles.previous().y);}
+            else this.player.land(GROUND);
+    }
+
+    //If there are no collisions animate the elements
+    this.animateEnviroment = function () {
+        if (!this.collideObstaclePlayer() && !this.collideVertical()) {
+            this.animateBackground();                                                                                  
+            this.obstacles.animateObstacles();
+            this.player.hit = false;
+        }
     }
 
     //- OBSTACLES & ITEMS - Obstacle and Items positioning and generation
@@ -295,6 +318,7 @@ var Game = function () {
     }
 
     //- COLLISIONS
+    //Player moving left and colliding with previous obstacle
     this.collideLeft = function () {
         return this.obstacles.previous() &&
                this.player.x - this.player.runSpeed <= this.obstacles.previous().x + this.obstacles.previous().w &&
@@ -302,6 +326,7 @@ var Game = function () {
                this.player.y + this.player.h > this.obstacles.previous().y;
     }
 
+    //Player moving right and colliding with next obstacle
     this.collideRight = function () {
         return this.obstacles.next() &&
                this.player.x + this.player.w + this.player.runSpeed >= this.obstacles.next().x &&
@@ -309,6 +334,7 @@ var Game = function () {
                this.player.y + this.player.h > this.obstacles.next().y;
     }
 
+    //Detect if player is landing on previous or next obstacle
     this.collideVertical = function () {
         if (!this.obstacles.next() && this.obstacles.previous()) {
             return this.collideVerticalObstacle (this.obstacles.previous(), "p");
@@ -326,17 +352,11 @@ var Game = function () {
         }
     }
 
+    //Detects collision with nearest obstacle
     this.collideVerticalObstacle = function (obstacle, pos) {
         if (obstacle &&
-        (this.player.x > obstacle.x &&                              // Player collides with larger obstacle
-        this.player.x < obstacle.x + obstacle.w ||
-        this.player.x + this.player.w > obstacle.x &&
-        this.player.x + this.player.w < obstacle.x + obstacle.w) ||
-        (obstacle.x > this.player.x &&                              // Player collides with smaller obstacle
-        obstacle.x < this.player.x + this.player.w ||
-        obstacle.x + obstacle.w > this.player.x &&
-        obstacle.x + obstacle.w < this.player.x + this.player.w) &&
-        this.player.y + this.player.h + this.player.vSpeed >= obstacle.y) {
+        this.collideVerticalSmallLarge(this.player, obstacle) ||
+        this.collideVerticalSmallLarge(obstacle, this.player)) {
             this.player.position = obstacle.y;
             this.player.location = pos;
             return true;
@@ -345,10 +365,20 @@ var Game = function () {
         return false; 
     }
 
+    //Detects if an element's side collides inside the limits of a large element
+    this.collideVerticalSmallLarge = function (small, large) {
+        return small.x > large.x &&                              // Player collides with larger obstacle
+               small.x < large.x + large.w ||
+               small.x + small.w > large.x &&
+               small.x + small.w < large.x + large.w;
+    }
+
+    //Player stands idle and moving obstacle collides with him
     this.collideObstaclePlayer = function () {
         return this.obstacles.next() && this.collideRight();
     }
 
+    //Player collides with item
     this.collidePlayerItem = function () {
         return this.item.x + this.item.w >= this.player.x &&
                this.item.x + this.item.w <= this.player.x + this.player.w &&
@@ -381,6 +411,7 @@ var Game = function () {
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
         clearInterval(this.timerObstacle);
+        
         console.log("Congratulations! You are on time!");
         this.status = 3;
         this.level++;

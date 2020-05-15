@@ -151,6 +151,7 @@ function drawTitleText() {
 function drawLevel(level) {
     resetFont();
     setShadow();
+
     ctx.strokeText(`Day ${level}`, 500, 270);
     ctx.fillText(`Day ${level}`, 500, 270);
 }
@@ -235,7 +236,9 @@ function animateTitle () {
     animationId = requestAnimationFrame( function animation() {
         ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
         ctx.drawImage(game.resources.list.bg.city.element, 0, pos);
+
         pos -= 2;
+        
         if (pos >= 0)
             requestAnimationFrame(animation);
         else {

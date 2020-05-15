@@ -6,7 +6,7 @@ var Obstacle = function (type, x, w, h) {
     this.x = x;                    // Starting horizontal position
     this.y = GROUND - this.h;           // Starting vertical position
     this.type = type;
-    this.speed = -2;
+    this.speed = -2.75;
 
     self.move = function () {
         this.x += this.speed;

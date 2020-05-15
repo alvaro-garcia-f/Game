@@ -13,6 +13,7 @@ var Obstacle = function (type, x, w, h) {
     }
 }
 
+// ObstacleBufffer Class
 var ObstacleBuffer = function () {
     const OBSTACLES = {
         box1: {
@@ -27,7 +28,7 @@ var ObstacleBuffer = function () {
 
     this.bufferFront = [];
     this.bufferBack = [];
-    this.maxSize = 10;
+    this.maxSize = 5;
 
     // Obstacles handlers
     this.next = function () {

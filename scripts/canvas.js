@@ -267,7 +267,6 @@ function animateGoal () {
 
         // If player is not inside the building make him walk
         if (game.player.x < pos) {
-            console.log(game.player.x);
             game.player.x += game.player.runSpeed;
             game.loadPlayer();
         }

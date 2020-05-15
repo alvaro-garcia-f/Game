@@ -79,8 +79,11 @@ var Player = function () {
 
     this.land = function (floor) {
         if (this.y + this.vSpeed >= floor - this.h) {   // Prevents falling below obstacle
-            if (floor == GROUND) { this.updateStatus(`running_${this.frame%5}`); }
-            else { this.updateStatus('idle'); }
+            if (floor == GROUND)
+                this.updateStatus(`running_${this.frame%5}`);
+            else
+                this.updateStatus('idle');
+                
             this.y = floor - this.h;
             this.vSpeed = 0;               // Reset jump speed
             this.jumping = false;

@@ -67,7 +67,6 @@ var Game = function () {
         if (self.resources.isLoadComplete()) {
             self.sound.load(self.resources.list.sfx);
             animateTitle();
-            //self.setUpLevel();
             return;
         } else {
             setTimeout(self.loadWhenReady, 300);
@@ -81,6 +80,7 @@ var Game = function () {
         self.player.status = 'idle';
         self.countDown = 60; 
         self.distance = 2000;
+        this.item.visible = false;
         self.obstacles.emptyBuffer();
         drawNextLevel(`Day ${self.level}`);
         setTimeout(self.startGame, 3000);
@@ -141,7 +141,7 @@ var Game = function () {
         //If after moving the player is still on a box, go back to idle status
         if (this.collideVertical()) this.player.updateStatus('idle'); 
 
-        //Detect collisions
+        //Detect if and obstacle collides with a player
         if (this.collideObstaclePlayer()) {
             this.player.updateStatus('idle');
             if(!this.player.hit) {
@@ -152,20 +152,9 @@ var Game = function () {
 
         // If there are no Collisions, background and obstacles scroll
         this.animateEnviroment();
-        
+
         // If item visible and collides with player increase countDown
-        if (this.item.visible && this.collidePlayerItem()) {
-            this.item.visible = false;
-            this.sound.play("beer");
-            this.countDown += 5;
-            //Make title blink in green
-            var counter = 4;                                    
-            var bonusTimer = setInterval (() => {
-                self.bonusStyle = !self.bonusStyle;
-                counter--;
-                if (counter === 0) clearInterval(bonusTimer);                   
-            }, 160);
-        }
+        this.pickUpItem();
     }
     
     //- LOADERS - Print elements on screen
@@ -230,7 +219,7 @@ var Game = function () {
     //Detect in which direction the player is moving and act accordingly
     this.movePlayer = function (direction) {
         // If player moves out an obstacles, falls to ground
-       this.playerFall();
+       this.playerFalls();
 
         // Move player in the correct direction
         if (direction === "left") this.movePlayerLeft();
@@ -267,7 +256,7 @@ var Game = function () {
     }
     
     //Detect if player is running out of an obstacle and makes him fall
-    this.playerFall = function () {
+    this.playerFalls = function () {
         if (!this.collideVertical() && this.player.position !== GROUND && !this.player.jumping) {
             this.player.jumping = true;
             this.player.land(GROUND);
@@ -279,6 +268,23 @@ var Game = function () {
         if (this.collideVertical() && this.player.location === "n") { this.player.land(this.obstacles.next().y);}
             else if (this.collideVertical() && this.player.location === "p") { this.player.land(this.obstacles.previous().y);}
             else this.player.land(GROUND);
+    }
+
+    //Detect if player collides with item and increases time if so
+    this.pickUpItem = function () {
+        if (this.item.visible && this.collidePlayerItem()) {
+            this.item.visible = false;
+            this.sound.play("beer");
+            this.countDown += 5;
+            
+            //Make title blink in green
+            var counter = 4;                                    
+            var bonusTimer = setInterval (() => {
+                self.bonusStyle = !self.bonusStyle;
+                counter--;
+                if (counter === 0) clearInterval(bonusTimer);                   
+            }, 160);
+        }
     }
 
     //If there are no collisions animate the elements

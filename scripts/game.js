@@ -257,6 +257,7 @@ var Game = function () {
 
         if (this.item.x + this.item.w <= 0) {
             this.item.x = 1000;
+            this.item.visible = false;
         }
     }
 

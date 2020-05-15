@@ -35,37 +35,38 @@ var game = new Game();
 game.init();
 
 // KEYBOARD LISTENERS
-window.addEventListener("keydown", (e) => {
+window.addEventListener('keydown', (e) => {
     e.preventDefault();
     switch (e.key) {
-        case "ArrowLeft":
+        case 'ArrowLeft':
             game.keyLeft = true;
             break;
-        case "ArrowRight":
+        case 'ArrowRight':
             game.keyRight = true;
             break;
-        case "ArrowUp":
+        case 'ArrowUp':
             game.keyJump = true;
             break;
-        case " ":
+        case ' ':
             if (game.status === 0) {
                 game.status = -1;
+                game.sound.play('beer');
                 game.setUpLevel();
             }
             break;
     }
 });
 
-window.addEventListener("keyup", (e) => {
+window.addEventListener('keyup', (e) => {
     e.preventDefault();
     switch (e.key) {
-        case "ArrowLeft":
+        case 'ArrowLeft':
             game.keyLeft = false;
             break;
-        case "ArrowRight":
+        case 'ArrowRight':
             game.keyRight = false;
             break;
-        case "ArrowUp":
+        case 'ArrowUp':
             game.keyJump = false;
             break;
     }

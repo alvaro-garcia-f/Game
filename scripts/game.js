@@ -29,11 +29,13 @@ var Game = function () {
     this.bg = {                               // Background position
         x: 0,
         y: 0
-    };
+    }
+
     this.bg2 = {                             // Second background to replicate loop
         x: SCR_WIDTH,
         y: 0
     }
+    
     this.item = {
         w: 29,
         h: 31,
@@ -75,10 +77,12 @@ var Game = function () {
         self.player.x = 64;
         self.player.y = GROUND - self.player.h;
         self.player.status = 'idle';
-        self.countDown = 60; 
-        self.distance = 2000;
+        if (self.countDown <= 10) self.countDown = 60;// - self.difficulty; 
+        self.distance = 400; //+ 100 * self.difficulty;
         self.item.visible = false;
         self.obstacles.emptyBuffer();
+        self.bg.x = 0;
+        self.bg2.x = SCR_WIDTH;
         drawNextLevel(`Day ${self.level}`);
         setTimeout(self.startGame, 3000);
     }
@@ -100,7 +104,7 @@ var Game = function () {
             if (self.player.status !== 'idle') self.distance--;
         }, 30); // <-- Approx 35 makes game beatable no errors and 6-7 +5 items picked up
         
-        self.timerObstacle = setInterval(self.generateObstacle, 1000);
+        self.timerObstacle = setInterval(self.generateObstacle, 3000);
     }
     
     //Main game block - Generates - Updates - Prints

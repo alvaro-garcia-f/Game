@@ -47,8 +47,8 @@ var Game = function () {
     this.timerDistance;
     this.timerObstacle;
     this.level = 1;
-    this.status = 0;                        // 0-Stopped | 1-Running  | 2-Life Loss | 3-Goal reached 
-    this.bonusStyle = false;                // used to make timer blink when item picked up
+    this.status = -1;         // -1-Stopped | 0-Title | 1-Running  | 2-Life Loss | 3-Goal reached 
+    this.bonusStyle = false;  // True on intervals when item picked up. Makes countDown green
 
     //- GAME SETUP 
     // Preload all assets
@@ -86,6 +86,8 @@ var Game = function () {
         setTimeout(self.startGame, 3000);
     }
 
+    //- GAME START
+    //Start counters, launches obstacles, starts main loop
     this.startGame = function () {
         // Start animation loop
         console.log("Game Start");
@@ -104,14 +106,17 @@ var Game = function () {
         self.timerObstacle = setInterval(self.generateObstacle, 1000);
     }
     
-    // Main game block - Generates procedure every iteration
+    //Main game block - Generates - Updates - Prints
     this.engine = function () {
+
         // Detect end game conditions
-        if (this.countDown <= 0) {             // Life loss or Game Over
+        // Countdown reaches 0 - Life loss or Game Over
+        if (this.countDown <= 0) {             
             this.missedAttempt();
             return;
         }
-        if (this.distance <= 0) {               // Goal
+        // Distance reaches 0 - Goal
+        if (this.distance <= 0) {      
             this.reachGoal();
             return;
         }
@@ -150,11 +155,13 @@ var Game = function () {
             this.player.hit = false;
         }
 
+        // If item visible and collides with player increase countDown
         if (this.item.visible && this.collidePlayerItem()) {
             this.item.visible = false;
             this.sound.play("beer");
             this.countDown += 5;
-            var counter = 4;                                    // Odd number, so bonusStyle can go back to false
+            //Make title blink in green
+            var counter = 4;                                    
             var bonusTimer = setInterval (() => {
                 self.bonusStyle = !self.bonusStyle;
                 counter--;
@@ -163,13 +170,12 @@ var Game = function () {
         }
     }
     
-    // Loaders
+    //- LOADERS - Print elements on screen
     this.loadCounters = function () {
         drawCounters(this.player.attempts, this.resources.list.ui.heart.element,
                      this.countDown, this.resources.list.ui.clock.element,
                      this.distance, this.resources.list.ui.flag.element, this.bonusStyle);
     }
-
 
     this.loadEnviroment = function () {
         drawBackground(this.resources.list.bg.city.element, this.bg);
@@ -179,8 +185,11 @@ var Game = function () {
 
     this.loadPlayer = function () {
         var sprite = `${this.player.status.split("_")[0]}_${this.player.attempts}`;
+        
         if (this.player.status.split('_')[0] === 'running') sprite = `${sprite}_${this.player.status.split("_")[1]}`; 
+        
         drawElement(this.resources.list.player[sprite].element, this.player);
+        
         this.browserFrames++;
         if (this.browserFrames === 6) {
             this.browserFrames = 1;
@@ -349,7 +358,7 @@ var Game = function () {
                this.item.y <= this.player.y + this.player.h;
     }
 
-    //Endings
+    //- ENDINGS
     this.missedAttempt = function () {
         clearInterval(this.timerClock);
         clearInterval(this.timerDistance);
@@ -359,7 +368,7 @@ var Game = function () {
 
         if (this.player.attempts === 0) {
             console.log("Game Over");
-            this.status = 0;
+            this.status = -1;
         } else {
             console.log("I'm sorry! You are late!");
             this.status = 2;

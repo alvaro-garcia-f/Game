@@ -23,8 +23,8 @@ function loadScrLoop() {
         animateGoal();                                              
     }
 
-    // Status === 0 - Game Over
-    if(game.status === 0) {
+    // Status === -1 - Game Over
+    if(game.status === -1) {
         cancelAnimationFrame(id);
         drawGameOver();
     }

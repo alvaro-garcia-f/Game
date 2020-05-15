@@ -78,7 +78,7 @@ function drawElement(asset, object) {
     ctx.drawImage(asset, object.x, object.y);
 }
 
-// - TRANSITION SCREENS
+// - TEXT 
 //Draw main title text
 function drawTitleText() {
     ctx.font = '63px Eight Bit Dragon';
@@ -99,7 +99,9 @@ function drawTitleText() {
     ctx.font = '84px Eight Bit Dragon';
     ctx.lineWidth = 11;
     ctx.strokeText('R                E', 500, 215);
-    ctx.fillText('R                E', 500, 215);      
+    ctx.fillText('R                E', 500, 215);
+    
+    drawBottomText("Press Space Bar to Start");
 }
 
 //Draw text alerts on the screen
@@ -162,6 +164,15 @@ function drawMainText(text, style) {
     ctx.fillText(text, 500, 280);
 }
 
+//Prints bottom message
+function drawBottomText(text) {
+    resetFont();
+    setShadow();
+    ctx.strokeText(text, 500, 320);
+    ctx.fillText(text, 500, 320);
+}
+
+// - TRANSITION SCREENS
 function drawNextLevel(text) {
     ctx.clearRect(0, 0, SCR_WIDTH, SCR_HEIGHT);
     ctx.drawImage(game.resources.list.bg.city.element ,0,0);
@@ -182,10 +193,7 @@ function drawPunishment (attempts) {
     if (attempts === 2) var text = "Dress like Urkel!";
     if (attempts === 1) var text = "You know what to do...";
 
-    resetFont();
-    setShadow();
-    ctx.strokeText(text, 500, 320);
-    ctx.fillText(text, 500, 320);
+    drawBottomText(text);
 }
 
 function drawGameOver () {
@@ -210,6 +218,7 @@ function animateTitle () {
         else {
             cancelAnimationFrame(animationId);
             drawTitleText();
+            game.status = 0;
         }
     });
 }

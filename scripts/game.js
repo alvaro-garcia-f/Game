@@ -47,8 +47,10 @@ var Game = function () {
     this.sound = new audioPlayer();
 
     this.level = 1;
-    this.distance = 500;
-    this.countDown = 60;
+    this.difficulty = 0;
+    this.baseDistance = 500;
+    this.maxCountDown = 60;
+    this.countDown;
     this.timerClock;
     this.timerDistance;
     this.timerObstacle;
@@ -77,8 +79,15 @@ var Game = function () {
         self.player.x = 64;
         self.player.y = GROUND - self.player.h;
         self.player.status = 'idle';
-        if (self.countDown <= 10) self.countDown = 60;// - self.difficulty; 
-        self.distance = 400; //+ 100 * self.difficulty;
+
+        //Decrease counter and increase distance with difficulty
+        if (self.maxCountDown > 10) {
+            self.countDown = self.maxCountDown; 
+            self.maxCountDown -= self.difficulty;
+        }
+        self.baseDistance += 100 * self.difficulty;
+        self.distance = self.baseDistance;
+
         self.item.visible = false;
         self.obstacles.emptyBuffer();
         self.bg.x = 0;
@@ -422,6 +431,7 @@ var Game = function () {
         console.log("Congratulations! You are on time!");
         this.status = 3;
         this.level++;
+        this.difficulty++;
         this.sound.play("victory");
     }
 }

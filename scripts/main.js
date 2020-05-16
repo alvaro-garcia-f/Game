@@ -1,4 +1,5 @@
 var id;
+var gameOn = false;
 
 //- MAIN LOOP
 function loadScrLoop() {
@@ -32,7 +33,13 @@ function loadScrLoop() {
 
 //- INITIALIZE GAME
 var game = new Game();
-game.init();
+
+canvas.onclick = function () {
+    if (!gameOn) {
+        gameOn = true;
+        game.init();
+    }
+}
 
 // KEYBOARD LISTENERS
 window.addEventListener('keydown', (e) => {

@@ -14,12 +14,16 @@ var audioPlayer = function () {
     }
 
     this.playSfx = function (event) {
-        if (this.sfx[event]) this.sfx[event].element.play();
+        if (this.sfx[event]) {
+            this.sfx[event].element.volume = 0.1; // <-- Demo
+            this.sfx[event].element.play();
+        }
     }
 
     this.playOst = function (track) {
         if (this.ost[track]) {
             this.ost[track].element.loop = true;
+            this.ost[track].element.volume = 0.1;   // <-- Demo
             this.ost[track].element.play();
         }
     }
@@ -69,7 +73,7 @@ var Game = function () {
     this.level = 1;
     this.difficulty = 0;
     this.baseDistance = 500;
-    this.maxCountDown = 30;                 // Default 60 -> 30 for testing
+    this.maxCountDown = 20;                 // Default 60 -> 20 for testing
     this.countDown;
     this.timerClock;
     this.timerDistance;
@@ -361,7 +365,7 @@ var Game = function () {
     }
 
     this.generateItem = function () {     
-        if (!this.item.visible && Math.random()*300 <= 0.5) {
+        if (!this.item.visible && Math.random()*200 <= 0.5) {
             this.item.visible = true;
             this.item.x = 1000;
         }

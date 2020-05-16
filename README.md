@@ -4,7 +4,7 @@ A simple platform game using Vanilla JS.
 
 ## DEMO
 
-(Coming soon..)
+http://alvaro-garcia-f.github-io/Game
 
 ## Features
 

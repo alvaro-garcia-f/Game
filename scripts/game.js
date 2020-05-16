@@ -69,7 +69,7 @@ var Game = function () {
     this.level = 1;
     this.difficulty = 0;
     this.baseDistance = 500;
-    this.maxCountDown = 60;
+    this.maxCountDown = 30;                 // Default 60 -> 30 for testing
     this.countDown;
     this.timerClock;
     this.timerDistance;
@@ -361,7 +361,7 @@ var Game = function () {
     }
 
     this.generateItem = function () {     
-        if (!this.item.visible && Math.random()*100 <= 0.5) {
+        if (!this.item.visible && Math.random()*300 <= 0.5) {
             this.item.visible = true;
             this.item.x = 1000;
         }

@@ -31,6 +31,13 @@ If clock reaches 0 before goal player loses an attempts. If goal reaches 0 befor
 - Goal and ending conditions depend on difficulty
 - Item speed increased with difficulty
 
+## PENDING FEATURES
+- Level maps and design
+- More types of obstacles, static and dynamic.
+- Different game mechanics (dodge, duck, roll...)
+- More variety to graphics
+- More varietty to music
+
 ## CURRENT ISSUES & KNOWN BUGS
 
 - Problems with collisions in certain still undetermined conditions. Sometimes the player lands on a box and it's not detected when he leaves it.

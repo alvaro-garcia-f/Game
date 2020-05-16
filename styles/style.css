@@ -4,9 +4,29 @@
 }
 
 body {
-    background-color: black;
+    background-color: #0f1538;
+    margin: 0;
     font-family: 'Eight Bit Dragon';
     color: white;
+}
+
+header {
+    background-color: #f7a90c;
+    height: 75px;
+    margin: 0 0 20px 0;
+    line-height: 75px;
+    font-size: 15.75px;
+    color: #111; 
+}
+
+.title {
+    font-size: 21px;
+    margin-left: 20px;
+}
+
+span {
+    display: inline-block;
+    height: 100%;
 }
 
 #screen {
@@ -16,4 +36,12 @@ body {
     border: 2px solid orange;
     background-color: #8ed0ff;
     margin: 0 auto;
+}
+
+footer {
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #f7a90c;
 }

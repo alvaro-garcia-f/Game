@@ -271,12 +271,11 @@ function animateGoal () {
             game.loadPlayer();
         }
 
-        // If the building is still moving, animate background
-        if(pos > 600) {
-            pos -= 2;
-            game.bg.x -= 0.5;
-            game.bg2.x -= 0.5;
-        }
+        //Animate building, animate background
+        if(pos > 600) pos -= 2;
+        
+        game.bg.x -= 0.5;
+        game.bg2.x -= 0.5;    
 
         drawBuilding(game.resources.list.bg.building.element, pos);
 

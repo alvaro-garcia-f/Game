@@ -46,6 +46,6 @@ If clock reaches 0 before goal player loses an attempts. If goal reaches 0 befor
 
 ## ACKNOWLEDGEMENTS
 
-- These guys provided the models that set the base fot Timmy: https://craftpix.net/freebies/free-3-character-sprite-sheets-pixel-art/
+- These guys provided the models that set the base for Timmy: https://craftpix.net/freebies/free-3-character-sprite-sheets-pixel-art/
 - 8 Bit Universe provided the music: https://www.youtube.com/channel/UCn4HDI02U4f3VEsghRX7dRw
 - Fonts by Chrequered Ink: https://chequered.ink/ 
